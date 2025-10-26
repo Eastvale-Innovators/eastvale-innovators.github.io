@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leadership - Eastvale Innovators</title>
+    <link rel="icon" type="image/png" href="assets/img/logo_favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #293d62;
+            --primary-light: #3d5278;
+            --primary-dark: #1a2740;
+            --accent: #4a9eff;
+            --accent-glow: rgba(74, 158, 255, 0.3);
+            --text-light: #f5f5f5;
+            --text-dark: #1a1a1a;
+            --bg-light: #ffffff;
+            --bg-dark: #0a0e1a;
+            --gradient-1: linear-gradient(135deg, #293d62 0%, #4a9eff 100%);
+            --gradient-2: linear-gradient(135deg, #1a2740 0%, #293d62 100%);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-light);
+            background: var(--bg-dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 0;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            background: rgba(26, 39, 64, 0.8);
+            border-bottom: 1px solid rgba(74, 158, 255, 0.1);
+        }
+
+        nav.scrolled {
+            padding: 1rem 0;
+            background: rgba(26, 39, 64, 0.95);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: var(--gradient-2);
+            margin-top: 80px;
+        }
+
+        .hero-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(74, 158, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(74, 158, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 300;
+        }
+
+        /* Main Content */
+        .leadership-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 6rem 2rem;
+        }
+
+        .year-badge {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .year-badge span {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            background: rgba(74, 158, 255, 0.1);
+            border: 1px solid rgba(74, 158, 255, 0.3);
+            border-radius: 50px;
+            color: var(--accent);
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* President Section - Single Large Card */
+        .president-section {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 5rem;
+        }
+
+        .president-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(74, 158, 255, 0.3);
+            border-radius: 30px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            max-width: 450px;
+            width: 100%;
+            position: relative;
+        }
+
+        .president-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .president-card:hover::before {
+            opacity: 1;
+        }
+
+        .president-card:hover {
+            transform: translateY(-15px);
+            border-color: var(--accent);
+            box-shadow: 0 30px 80px rgba(74, 158, 255, 0.4);
+        }
+
+        .president-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .president-card:hover .president-image {
+            transform: scale(1.05);
+        }
+
+        .president-info {
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .president-info h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .president-info .role {
+            color: var(--accent);
+            font-size: 1.3rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Executive Row - 3 Cards */
+        .executive-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 5rem;
+        }
+
+        .exec-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .exec-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .exec-card:hover::before {
+            opacity: 1;
+        }
+
+        .exec-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(74, 158, 255, 0.5);
+            box-shadow: 0 20px 60px rgba(74, 158, 255, 0.3);
+        }
+
+        .exec-image {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .exec-card:hover .exec-image {
+            transform: scale(1.08);
+        }
+
+        .exec-info {
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .exec-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .exec-info .role {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        /* Department Heads - 2x2 Grid */
+        .section-title {
+            text-align: center;
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .department-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem;
+            margin-bottom: 6rem;
+        }
+
+        .dept-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .dept-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .dept-card:hover::before {
+            opacity: 1;
+        }
+
+        .dept-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(74, 158, 255, 0.5);
+            box-shadow: 0 20px 60px rgba(74, 158, 255, 0.3);
+        }
+
+        .dept-image {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .dept-card:hover .dept-image {
+            transform: scale(1.08);
+        }
+
+        .dept-info {
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .dept-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .dept-info .role {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        /* Advisors Section */
+        .advisors-section {
+            margin-top: 6rem;
+        }
+
+        .advisors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .advisor-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .advisor-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .advisor-card:hover::before {
+            opacity: 1;
+        }
+
+        .advisor-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 215, 0, 0.4);
+            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.2);
+        }
+
+        .advisor-image {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .advisor-card:hover .advisor-image {
+            transform: scale(1.08);
+        }
+
+        .advisor-info {
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .advisor-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .advisor-info .role {
+            color: #ffd700;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: rgba(26, 39, 64, 0.5);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .department-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .executive-row {
+                grid-template-columns: 1fr;
+            }
+
+            .department-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .advisors-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .leadership-container {
+                padding: 3rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">EASTVALE INNOVATORS</a>
+            <ul class="nav-links">
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="leadership.html">Leadership</a></li>
+                <li><a href="index.html#teams">Teams</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <img src="assets/img/new_innovators.png" alt="Eastvale Innovators" class="hero-img">
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <h1>Our Leadership</h1>
+            <p class="hero-subtitle">Meet the innovators driving change in our community</p>
+        </div>
+    </section>
+
+    <style>
+    .hero {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.8) drop-shadow(0 10px 30px rgba(74, 158, 255, 0.3));
+        z-index: 1;
+    }
+
+    .hero h1,
+    .hero p {
+        color: #fff;
+    }
+    </style>
+
+    <!-- Main Leadership Content -->
+    <div class="leadership-container">
+        <!-- Year Badge -->
+        <div class="year-badge">
+            <span>2025 - 2026</span>
+        </div>
+
+        <!-- President Section -->
+        <div class="president-section">
+            <div class="president-card">
+                <img src="assets/img/OldImages/nil.jpg" alt="Devom Brahmbhatt" class="president-image">
+                <div class="president-info">
+                    <h2>Devom Brahmbhatt</h2>
+                    <p class="role">President</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Executive Row: VP, Treasurer, Secretary -->
+        <div class="executive-row">
+            <div class="exec-card">
+                <img src="assets/img/OldImages/nil.jpg" alt="Adithi Ganesan" class="exec-image">
+                <div class="exec-info">
+                    <h3>Adithi Ganesan</h3>
+                    <p class="role">Secretary</p>
+                </div>
+            </div>
+
+            <div class="exec-card">
+                <img src="assets/img/OldImages/nil.jpg" alt="Jessica Zhang" class="exec-image">
+                <div class="exec-info">
+                    <h3>Jessica Zhang</h3>
+                    <p class="role">Vice President</p>
+                </div>
+            </div>
+
+            <div class="exec-card">
+                <img src="assets/img/OldImages/nil.jpg" alt="Jeethashri Sundarraj" class="exec-image">
+                <div class="exec-info">
+                    <h3>Jeethashri Sundarraj</h3>
+                    <p class="role">Treasurer</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Department Heads Section -->
+        <h2 class="section-title">Department Heads</h2>
+        <div class="department-grid">
+            <div class="dept-card">
+                <img src="assets/img/OldImages/nil.jpg" alt="Aryan Wadhera" class="dept-image">
+                <div class="dept-info">
+                    <h3>Aryan Wadhera</h3>
+                    <p class="role">Head of Computer Science</p>
+                </div>
+            </div>
+
+            <div class="dept-card">
+                <img src="assets/img/OldImages/nil.jpg" alt="Tyler Salamanca" class="dept-image">
+                <div class="dept-info">
+                    <h3>Tyler Salamanca</h3>
+                    <p class="role">Head of Engineering</p>
+                </div>
+            </div>
+
+            <div class="dept-card">
+                <img src="assets/img/OldImages/nil.jpg" alt="Madison Saldaña" class="dept-image">
+                <div class="dept-info">
+                    <h3>Mark Benson</h3>
+                    <p class="role">Head of Medicine</p>
+                </div>
+            </div>
+
+            <div class="dept-card">
+                <img src="assets/img/OldImages/nil.jpg" alt="Marketing Head" class="dept-image">
+                <div class="dept-info">
+                    <h3>Kireeti Yarlagadda</h3>
+                    <p class="role">Head of Finance</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advisors Section -->
+        <div class="advisors-section">
+            <h2 class="section-title">Our Advisors</h2>
+            <div class="advisors-grid">
+                <div class="advisor-card">
+                    <img src="assets/img/OldImages/nil.jpg" alt="Advisor 1" class="advisor-image">
+                    <div class="advisor-info">
+                        <h3>Scott Usher</h3>
+                        <p class="role">Faculty Advisor</p>
+                    </div>
+                </div>
+
+                <div class="advisor-card">
+                    <img src="assets/img/OldImages/nil.jpg" alt="Advisor 2" class="advisor-image">
+                    <div class="advisor-info">
+                        <h3>Alex Cabal</h3>
+                        <p class="role">Industry Mentor</p>
+                    </div>
+                </div>
+
+                <div class="advisor-card">
+                    <img src="assets/img/OldImages/nil.jpg" alt="Advisor 3" class="advisor-image">
+                    <div class="advisor-info">
+                        <h3>Rachel Auld</h3>
+                        <p class="role">Technical Advisor</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Copyright © Eastvale Innovators 2025</p>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
