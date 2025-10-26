@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eastvale Innovators</title>
+    <title>Leadership - Eastvale Innovators</title>
     <link rel="icon" type="image/png" href="assets/img/logo_favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -119,14 +119,24 @@
 
         /* Hero Section */
         .hero {
-            height: 50vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             overflow: hidden;
-            background: var(--gradient-2);
-            margin-top: 80px;
+            text-align: center;
+        }
+
+        .hero-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.8) drop-shadow(0 10px 30px rgba(74, 158, 255, 0.3));
+            z-index: 1;
         }
 
         .hero-grid {
@@ -139,19 +149,17 @@
                 linear-gradient(rgba(74, 158, 255, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(74, 158, 255, 0.03) 1px, transparent 1px);
             background-size: 50px 50px;
-            z-index: 1;
+            z-index: 2;
         }
 
         .hero-content {
             position: relative;
-            z-index: 2;
-            text-align: center;
-            max-width: 900px;
+            z-index: 3;
             padding: 0 2rem;
         }
 
         .hero h1 {
-            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-size: clamp(3rem, 8vw, 5rem);
             margin-bottom: 1rem;
             line-height: 1.1;
             background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
@@ -161,8 +169,8 @@
         }
 
         .hero-subtitle {
-            font-size: clamp(1rem, 2vw, 1.3rem);
-            color: rgba(255, 255, 255, 0.7);
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            color: rgba(255, 255, 255, 0.9);
             font-weight: 300;
         }
 
@@ -565,39 +573,6 @@
             <p class="hero-subtitle">Meet the innovators driving change in our community</p>
         </div>
     </section>
-
-    <style>
-    .hero {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        overflow: hidden;
-        text-align: center;
-    }
-
-    .hero-content {
-        position: relative;
-        z-index: 2;
-    }
-
-    .hero-img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        filter: brightness(0.7);
-        z-index: 1;
-    }
-
-    .hero h1,
-    .hero p {
-        color: #fff;
-    }
-    </style>
 
     <!-- Main Leadership Content -->
     <div class="leadership-container">
