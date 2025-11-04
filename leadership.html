@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eastvale Innovators</title>
+    <title>Leadership - Eastvale Innovators</title>
     <link rel="icon" type="image/png" href="assets/img/logo_favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -15,16 +15,12 @@
 
         :root {
             --primary: #293d62;
-            --primary-light: #3d5278;
-            --primary-dark: #1a2740;
             --accent: #4a9eff;
             --accent-glow: rgba(74, 158, 255, 0.3);
             --text-light: #f5f5f5;
-            --text-dark: #1a1a1a;
-            --bg-light: #ffffff;
             --bg-dark: #0a0e1a;
-            --gradient-1: linear-gradient(135deg, #4a9eff 0%, #4a9eff 100%);
             --gradient-2: linear-gradient(135deg, #1a2740 0%, #293d62 100%);
+            --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         body {
@@ -75,12 +71,17 @@
         .logo {
             font-size: 1.5rem;
             font-weight: 800;
-            background: var(--gradient-1);
+            background: linear-gradient(135deg, #4a9eff 0%, #4a9eff 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             letter-spacing: -0.5px;
             text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
         }
 
         .nav-links {
@@ -126,6 +127,9 @@
             height: 100vh;
             overflow: hidden;
             text-align: center;
+            background: var(--gradient-2);
+            margin-top: 0;
+            padding-top: 6rem;
         }
 
         .hero-img {
@@ -135,8 +139,8 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: brightness(0.8) drop-shadow(0 10px 30px rgba(74, 158, 255, 0.3));
-            z-index: 1;
+            opacity: 0.12;
+            z-index: 0;
         }
 
         .hero-grid {
@@ -149,13 +153,25 @@
                 linear-gradient(rgba(74, 158, 255, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(74, 158, 255, 0.03) 1px, transparent 1px);
             background-size: 50px 50px;
-            z-index: 2;
+            z-index: 1;
         }
 
         .hero-content {
             position: relative;
-            z-index: 3;
+            z-index: 2;
             padding: 0 2rem;
+            animation: fadeInDown 1s ease 0.2s backwards;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .hero h1 {
@@ -174,7 +190,7 @@
             font-weight: 300;
         }
 
-        /* Main Content */
+        /* Main Leadership Content */
         .leadership-container {
             max-width: 1400px;
             margin: 0 auto;
@@ -183,27 +199,45 @@
 
         .year-badge {
             text-align: center;
-            margin-bottom: 4rem;
+            margin-bottom: 5rem;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .year-badge span {
             display: inline-block;
-            padding: 0.75rem 2rem;
-            background: rgba(74, 158, 255, 0.1);
-            border: 1px solid rgba(74, 158, 255, 0.3);
+            padding: 0.8rem 2.5rem;
+            background: rgba(74, 158, 255, 0.15);
+            border: 1px solid rgba(74, 158, 255, 0.4);
             border-radius: 50px;
             color: var(--accent);
             font-size: 1.2rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 2px;
+            transition: var(--transition);
         }
 
-        /* President Section - Single Large Card */
+        .year-badge span:hover {
+            background: rgba(74, 158, 255, 0.25);
+            border-color: var(--accent);
+        }
+
+        /* President Section */
         .president-section {
             display: flex;
             justify-content: center;
-            margin-bottom: 5rem;
+            margin-bottom: 6rem;
         }
 
         .president-card {
@@ -212,7 +246,7 @@
             border: 2px solid rgba(74, 158, 255, 0.3);
             border-radius: 30px;
             overflow: hidden;
-            transition: all 0.4s ease;
+            transition: var(--transition);
             max-width: 450px;
             width: 100%;
             position: relative;
@@ -272,12 +306,12 @@
             letter-spacing: 1px;
         }
 
-        /* Executive Row - 3 Cards */
+        /* Executive Row */
         .executive-row {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2.5rem;
-            margin-bottom: 5rem;
+            margin-bottom: 6rem;
         }
 
         .exec-card {
@@ -286,7 +320,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 25px;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             position: relative;
         }
 
@@ -342,17 +376,18 @@
             font-size: 1rem;
         }
 
-        /* Department Heads - 2x2 Grid */
+        /* Section Title */
         .section-title {
             text-align: center;
             font-size: clamp(2rem, 4vw, 3rem);
-            margin-bottom: 3rem;
+            margin-bottom: 3.5rem;
             background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
+        /* Department Grid */
         .department-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -366,7 +401,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 25px;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             position: relative;
         }
 
@@ -424,7 +459,7 @@
 
         /* Advisors Section */
         .advisors-section {
-            margin-top: 6rem;
+            margin-top: 2rem;
         }
 
         .advisors-grid {
@@ -436,10 +471,10 @@
         .advisor-card {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.2);
             border-radius: 25px;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             position: relative;
         }
 
@@ -461,7 +496,7 @@
 
         .advisor-card:hover {
             transform: translateY(-10px);
-            border-color: rgba(255, 215, 0, 0.4);
+            border-color: rgba(255, 215, 0, 0.5);
             box-shadow: 0 20px 60px rgba(255, 215, 0, 0.2);
         }
 
@@ -499,7 +534,7 @@
         footer {
             text-align: center;
             padding: 3rem 2rem;
-            background: rgba(26, 39, 64, 0.5);
+            background: rgba(26, 39, 64, 0.8);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: rgba(255, 255, 255, 0.6);
         }
@@ -545,6 +580,10 @@
             .leadership-container {
                 padding: 3rem 1.5rem;
             }
+
+            .hero {
+                padding-top: 3rem;
+            }
         }
     </style>
 </head>
@@ -586,18 +625,18 @@
             <div class="president-card">
                 <img src="assets/img/OldImages/nil.jpg" alt="Devom Brahmbhatt" class="president-image">
                 <div class="president-info">
-                    <h2>Devom Brahmbhatt</h2>
+                    <h2>Member One</h2>
                     <p class="role">President</p>
                 </div>
             </div>
         </div>
 
-        <!-- Executive Row: VP, Treasurer, Secretary -->
+        <!-- Executive Row -->
         <div class="executive-row">
             <div class="exec-card">
                 <img src="assets/img/OldImages/nil.jpg" alt="Kaylee Dih" class="exec-image">
                 <div class="exec-info">
-                    <h3>Kaylee Dih</h3>
+                    <h3>Member Two</h3>
                     <p class="role">Secretary</p>
                 </div>
             </div>
@@ -605,7 +644,7 @@
             <div class="exec-card">
                 <img src="assets/img/OldImages/nil.jpg" alt="Muhammad Khan" class="exec-image">
                 <div class="exec-info">
-                    <h3>Muhammad Khan</h3>
+                    <h3>Member Three</h3>
                     <p class="role">Vice President</p>
                 </div>
             </div>
@@ -613,7 +652,7 @@
             <div class="exec-card">
                 <img src="assets/img/OldImages/nil.jpg" alt="Kireeti Yarlagadda" class="exec-image">
                 <div class="exec-info">
-                    <h3>Kireeti Yarlagadda</h3>
+                    <h3>Member Four</h3>
                     <p class="role">Treasurer</p>
                 </div>
             </div>
@@ -625,7 +664,7 @@
             <div class="dept-card">
                 <img src="assets/img/OldImages/nil.jpg" alt="Aryan Wadhera" class="dept-image">
                 <div class="dept-info">
-                    <h3>Aryan Wadhera</h3>
+                    <h3>Team Lead</h3>
                     <p class="role">Head of Computer Science</p>
                 </div>
             </div>
@@ -633,7 +672,7 @@
             <div class="dept-card">
                 <img src="assets/img/OldImages/nil.jpg" alt="Tyler Salamanca" class="dept-image">
                 <div class="dept-info">
-                    <h3>Tyler Salamanca</h3>
+                    <h3>Team Lead</h3>
                     <p class="role">Head of Engineering</p>
                 </div>
             </div>
@@ -641,7 +680,7 @@
             <div class="dept-card">
                 <img src="assets/img/OldImages/nil.jpg" alt="Mark Benson" class="dept-image">
                 <div class="dept-info">
-                    <h3>Mark Benson</h3>
+                    <h3>Team Lead</h3>
                     <p class="role">Head of Medicine</p>
                 </div>
             </div>
@@ -649,7 +688,7 @@
             <div class="dept-card">
                 <img src="assets/img/OldImages/nil.jpg" alt="Rithwik Anchuri" class="dept-image">
                 <div class="dept-info">
-                    <h3>Rithwik Anchuri</h3>
+                    <h3>Team Lead</h3>
                     <p class="role">Head of Finance</p>
                 </div>
             </div>
@@ -660,7 +699,7 @@
             <h2 class="section-title">Our Advisors</h2>
             <div class="advisors-grid">
                 <div class="advisor-card">
-                    <img src="assets/img/OldImages/nil.jpg" alt="Advisor 1" class="advisor-image">
+                    <img src="assets/img/OldImages/nil.jpg" alt="Scott Usher" class="advisor-image">
                     <div class="advisor-info">
                         <h3>Scott Usher</h3>
                         <p class="role">Faculty Advisor</p>
@@ -668,7 +707,7 @@
                 </div>
 
                 <div class="advisor-card">
-                    <img src="assets/img/OldImages/nil.jpg" alt="Advisor 2" class="advisor-image">
+                    <img src="assets/img/OldImages/nil.jpg" alt="Alex Cabal" class="advisor-image">
                     <div class="advisor-info">
                         <h3>Alex Cabal</h3>
                         <p class="role">Industry Mentor</p>
@@ -676,7 +715,7 @@
                 </div>
 
                 <div class="advisor-card">
-                    <img src="assets/img/OldImages/nil.jpg" alt="Advisor 3" class="advisor-image">
+                    <img src="assets/img/OldImages/nil.jpg" alt="Rachel Auld" class="advisor-image">
                     <div class="advisor-info">
                         <h3>Rachel Auld</h3>
                         <p class="role">Technical Advisor</p>
