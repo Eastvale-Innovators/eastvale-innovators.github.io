@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Eastvale Innovators</title>
+    <link rel="icon" type="image/png" href="assets/img/logo_favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #293d62;
+            --accent: #4a9eff;
+            --accent-glow: rgba(74, 158, 255, 0.3);
+            --text-light: #f5f5f5;
+            --bg-dark: #0a0e1a;
+            --gradient-2: linear-gradient(135deg, #1a2740 0%, #293d62 100%);
+            --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-light);
+            background: var(--bg-dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 0;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            background: rgba(26, 39, 64, 0.8);
+            border-bottom: 1px solid rgba(74, 158, 255, 0.1);
+        }
+
+        nav.scrolled {
+            padding: 1rem 0;
+            background: rgba(26, 39, 64, 0.95);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #4a9eff 0%, #4a9eff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            text-align: center;
+            background: var(--gradient-2);
+            margin-top: 0;
+            padding-top: 6rem;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('assets/img/P1010915%20(1).jpg') center/cover;
+            opacity: 0.12;
+            z-index: 0;
+        }
+
+        .hero-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(74, 158, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(74, 158, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            padding: 0 2rem;
+            max-width: 900px;
+            text-align: center;
+            animation: fadeInDown 1s ease 0.2s backwards;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 300;
+        }
+
+        /* Projects Container */
+        .projects-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 6rem 2rem;
+        }
+
+        .projects-intro {
+            text-align: center;
+            margin-bottom: 5rem;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .projects-intro h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .projects-intro p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.75);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Project Card */
+        .project-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            overflow: hidden;
+            margin-bottom: 4rem;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 0;
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-card:hover {
+            border-color: rgba(74, 158, 255, 0.5);
+            box-shadow: 0 20px 60px rgba(74, 158, 255, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .project-header {
+            padding: 3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .project-title {
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .project-team {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.5rem;
+            background: rgba(74, 158, 255, 0.15);
+            border: 1px solid rgba(74, 158, 255, 0.4);
+            border-radius: 20px;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .project-team:hover {
+            background: rgba(74, 158, 255, 0.25);
+            border-color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .project-team::after {
+            content: '→';
+            font-size: 1.2rem;
+        }
+
+        .project-content {
+            padding: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .project-description {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+        }
+
+        .project-screenshots {
+            margin-top: 2rem;
+        }
+
+        .screenshots-title {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .screenshot-placeholder {
+            aspect-ratio: 16/9;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px dashed rgba(74, 158, 255, 0.3);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.95rem;
+            transition: var(--transition);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .screenshot-placeholder:hover {
+            border-color: rgba(74, 158, 255, 0.6);
+            background: rgba(255, 255, 255, 0.08);
+            transform: scale(1.02);
+        }
+
+        .screenshot-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: rgba(26, 39, 64, 0.8);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .projects-container {
+                padding: 3rem 1.5rem;
+            }
+
+            .project-header,
+            .project-content {
+                padding: 2rem 1.5rem;
+            }
+
+            .screenshots-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding-top: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">EASTVALE INNOVATORS</a>
+            <ul class="nav-links">
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="leadership.html">Leadership</a></li>
+                <li><a href="teams.html">Teams</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <h1>Our Projects</h1>
+            <p class="hero-subtitle">Innovation in action across multiple disciplines</p>
+        </div>
+    </section>
+
+    <!-- Projects Container -->
+    <div class="projects-container">
+        <div class="projects-intro">
+            <h2>What We're Building</h2>
+            <p>Explore our latest innovations and initiatives across computer science, engineering, medicine, and finance</p>
+        </div>
+
+        <!-- Project Card 1 -->
+        <div class="project-card">
+            <div class="project-header">
+                <h3 class="project-title">Project Title Here</h3>
+                <a href="#" class="project-team">Computer Science Team</a>
+            </div>
+            <div class="project-content">
+                <p class="project-description">
+                    Add your project description here. Explain what the project is about, its goals, impact, and current status. This is where you can detail the innovative aspects and the problem you're solving.
+                </p>
+                <div class="project-screenshots">
+                    <h4 class="screenshots-title">Project Showcase</h4>
+                    <div class="screenshots-grid">
+                        <div class="screenshot-placeholder">Screenshot 1</div>
+                        <div class="screenshot-placeholder">Screenshot 2</div>
+                        <div class="screenshot-placeholder">Screenshot 3</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project Card 2 -->
+        <div class="project-card">
+            <div class="project-header">
+                <h3 class="project-title">Another Project Title</h3>
+                <a href="#" class="project-team">Engineering Team</a>
+            </div>
+            <div class="project-content">
+                <p class="project-description">
+                    Add your project description here. Explain what the project is about, its goals, impact, and current status. This is where you can detail the innovative aspects and the problem you're solving.
+                </p>
+                <div class="project-screenshots">
+                    <h4 class="screenshots-title">Project Showcase</h4>
+                    <div class="screenshots-grid">
+                        <div class="screenshot-placeholder">Screenshot 1</div>
+                        <div class="screenshot-placeholder">Screenshot 2</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project Card 3 -->
+        <div class="project-card">
+            <div class="project-header">
+                <h3 class="project-title">Medical Innovation Project</h3>
+                <a href="#" class="project-team">Medicine Team</a>
+            </div>
+            <div class="project-content">
+                <p class="project-description">
+                    Add your project description here. Explain what the project is about, its goals, impact, and current status. This is where you can detail the innovative aspects and the problem you're solving.
+                </p>
+                <div class="project-screenshots">
+                    <h4 class="screenshots-title">Project Showcase</h4>
+                    <div class="screenshots-grid">
+                        <div class="screenshot-placeholder">Screenshot 1</div>
+                        <div class="screenshot-placeholder">Screenshot 2</div>
+                        <div class="screenshot-placeholder">Screenshot 3</div>
+                        <div class="screenshot-placeholder">Screenshot 4</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Copyright © Eastvale Innovators 2025</p>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
