@@ -120,13 +120,12 @@
 
         /* Hero Section */
         .hero {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
             overflow: hidden;
-            text-align: center;
             background: var(--gradient-2);
             margin-top: 0;
             padding-top: 6rem;
@@ -153,15 +152,15 @@
                 linear-gradient(rgba(74, 158, 255, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(74, 158, 255, 0.03) 1px, transparent 1px);
             background-size: 50px 50px;
-            z-index: 2;
+            z-index: 1;
         }
 
         .hero-content {
             position: relative;
-            z-index: 3;
-            padding: 0 2rem;
-            max-width: 900px;
+            z-index: 2;
             text-align: center;
+            max-width: 900px;
+            padding: 0 2rem;
             animation: fadeInDown 1s ease 0.2s backwards;
         }
 
@@ -188,7 +187,7 @@
 
         .hero-subtitle {
             font-size: clamp(1.1rem, 2vw, 1.4rem);
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 255, 255, 0.85);
             font-weight: 300;
         }
 
@@ -501,7 +500,6 @@
             cursor: pointer;
         }
 
-
         /* Responsive */
         @media (max-width: 768px) {
             .nav-links {
@@ -548,13 +546,12 @@
 
     <div class="mobile-menu-overlay" id="mobileMenu">
         <button class="close-menu-btn">✕</button>
-        <a href="#about">About</a>
+        <a href="index.html#about">About</a>
         <a href="projects.html">Projects</a>
         <a href="leadership.html">Leadership</a>
         <a href="teams.html">Teams</a>
         <a href="contact.html">Contact</a>
     </div>
-
 
     <!-- Hero Section -->
     <section class="hero">
@@ -675,7 +672,6 @@
         closeBtn.addEventListener('click', () => {
             mobileMenu.classList.remove('active');
         });
-
     </script>
 </body>
 </html>
