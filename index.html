@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eastvale Innovators</title>
     <link rel="icon" type="image/png" href="assets/img/logo_favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/OBJLoader.js"></script>
     <style>
         * {
             margin: 0;
@@ -22,10 +24,12 @@
             --text-light: #f5f5f5;
             --text-dark: #1a1a1a;
             --bg-light: #ffffff;
-            --bg-dark: #0a0e1a;
+            --bg-dark: #001f3f; /* darker navy shade */
             --gradient-1: linear-gradient(135deg, #4a9eff 0%, #4a9eff 100%);
             --gradient-2: linear-gradient(135deg, #1a2740 0%, #293d62 100%);
             --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            --star-x: 50%;
+            --star-y: 50%;
         }
 
         body {
@@ -37,18 +41,32 @@
         }
 
         h1, h2, h3 {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: 'Orbitron', 'Space Grotesk', sans-serif;
             font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            text-align: center;
+            margin: 0.5rem 0;
+            display: block;
+            width: 100%;
         }
 
         html {
             scroll-behavior: smooth;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        html::-webkit-scrollbar {
+            display: none;
         }
 
         /* Navigation */
         nav {
             position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
             width: 100%;
             z-index: 1000;
             padding: 1.5rem 0;
@@ -126,14 +144,53 @@
         /* Hero Section */
         .hero {
             height: 100vh;
+            width: 100vw;
+            max-width: none;
+            margin: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
             overflow: hidden;
             background: var(--gradient-2);
-            margin-top: 0;
             padding-top: 6rem;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('assets/img/starfield.jpeg');
+            background-size: 200% 200%;
+            background-position: var(--star-x, 50%) var(--star-y, 50%);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            pointer-events: none;
+            transition: background-position 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 1;
+            opacity: 0.15;
+        }
+
+
+
+        /* 3D gear canvas - fixed to viewport, behind all content */
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        #canvas-container canvas {
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
         }
 
         .hero-bg {
@@ -144,7 +201,14 @@
             height: 100%;
             background: url('assets/img/P1010915%20(1).jpg') center/cover;
             opacity: 0.12;
-            z-index: 0;
+            z-index: 1;
+            transform: translateZ(0);
+            animation: heroZoom 30s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroZoom {
+            from { transform: scale(1); }
+            to { transform: scale(1.08); }
         }
 
         .hero-grid {
@@ -164,7 +228,7 @@
             position: relative;
             z-index: 2;
             text-align: center;
-            max-width: 900px;
+            max-width: 100%;
             padding: 0 2rem;
             animation: fadeInDown 1s ease 0.2s backwards;
         }
@@ -210,6 +274,12 @@
             box-shadow: 0 10px 30px var(--accent-glow);
             position: relative;
             overflow: hidden;
+            animation: pulse 2.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%,100% { box-shadow: 0 10px 30px var(--accent-glow); }
+            50% { box-shadow: 0 15px 45px var(--accent-glow); transform: translateY(-2px); }
         }
 
         .cta-button::before {
@@ -239,6 +309,23 @@
             transform: translateX(-50%);
             animation: bounce 2.5s infinite;
             z-index: 3;
+        }
+
+        .scroll-indicator svg {
+            stroke: var(--text-light);
+            animation: arrowPulse 2.5s infinite;
+        }
+
+        @keyframes arrowPulse {
+            0%,100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        nav.scrolled {
+            padding: 1rem 0;
+            background: rgba(26, 39, 64, 0.95);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid var(--accent);
         }
 
         @keyframes bounce {
@@ -304,6 +391,12 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            animation: gradientShift 3s infinite alternate;
+        }
+
+        @keyframes gradientShift {
+            from { background-position: 0% 50%; }
+            to { background-position: 100% 50%; }
         }
 
         .section-description {
@@ -331,6 +424,14 @@
             transition: var(--transition);
             position: relative;
             overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .about-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.6s ease, transform 0.6s ease;
         }
 
         .about-card::before {
@@ -468,7 +569,9 @@
             }
 
             .hero {
-                padding-top: 3rem;
+                max-width: none;
+                margin: 0;
+                width: 100vw;
             }
         }
     </style>
@@ -501,6 +604,7 @@
 
     <!-- Hero Section -->
     <section class="hero">
+        <div id="canvas-container"></div>
         <div class="hero-bg"></div>
         <div class="hero-grid"></div>
         <div class="hero-content">
@@ -546,19 +650,53 @@
     </section>
 
     <footer>
-        <p>Copyright © Eastvale Innovators 2025</p>
+        <p>Copyright © Eastvale Innovators 2026</p>
     </footer>
 
     <script>
-        // Navbar scroll effect
+        // Navbar scroll effect and parallax hero
+        const navbar = document.getElementById('navbar');
+        const heroBg = document.querySelector('.hero-bg');
+        const heroSection = document.querySelector('.hero');
+        const heroBefore = document.querySelector('.hero::before');
+        const starBg = heroSection ? getComputedStyle(heroSection, '::before') : null;
+
+        // Track cursor movement for star effect with dynamic cropping
+        document.addEventListener('mousemove', (e) => {
+            if (!heroSection) return;
+            
+            const hero = heroSection.getBoundingClientRect();
+            if (e.clientY < hero.bottom) {
+                // Calculate position within the hero section
+                const relX = e.clientX - hero.left;
+                const relY = e.clientY - hero.top;
+                
+                // Map cursor position to background position (inverted for natural feel)
+                // Since background-size is 200%, we need to move the position 0-100%
+                // to show different parts of the 200% sized background
+                const bgX = (relX / hero.width) * 100;
+                const bgY = (relY / hero.height) * 100;
+                
+                heroSection.style.setProperty('--star-x', `${bgX}%`);
+                heroSection.style.setProperty('--star-y', `${bgY}%`);
+            }
+        });
+
         window.addEventListener('scroll', function() {
-            const navbar = document.getElementById('navbar');
             if (window.scrollY > 50) {
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
             }
+            // simple parallax
+            if (heroBg) {
+                heroBg.style.transform = `translateY(${window.scrollY * 0.3}px)`;
+            }
         });
+
+        // Preload starfield image
+        const starfieldImg = new Image();
+        starfieldImg.src = 'assets/img/starfield.jpeg';
 
         // Mobile menu toggle
         const mobileBtn = document.querySelector('.mobile-menu-btn');
@@ -573,6 +711,98 @@
             mobileMenu.classList.remove('active');
         });
 
+        // reveal cards on scroll
+        const cards = document.querySelectorAll('.about-card');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.25 });
+        cards.forEach(c => observer.observe(c));
+
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+    
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setClearColor(0x000000, 0);
+    container.appendChild(renderer.domElement);
+
+    scene.add(new THREE.AmbientLight(0xffffff, 1.2));
+    const pointLight = new THREE.PointLight(0x4a9eff, 1.5);
+    pointLight.position.set(50, 50, 80);
+    scene.add(pointLight);
+
+    const loader = new THREE.OBJLoader();
+    let gearGroup = null;
+    let gearRotationY = 0;
+    let gearAxle = null;
+
+    loader.load('assets/models/gear.obj', (gear) => {
+        gear.traverse((child) => {
+            if (child.isMesh && child.material) {
+                child.material.color.setHex(0x000000);
+                child.material.transparent = true;
+                child.material.opacity = 0.25;
+                child.material.depthWrite = false;
+            }
+        });
+
+        gear.updateMatrixWorld(true);
+        const box = new THREE.Box3().setFromObject(gear);
+        const size = box.getSize(new THREE.Vector3()).length();
+        const center = box.getCenter(new THREE.Vector3());
+        const pivot = center.clone();
+
+        gearGroup = new THREE.Group();
+        gearGroup.add(gear);
+        gear.position.copy(pivot).negate();
+
+        // move gear to the right
+        gearGroup.position.x = 30;
+        gearGroup.position.y = 15;
+        const scale = Math.min(container.clientWidth, container.clientHeight) / (size * 3.2);
+        gear.scale.setScalar(scale);
+
+        const tiltGroup = new THREE.Group();
+        tiltGroup.add(gearGroup);
+        tiltGroup.rotation.y = (45 * Math.PI) / 180;
+        tiltGroup.rotation.x = -(25 * Math.PI) / 180;
+        scene.add(tiltGroup);
+
+        camera.position.set(0,0, size * 0.5);
+        camera.lookAt(0, 0, 0);
+
+        gearAxle = new THREE.Vector3(0, 0, 1);
+    }, undefined, (error) => {
+        console.error("Gear model load error:", error);
+    });
+
+    window.addEventListener('resize', () => {
+        if (!container) return;
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+
+    let lastScrollY = window.scrollY;
+    window.addEventListener('scroll', () => {
+        const currentScrollY = window.scrollY;
+        const delta = currentScrollY - lastScrollY;
+        lastScrollY = currentScrollY;
+        gearRotationY += delta * 0.002;
+        if (gearGroup && gearAxle) gearGroup.quaternion.setFromAxisAngle(gearAxle, gearRotationY);
+    });
+
+    function animate() {
+        requestAnimationFrame(animate);
+        renderer.render(scene, camera);
+    }
+    animate();
     </script>
 </body>
 </html>
