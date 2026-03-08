@@ -9,11 +9,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/OBJLoader.js"></script>
     <style>
-        *,
-        *::before,
-        *::after {
-            cursor: none !important;
-        }
 
         * {
             margin: 0;
@@ -44,7 +39,7 @@
             background: var(--bg-dark);
             overflow-x: hidden;
             line-height: 1.6;
-            cursor: none;
+            /* cursor: none; */
         }
 
         h1, h2, h3 {
@@ -563,7 +558,7 @@
             cursor: pointer;
         }
 
-        #cursor-3d {
+        /* #cursor-3d {
             position: fixed;
             width: 32px;
             height: 32px;
@@ -580,16 +575,16 @@
             height: 100%;
             user-select: none;
             pointer-events: none;
-        }
+        } */
 
-        .cursor-star-glow {
+        /* .cursor-star-glow {
             filter:
                 drop-shadow(0 0 2px rgba(74,158,255,0.7))
                 drop-shadow(0 0 6px rgba(74,158,255,0.6))
                 drop-shadow(0 0 12px rgba(74,158,255,0.4));
-        }
+        } */
 
-        #cursor-trail{
+        /* #cursor-trail{
             position:fixed;
             top:0;
             left:0;
@@ -597,56 +592,32 @@
             height:100vh;
             pointer-events:none;
             z-index:9998;
-        }
+        } */
 
-        #nebula-transition {
+        #tile-transition {
             position: fixed;
             inset: 0;
-            z-index: 10000;
-            opacity: 0;
+            z-index: 20000;
             pointer-events: none;
-            transition: opacity 0.35s ease;
+            display: grid;
+            background: black; /* prevents page flash */
         }
 
-        #nebula-transition.active {
-            opacity: 1;
-        }
-
-        #nebula-canvas {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-
-        .warp-blackout {
-            position: fixed;
-            inset: 0;
+        .tile {
             background: black;
-            z-index: 15000;
             opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.45s ease;
+            transform: scale(0.9);
+            transition: opacity 0.35s ease, transform 0.35s ease;
         }
 
-        .warp-blackout.active {
+        .tile.active {
             opacity: 1;
+            transform: scale(1);
         }
 
-        #page-content.page-warp-blur {
-            animation: warpBlur 0.8s ease forwards;
-        }
-
-        @keyframes warpBlur {
-            0% {
-                filter: blur(0px);
-                transform: scale(1);
-                opacity: 1;
-            }
-            100% {
-                filter: blur(12px);
-                transform: scale(1.03);
-                opacity: 0.35;
-            }
+        .tile.reveal {
+            opacity: 0;
+            transform: scale(0.9);
         }
 
         /* Responsive */
@@ -676,11 +647,11 @@
     </style>
 </head>
 <body>
-    <div id="cursor-3d">
+    <!-- <div id="cursor-3d">
         <img src="assets/img/cursor.png" id="cursor-img">
-    </div>
-        <div id="page-content">
-        <canvas id="cursor-trail"></canvas>
+    </div> -->
+    <div id="page-content">
+        <!-- <canvas id="cursor-trail"></canvas> -->
         <!-- Navigation -->
         <nav id="navbar">
             <div class="nav-container">
@@ -757,12 +728,7 @@
             <p>Copyright © Eastvale Innovators 2026</p>
         </footer>
     </div>
-
-    <div class="warp-blackout" id="warpBlackout"></div>
-
-    <div id="nebula-transition">
-        <canvas id="nebula-canvas"></canvas>
-    </div>
+    <div id="tile-transition"></div>
     <script>
         // Navbar scroll effect and parallax hero
         const navbar = document.getElementById('navbar');
@@ -910,98 +876,98 @@
         });
 
         // Custom cursor effects
-        const cursor = document.getElementById("cursor-3d");
+        // const cursor = document.getElementById("cursor-3d");
 
-        document.addEventListener("mousemove", (e) => {
-            cursor.style.left = e.clientX + "px";
-            cursor.style.top = e.clientY + "px";
-        });
+        // document.addEventListener("mousemove", (e) => {
+        //     cursor.style.left = e.clientX + "px";
+        //     cursor.style.top = e.clientY + "px";
+        // });
 
-        const hero = document.querySelector(".hero");
+        // const hero = document.querySelector(".hero");
 
-        hero.addEventListener("mouseenter", () => {
-            cursor.classList.add("cursor-star-glow");
-        });
+        // hero.addEventListener("mouseenter", () => {
+        //     cursor.classList.add("cursor-star-glow");
+        // });
 
-        hero.addEventListener("mouseleave", () => {
-            cursor.classList.remove("cursor-star-glow");
-        });
+        // hero.addEventListener("mouseleave", () => {
+        //     cursor.classList.remove("cursor-star-glow");
+        // });
 
-        document.addEventListener("mousedown", () => {
-            cursor.style.transform = "translate(-50%, -50%) scale(0.75)";
-        });
+        // document.addEventListener("mousedown", () => {
+        //     cursor.style.transform = "translate(-50%, -50%) scale(0.75)";
+        // });
 
-        document.addEventListener("mouseup", () => {
-            cursor.style.transform = "translate(-50%, -50%) scale(1)";
-        });
+        // document.addEventListener("mouseup", () => {
+        //     cursor.style.transform = "translate(-50%, -50%) scale(1)";
+        // });
 
-        const trailCanvas = document.getElementById("cursor-trail");
-        const ctx = trailCanvas.getContext("2d");
-        let insideStarfield = false;
-        hero.addEventListener("mouseenter", () => {
-            insideStarfield = true;
-        });
+        // const trailCanvas = document.getElementById("cursor-trail");
+        // const ctx = trailCanvas.getContext("2d");
+        // let insideStarfield = false;
+        // hero.addEventListener("mouseenter", () => {
+        //     insideStarfield = true;
+        // });
         
-        hero.addEventListener("mouseleave", () => {
-            insideStarfield = false;
-        });
+        // hero.addEventListener("mouseleave", () => {
+        //     insideStarfield = false;
+        // });
 
-        trailCanvas.width = window.innerWidth;
-        trailCanvas.height = window.innerHeight;
-        window.addEventListener("resize", () => {
-            trailCanvas.width = window.innerWidth;
-            trailCanvas.height = window.innerHeight;
-        });
+        // trailCanvas.width = window.innerWidth;
+        // trailCanvas.height = window.innerHeight;
+        // window.addEventListener("resize", () => {
+        //     trailCanvas.width = window.innerWidth;
+        //     trailCanvas.height = window.innerHeight;
+        // });
         
-        let trail = [];
-        let cursorX = window.innerWidth/2;
-        let cursorY = window.innerHeight/2;
-        const cursorTipOffsetX = 20;
-        const cursorTipOffsetY = 20;
-        document.addEventListener("mousemove", (e) => {
-            cursorX = e.clientX + cursorTipOffsetX;
-            cursorY = e.clientY + cursorTipOffsetY;
+        // let trail = [];
+        // let cursorX = window.innerWidth/2;
+        // let cursorY = window.innerHeight/2;
+        // const cursorTipOffsetX = 20;
+        // const cursorTipOffsetY = 20;
+        // document.addEventListener("mousemove", (e) => {
+        //     cursorX = e.clientX + cursorTipOffsetX;
+        //     cursorY = e.clientY + cursorTipOffsetY;
 
-            if(insideStarfield){
-                trail.push({
-                    x: cursorX,
-                    y: cursorY,
-                    life: 1
-                });
-                if(trail.length > 40){
-                    trail.shift();
-                }
-            }
-        });
+        //     if(insideStarfield){
+        //         trail.push({
+        //             x: cursorX,
+        //             y: cursorY,
+        //             life: 1
+        //         });
+        //         if(trail.length > 40){
+        //             trail.shift();
+        //         }
+        //     }
+        // });
 
-        /* smoother fading + constant update */
-        function drawTrail(){
-            ctx.clearRect(0,0,trailCanvas.width,trailCanvas.height);
-            ctx.lineJoin = "round";
-            ctx.lineCap = "round";
-            ctx.shadowBlur = 10;
-            ctx.shadowColor = "#4a9eff";
-            for(let i = 0; i < trail.length-1; i++){
-                const p1 = trail[i];
-                const p2 = trail[i+1];
+        // /* smoother fading + constant update */
+        // function drawTrail(){
+        //     ctx.clearRect(0,0,trailCanvas.width,trailCanvas.height);
+        //     ctx.lineJoin = "round";
+        //     ctx.lineCap = "round";
+        //     ctx.shadowBlur = 10;
+        //     ctx.shadowColor = "#4a9eff";
+        //     for(let i = 0; i < trail.length-1; i++){
+        //         const p1 = trail[i];
+        //         const p2 = trail[i+1];
 
-                ctx.beginPath();
-                ctx.moveTo(p1.x,p1.y);
-                ctx.lineTo(p2.x,p2.y);
-                const alpha = p1.life;
+        //         ctx.beginPath();
+        //         ctx.moveTo(p1.x,p1.y);
+        //         ctx.lineTo(p2.x,p2.y);
+        //         const alpha = p1.life;
 
-                ctx.strokeStyle = `rgba(74,158,255,${alpha})`;
-                ctx.lineWidth = 4 * alpha;
-                ctx.stroke();
+        //         ctx.strokeStyle = `rgba(74,158,255,${alpha})`;
+        //         ctx.lineWidth = 4 * alpha;
+        //         ctx.stroke();
 
-                p1.life -= 0.03;
-            }
-            /* remove dead points */
-            trail = trail.filter(p => p.life > 0);
+        //         p1.life -= 0.03;
+        //     }
+        //     /* remove dead points */
+        //     trail = trail.filter(p => p.life > 0);
 
-            requestAnimationFrame(drawTrail);
-        }
-        drawTrail();
+        //     requestAnimationFrame(drawTrail);
+        // }
+        // drawTrail();
 
         // track scroll state for idle rotation
         let idleRotationSpeed = 0.0015;
@@ -1032,6 +998,7 @@
         });
 
         let lightAngle = 0;
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         function animate() {
             requestAnimationFrame(animate);
             // idle rotation when NOT scrolling
@@ -1060,7 +1027,6 @@
             pointLight.position.y = Math.cos(lightAngle) * 40;
 
             renderer.render(scene, camera);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         }
         animate();
 
@@ -1077,203 +1043,148 @@
                 `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
         });
 
-        // Warp transition effect
-        const nebulaOverlay = document.getElementById("nebula-transition");
-        const nebulaCanvas = document.getElementById("nebula-canvas");
-        const warpBlackout = document.getElementById("warpBlackout");
-        const pageContent = document.getElementById("page-content");
-        const nctx = nebulaCanvas.getContext("2d");
+        /* =========================
+        TILE PAGE TRANSITION
+        ========================= */
 
-        function resizeNebulaCanvas() {
-            nebulaCanvas.width = window.innerWidth;
-            nebulaCanvas.height = window.innerHeight;
-        }
-        resizeNebulaCanvas();
-        window.addEventListener("resize", resizeNebulaCanvas);
+        const tileContainer = document.getElementById("tile-transition");
 
-        let stars = [];
-        let warpPhase = 0;
-        let warpTimer = 0;
-        let warpSpeed = 0.15;
-        let warpAnimationFrame = null;
-        let navigating = false;
+        const TILE_ROWS = 12;
+        const TILE_COLS = 20;
 
-        function resetWarpState() {
-            stars = [];
-            warpPhase = 0;
-            warpTimer = 0;
-            warpSpeed = 0.15;
+        let tiles = [];
 
-            if (pageContent) {
-                pageContent.classList.remove("page-warp-blur");
+
+        /* Create grid */
+
+        function createTiles() {
+
+            tileContainer.innerHTML = "";
+
+            tileContainer.style.gridTemplateRows = `repeat(${TILE_ROWS}, 1fr)`;
+            tileContainer.style.gridTemplateColumns = `repeat(${TILE_COLS}, 1fr)`;
+
+            tiles = [];
+
+            for (let r = 0; r < TILE_ROWS; r++) {
+
+                for (let c = 0; c < TILE_COLS; c++) {
+
+                    const tile = document.createElement("div");
+                    tile.className = "tile";
+
+                    tile.dataset.row = r;
+                    tile.dataset.col = c;
+
+                    tileContainer.appendChild(tile);
+                    tiles.push(tile);
+
+                }
+
             }
 
-            warpBlackout.classList.remove("active");
-            nebulaOverlay.classList.remove("active");
-            nctx.clearRect(0, 0, nebulaCanvas.width, nebulaCanvas.height);
-
-            if (warpAnimationFrame) {
-                cancelAnimationFrame(warpAnimationFrame);
-                warpAnimationFrame = null;
-            }
-
-            navigating = false;
-        }
-
-        function spawnStar() {
-            const cx = nebulaCanvas.width / 2;
-            const cy = nebulaCanvas.height / 2;
-
-            const x = Math.random() * nebulaCanvas.width;
-            const y = Math.random() * nebulaCanvas.height;
-
-            let dx = x - cx;
-            let dy = y - cy;
-            const len = Math.hypot(dx, dy) || 1;
-
-            dx /= len;
-            dy /= len;
-
-            stars.push({
-                x,
-                y,
-                prevX: x,
-                prevY: y,
-                dx,
-                dy,
-                size: Math.random() * 1.4 + 0.6,
-                alpha: Math.random() * 0.35 + 0.35,
-                depth: Math.random() * 0.8 + 0.2
-            });
         }
 
-        function updateWarpPhase() {
-            warpTimer++;
 
-            if (warpTimer < 35) {
-                warpPhase = 0; // fade in stars slowly
-            } else if (warpTimer < 90) {
-                warpPhase = 1; // accelerate
-            } else if (warpTimer < 140) {
-                warpPhase = 2; // hyperdrive streaks + blur content
-            } else if (warpTimer < 175) {
-                warpPhase = 3; // blackout
-            } else {
-                warpPhase = 4; // done
-            }
+        /* diagonal order */
 
-            if (warpPhase === 0) {
-                warpSpeed = Math.min(warpSpeed * 1.01 + 0.003, 0.45);
-            } else if (warpPhase === 1) {
-                warpSpeed = Math.min(warpSpeed * 1.05 + 0.01, 2.2);
-            } else if (warpPhase >= 2) {
-                warpSpeed = Math.min(warpSpeed * 1.09 + 0.03, 8.5);
-            }
-        }
+        function getTileOrder() {
 
-        function drawStar(star) {
-            const vx = star.dx * warpSpeed * (2.2 + star.depth * 4.2);
-            const vy = star.dy * warpSpeed * (2.2 + star.depth * 4.2);
+            return tiles.slice().sort((a,b) => {
 
-            star.prevX = star.x;
-            star.prevY = star.y;
-            star.x += vx;
-            star.y += vy;
+                const ar = Number(a.dataset.row);
+                const ac = Number(a.dataset.col);
 
-            const streakMult = warpPhase < 2 ? 0.6 : 6.5;
-            const tailX = star.x - vx * streakMult;
-            const tailY = star.y - vy * streakMult;
+                const br = Number(b.dataset.row);
+                const bc = Number(b.dataset.col);
 
-            if (warpPhase < 2) {
-                nctx.beginPath();
-                nctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-                nctx.fillStyle = `rgba(210, 230, 255, ${star.alpha})`;
-                nctx.fill();
-            } else {
-                nctx.beginPath();
-                nctx.moveTo(tailX, tailY);
-                nctx.lineTo(star.x, star.y);
-                nctx.strokeStyle = `rgba(230, 242, 255, ${Math.min(1, star.alpha + 0.2)})`;
-                nctx.lineWidth = Math.max(1, star.size * 1.2);
-                nctx.stroke();
-            }
-        }
+                return (ar + ac) - (br + bc);
 
-        function animateWarp() {
-            nctx.clearRect(0, 0, nebulaCanvas.width, nebulaCanvas.height);
-
-            updateWarpPhase();
-
-            // random spawn timing, anywhere on screen
-            let spawnChance = 0.12;
-            if (warpPhase === 1) spawnChance = 0.28;
-            if (warpPhase >= 2) spawnChance = 0.42;
-
-            if (Math.random() < spawnChance) {
-                spawnStar();
-            }
-            if (Math.random() < spawnChance * 0.65) {
-                spawnStar();
-            }
-
-            for (const star of stars) {
-                drawStar(star);
-            }
-
-            stars = stars.filter((star) => {
-                return (
-                    star.x > -120 &&
-                    star.x < nebulaCanvas.width + 120 &&
-                    star.y > -120 &&
-                    star.y < nebulaCanvas.height + 120
-                );
             });
 
-            if (warpPhase >= 2 && pageContent && !pageContent.classList.contains("page-warp-blur")) {
-                pageContent.classList.add("page-warp-blur");
-            }
-
-            if (warpPhase >= 3) {
-                warpBlackout.classList.add("active");
-            }
-
-            if (warpPhase < 4) {
-                warpAnimationFrame = requestAnimationFrame(animateWarp);
-            }
         }
 
-        function startWarpNavigation(href) {
-            if (navigating) return;
-            navigating = true;
 
-            nebulaOverlay.classList.add("active");
-            animateWarp();
+        /* cover animation */
 
-            // let stars fly past, then switch page
+        function coverTiles() {
+
+            const ordered = getTileOrder();
+
+            ordered.forEach((tile, i) => {
+
+                setTimeout(() => {
+                    tile.classList.add("active");
+                }, i * 2);
+
+            });
+
+        }
+
+
+        /* reveal animation */
+
+        function revealTiles() {
+            const ordered = getTileOrder().reverse();
+            ordered.forEach((tile, i) => {
+                setTimeout(() => {
+                    tile.classList.remove("active");
+                }, i * 2);
+            });
             setTimeout(() => {
-                window.location.href = href;
-            }, 1900);
+                tileContainer.style.background = "transparent";
+            }, ordered.length * 2 - 240);
         }
 
-        document.querySelectorAll("a").forEach((link) => {
-            link.addEventListener("click", (e) => {
+
+        /* page navigation */
+
+        function startTileNavigation(href) {
+
+            coverTiles();
+
+            setTimeout(() => {
+
+                window.location.href = href;
+
+            }, tiles.length * 2 + 200);
+
+        }
+
+
+        /* intercept links */
+
+        document.querySelectorAll("a").forEach(link => {
+
+            link.addEventListener("click", e => {
+
                 const href = link.getAttribute("href");
 
                 if (!href) return;
                 if (href.startsWith("#")) return;
-                if (href.startsWith("javascript:")) return;
                 if (href.startsWith("mailto:")) return;
                 if (href.startsWith("tel:")) return;
                 if (link.target === "_blank") return;
 
                 e.preventDefault();
-                startWarpNavigation(href);
+
+                startTileNavigation(href);
+
             });
+
         });
 
-        // optional: reset if you ever reuse the page without hard navigation
-        window.addEventListener("pageshow", () => {
-            resetWarpState();
+
+        /* reveal animation when page loads */
+
+        document.addEventListener("DOMContentLoaded", () => {
+            createTiles();
+            /* instantly cover screen */
+            tiles.forEach(tile => tile.classList.add("active"));
+            /* allow browser to render tiles first */
+            setTimeout(() => {
+                revealTiles();
+            }, 120);
         });
     </script>
 </body>

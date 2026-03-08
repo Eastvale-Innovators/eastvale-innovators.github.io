@@ -31,6 +31,22 @@
             line-height: 1.6;
         }
 
+        body::before {
+            content: "";
+            position: fixed;
+            inset: -200px;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(74,158,255,0.12), transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(74,158,255,0.08), transparent 40%);
+            z-index: -1;
+            animation: bgDrift 30s linear infinite alternate;
+        }
+
+        @keyframes bgDrift {
+            from { transform: translate(0px,0px); }
+            to { transform: translate(-120px,-80px); }
+        }
+
         h1, h2, h3 {
             font-family: 'Orbitron', 'Space Grotesk', sans-serif;
             font-weight: 700;
@@ -160,6 +176,27 @@
                 linear-gradient(90deg, rgba(74, 158, 255, 0.03) 1px, transparent 1px);
             background-size: 50px 50px;
             z-index: 1;
+        }
+
+        .hero-lines {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            opacity: 0.15;
+            background:
+                repeating-linear-gradient(
+                    45deg,
+                    rgba(74,158,255,0.2),
+                    rgba(74,158,255,0.2) 1px,
+                    transparent 1px,
+                    transparent 60px
+                );
+            animation: leadershipFlow 30s linear infinite;
+        }
+
+        @keyframes leadershipFlow {
+            from { background-position: 0 0; }
+            to { background-position: 600px 600px; }
         }
 
         .hero-content {
@@ -603,6 +640,112 @@
             cursor: pointer;
         }
 
+        .rank-badge {
+            display: inline-block;
+            margin-top: 0.5rem;
+            padding: 6px 14px;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            border-radius: 999px;
+            border: 1px solid rgba(74,158,255,0.4);
+            background: rgba(74,158,255,0.1);
+            color: var(--accent);
+        }
+
+        .president-card,
+        .exec-card,
+        .dept-card,
+        .advisor-card {
+            position: relative;
+        }
+
+        .president-card::after,
+        .exec-card::after,
+        .dept-card::after,
+        .advisor-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at var(--x) var(--y), rgba(74,158,255,0.15), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            pointer-events: none;
+        }
+
+        .president-card:hover::after,
+        .exec-card:hover::after,
+        .dept-card:hover::after,
+        .advisor-card:hover::after {
+            opacity: 1;
+        }
+
+        .leadership-divider {
+            height: 1px;
+            width: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(74,158,255,0.6),
+                transparent
+            );
+            margin: 3rem 0 4rem;
+        }
+
+        .president-card {
+            box-shadow:
+                0 0 0 1px rgba(74,158,255,0.2),
+                0 20px 80px rgba(74,158,255,0.25);
+        }
+
+        .president-card::after {
+            background: radial-gradient(circle at center, rgba(74,158,255,0.35), transparent 70%);
+        }
+
+        .leadership-quote {
+            text-align: center;
+            max-width: 700px;
+            margin: 2rem auto 4rem;
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.7);
+            font-style: italic;
+        }
+
+        .fade-section {
+            opacity:0;
+            transform:translateY(40px);
+            transition:all .8s ease;
+        }
+
+        .fade-section.visible {
+            opacity:1;
+            transform:translateY(0);
+        }
+
+        #tile-transition {
+            position: fixed;
+            inset: 0;
+            z-index: 20000;
+            pointer-events: none;
+            display: grid;
+            background: black; /* prevents page flash */
+        }
+
+        .tile {
+            background: black;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+
+        .tile.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .tile.reveal {
+            opacity: 0;
+            transform: scale(0.9);
+        }
 
         /* Responsive */
         @media (max-width: 1024px) {
@@ -672,6 +815,7 @@
     <section class="hero">
         <img src="assets/img/new_innovators.png" alt="Eastvale Innovators" class="hero-img">
         <div class="hero-grid"></div>
+        <div class="hero-lines"></div>
         <div class="hero-content">
             <h1>Our Leadership</h1>
             <p class="hero-subtitle">Meet the innovators driving change in our community</p>
@@ -686,18 +830,24 @@
         </div>
 
         <!-- President Section -->
-        <div class="president-section">
+        <div class="president-section fade-section">
             <div class="president-card">
                 <img src="assets/img/OldImages/nil.jpg" alt="Devom Brahmbhatt" class="president-image">
                 <div class="president-info">
                     <h2>Member One</h2>
                     <p class="role">President</p>
+                    <div class="rank-badge">Executive Leadership</div>
+                    <p class="leadership-quote">
+                        "blah blah blah."
+                    </p>
                 </div>
             </div>
         </div>
 
+        <div class="leadership-divider"></div>
+
         <!-- Executive Row -->
-        <div class="executive-row">
+        <div class="executive-row fade-section">
             <div class="exec-card">
                 <img src="assets/img/OldImages/nil.jpg" alt="Kaylee Dih" class="exec-image">
                 <div class="exec-info">
@@ -723,9 +873,11 @@
             </div>
         </div>
 
+        <div class="leadership-divider"></div>
+
         <!-- Department Heads Section -->
         <h2 class="section-title">Department Heads</h2>
-        <div class="department-grid">
+        <div class="department-grid fade-section">
             <div class="dept-card">
                 <img src="assets/img/OldImages/nil.jpg" alt="Aryan Wadhera" class="dept-image">
                 <div class="dept-info">
@@ -759,8 +911,10 @@
             </div>
         </div>
 
+        <div class="leadership-divider"></div>
+
         <!-- Advisors Section -->
-        <div class="advisors-section">
+        <div class="advisors-section fade-section">
             <h2 class="section-title">Our Advisors</h2>
             <div class="advisors-grid">
                 <div class="advisor-card">
@@ -792,9 +946,9 @@
 
     <!-- Footer -->
     <footer>
-        <p>Copyright © Eastvale Innovators 2025</p>
+        <p>Copyright © Eastvale Innovators 2026</p>
     </footer>
-
+    <div id="tile-transition"></div>
     <script>
         // Navbar scroll effect
         window.addEventListener('scroll', function() {
@@ -819,6 +973,125 @@
             mobileMenu.classList.remove('active');
         });
 
+        document.querySelectorAll(".president-card, .exec-card, .dept-card, .advisor-card").forEach(card => {
+            card.addEventListener("mousemove", e => {
+            const rect = card.getBoundingClientRect();
+
+            card.style.setProperty("--x", `${e.clientX - rect.left}px`);
+            card.style.setProperty("--y", `${e.clientY - rect.top}px`);
+            });
+        });
+
+        const observer=new IntersectionObserver(entries=>{
+            entries.forEach(entry=>{
+                if(entry.isIntersecting)
+                    entry.target.classList.add("visible")
+                })
+            })
+            document.querySelectorAll(".fade-section").forEach(el=>{
+            observer.observe(el)
+        })
+
+        const heroTitle = document.querySelector(".hero h1");
+        document.addEventListener("mousemove", (e) => {
+            if (!heroTitle) return;
+            const rect = heroTitle.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const offsetX = (e.clientX - centerX) / rect.width;
+            const offsetY = (e.clientY - centerY) / rect.height;
+            const rotateY = offsetX * 2;
+            const rotateX = -offsetY * 1;
+            heroTitle.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+
+        const tileContainer = document.getElementById("tile-transition");
+        const TILE_ROWS = 12;
+        const TILE_COLS = 20;
+        let tiles = [];
+
+        function createTiles() {
+            if (!tileContainer) return;
+
+            tileContainer.innerHTML = "";
+            tileContainer.style.gridTemplateRows = `repeat(${TILE_ROWS}, 1fr)`;
+            tileContainer.style.gridTemplateColumns = `repeat(${TILE_COLS}, 1fr)`;
+
+            tiles = [];
+
+            for (let r = 0; r < TILE_ROWS; r++) {
+                for (let c = 0; c < TILE_COLS; c++) {
+                    const tile = document.createElement("div");
+                    tile.className = "tile";
+                    tile.dataset.row = r;
+                    tile.dataset.col = c;
+                    tileContainer.appendChild(tile);
+                    tiles.push(tile);
+                }
+            }
+        }
+
+        function getTileOrder() {
+            return tiles.slice().sort((a, b) => {
+                const ar = Number(a.dataset.row);
+                const ac = Number(a.dataset.col);
+                const br = Number(b.dataset.row);
+                const bc = Number(b.dataset.col);
+                return (ar + ac) - (br + bc);
+            });
+        }
+
+        function coverTiles() {
+            const ordered = getTileOrder();
+            ordered.forEach((tile, i) => {
+                setTimeout(() => {
+                    tile.classList.add("active");
+                }, i * 2);
+            });
+        }
+
+        function revealTiles() {
+            const ordered = getTileOrder().reverse();
+            ordered.forEach((tile, i) => {
+                setTimeout(() => {
+                    tile.classList.remove("active");
+                }, i * 2);
+            });
+            setTimeout(() => {
+                tileContainer.style.background = "transparent";
+            }, ordered.length * 2 - 240);
+        }
+
+        function startTileNavigation(href) {
+            coverTiles();
+
+            setTimeout(() => {
+                window.location.href = href;
+            }, tiles.length * 2 + 200);
+        }
+
+        document.querySelectorAll("a").forEach(link => {
+            link.addEventListener("click", e => {
+                const href = link.getAttribute("href");
+
+                if (!href) return;
+                if (href.startsWith("#")) return;
+                if (href.startsWith("mailto:")) return;
+                if (href.startsWith("tel:")) return;
+                if (link.target === "_blank") return;
+
+                e.preventDefault();
+                startTileNavigation(href);
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            createTiles();
+            tiles.forEach(tile => tile.classList.add("active"));
+            setTimeout(() => {
+                revealTiles();
+            }, 120);
+        });
     </script>
 </body>
 </html>
