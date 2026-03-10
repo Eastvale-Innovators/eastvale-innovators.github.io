@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Projects - Eastvale Innovators</title>
-    <link rel="icon" type="image/png" href="assets/img/logo_favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="assets/img/logo_favicon.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
     <style>
         * {
             margin: 0;
@@ -15,12 +15,19 @@
 
         :root {
             --primary: #293d62;
+            --primary-light: #3d5278;
+            --primary-dark: #1a2740;
             --accent: #4a9eff;
             --accent-glow: rgba(74, 158, 255, 0.3);
             --text-light: #f5f5f5;
-            --bg-dark: #0a0e1a;
+            --text-dark: #1a1a1a;
+            --bg-light: #ffffff;
+            --bg-dark: #001f3f; /* darker navy shade */
+            --gradient-1: linear-gradient(135deg, #4a9eff 0%, #4a9eff 100%);
             --gradient-2: linear-gradient(135deg, #1a2740 0%, #293d62 100%);
             --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            --star-x: 50%;
+            --star-y: 50%;
         }
 
         body {
@@ -29,21 +36,36 @@
             background: var(--bg-dark);
             overflow-x: hidden;
             line-height: 1.6;
+            /* cursor: none; */
         }
 
         h1, h2, h3 {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: 'Orbitron', 'Space Grotesk', sans-serif;
             font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            text-align: center;
+            margin: 0.5rem 0;
+            display: block;
+            width: 100%;
         }
 
         html {
             scroll-behavior: smooth;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        html::-webkit-scrollbar {
+            display: none;
         }
 
         /* Navigation */
         nav {
             position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
             width: 100%;
             z-index: 1000;
             padding: 1.5rem 0;
@@ -71,7 +93,7 @@
         .logo {
             font-size: 1.5rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #4a9eff 0%, #4a9eff 100%);
+            background: var(--gradient-1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -118,7 +140,6 @@
             width: 100%;
         }
 
-        /* Hero Section */
         .hero {
             position: relative;
             display: flex;
@@ -128,16 +149,42 @@
             overflow: hidden;
             text-align: center;
             background: var(--gradient-2);
-            margin-top: 0;
             padding-top: 6rem;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url('assets/img/starfield2.jpg');
+            background-size: 200% 200%;
+            background-position: var(--star-x, 50%) var(--star-y, 50%);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            pointer-events: none;
+            transition: background-position 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 1;
+            opacity: 0.15;
+        }
+
+        .hero::after{
+            content:"";
+            position:absolute;
+            inset:0;
+
+            background:
+                radial-gradient(circle at center,
+                rgba(255,255,255,0.15),
+                rgba(74,158,255,0.15) 15%,
+                transparent 60%);
+
+            pointer-events:none;
+            z-index:2;
         }
 
         .hero-bg {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background: url('assets/img/P1010915%20(1).jpg') center/cover;
             opacity: 0.12;
             z-index: 0;
@@ -145,15 +192,18 @@
 
         .hero-grid {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
+            inset: 0;
+            background-image:
                 linear-gradient(rgba(74, 158, 255, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(74, 158, 255, 0.03) 1px, transparent 1px);
             background-size: 50px 50px;
             z-index: 2;
+            animation: gridDrift 40s linear infinite;
+        }
+
+        @keyframes gridDrift {
+            from { background-position: 0px 0px; }
+            to { background-position: 50px 50px; }
         }
 
         .hero-content {
@@ -161,8 +211,14 @@
             z-index: 3;
             padding: 0 2rem;
             max-width: 900px;
-            text-align: center;
-            animation: fadeInDown 1s ease 0.2s backwards;
+            animation: fadeInDown 1s ease 0.2s backwards, heroFloat 6s ease-in-out infinite;
+            perspective: 900px;
+        }
+
+        @keyframes heroFloat {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
         }
 
         @keyframes fadeInDown {
@@ -184,6 +240,8 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            transition: transform 0.12s ease-out;
+            transform-style: preserve-3d;
         }
 
         .hero-subtitle {
@@ -192,16 +250,9 @@
             font-weight: 300;
         }
 
-        /* Projects Container */
-        .projects-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 6rem 2rem;
-        }
-
         .projects-intro {
             text-align: center;
-            margin-bottom: 5rem;
+            margin-bottom: 4rem;
             animation: fadeInUp 0.8s ease;
         }
 
@@ -233,138 +284,6 @@
             line-height: 1.8;
         }
 
-        /* Project Card */
-        .project-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 25px;
-            overflow: hidden;
-            margin-bottom: 4rem;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            z-index: 0;
-        }
-
-        .project-card:hover::before {
-            opacity: 1;
-        }
-
-        .project-card:hover {
-            border-color: rgba(74, 158, 255, 0.5);
-            box-shadow: 0 20px 60px rgba(74, 158, 255, 0.3);
-            transform: translateY(-5px);
-        }
-
-        .project-header {
-            padding: 3rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            z-index: 1;
-        }
-
-        .project-title {
-            font-size: clamp(1.8rem, 3vw, 2.5rem);
-            margin-bottom: 1rem;
-            color: var(--text-light);
-        }
-
-        .project-team {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.6rem 1.5rem;
-            background: rgba(74, 158, 255, 0.15);
-            border: 1px solid rgba(74, 158, 255, 0.4);
-            border-radius: 20px;
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: var(--transition);
-        }
-
-        .project-team:hover {
-            background: rgba(74, 158, 255, 0.25);
-            border-color: var(--accent);
-            transform: translateX(5px);
-        }
-
-        .project-team::after {
-            content: '→';
-            font-size: 1.2rem;
-        }
-
-        .project-content {
-            padding: 3rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .project-description {
-            font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.8;
-            margin-bottom: 2.5rem;
-        }
-
-        .project-screenshots {
-            margin-top: 2rem;
-        }
-
-        .screenshots-title {
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-light);
-            font-weight: 600;
-        }
-
-        .screenshots-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .screenshot-placeholder {
-            aspect-ratio: 16/9;
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px dashed rgba(74, 158, 255, 0.3);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 0.95rem;
-            transition: var(--transition);
-            overflow: hidden;
-            position: relative;
-        }
-
-        .screenshot-placeholder:hover {
-            border-color: rgba(74, 158, 255, 0.6);
-            background: rgba(255, 255, 255, 0.08);
-            transform: scale(1.02);
-        }
-
-        .screenshot-placeholder img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Footer */
         footer {
             text-align: center;
             padding: 3rem 2rem;
@@ -373,7 +292,6 @@
             color: rgba(255, 255, 255, 0.6);
         }
 
-        /* Mobile Menu */
         .mobile-menu-btn {
             display: none;
             background: none;
@@ -383,13 +301,9 @@
             cursor: pointer;
         }
 
-        /* Fullscreen Mobile Menu */
         .mobile-menu-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background: rgba(10, 14, 26, 0.95);
             backdrop-filter: blur(12px);
             z-index: 2000;
@@ -431,8 +345,348 @@
             cursor: pointer;
         }
 
+        .constellation-section {
+            padding: 6rem 0 4rem;
+            position: relative;
+        }
 
-        /* Responsive */
+        .sky-ui-hint {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.03em;
+        }
+
+        #sky-container {
+            position: relative;
+            width: min(1400px, calc(100% - 2rem));
+            height: 78vh;
+            min-height: 620px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 28px;
+            cursor: grab;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(74, 158, 255, 0.12), transparent 25%),
+                radial-gradient(circle at 80% 30%, rgba(120, 180, 255, 0.08), transparent 22%),
+                radial-gradient(circle at 50% 70%, rgba(74, 158, 255, 0.06), transparent 30%),
+                linear-gradient(180deg, rgba(10, 18, 36, 0.98), rgba(2, 6, 16, 1));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.35),
+                inset 0 0 80px rgba(74, 158, 255, 0.05);
+            user-select: none;
+            touch-action: none;
+            transition: transform 0.3s ease, filter 0.35s ease;
+        }
+
+        #sky-container.dragging {
+            cursor: grabbing;
+        }
+
+        #sky-container.warping {
+            filter: brightness(1.2) blur(8px);
+            transform: scale(1.02);
+        }
+
+        #sky-container::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at center, transparent 40%, rgba(0, 0, 0, 0.28) 100%);
+            z-index: 10;
+        }
+
+        #nebula,
+        #stars-back,
+        #stars-mid,
+        #stars-front,
+        #fx-layer,
+        #shooting-stars,
+        #constellations {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #nebula,
+        #stars-back,
+        #stars-mid,
+        #stars-front,
+        #fx-layer,
+        #shooting-stars {
+            pointer-events: none;
+        }
+
+        #nebula { z-index: 0; }
+        #stars-back { z-index: 2; }
+        #stars-mid { z-index: 3; }
+        #stars-front { z-index: 4; }
+        #fx-layer { z-index: 5; }
+        #shooting-stars { z-index: 6; }
+        #constellations { z-index: 7; overflow: visible; }
+
+        .constellation {
+            cursor: pointer;
+        }
+
+        .constellation-line {
+            stroke: rgba(130, 190, 255, 0.34);
+            stroke-width: 1.35;
+            opacity: 0.72;
+            stroke-dasharray: 0;
+            stroke-dashoffset: 130;
+            animation: drawLine 1.2s forwards;
+            transition: opacity 0.35s ease, stroke 0.35s ease, stroke-width 0.35s ease, filter 0.35s ease;
+        }
+
+        @keyframes drawLine {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .constellation-star {
+            fill: rgba(255, 255, 255, 0.95);
+            transition: transform 0.35s ease, opacity 0.35s ease, filter 0.35s ease, fill 0.35s ease;
+            transform-origin: center;
+            opacity: 0.95;
+        }
+
+        .constellation-core {
+            fill: rgba(160, 210, 255, 0.95);
+            filter: drop-shadow(0 0 12px rgba(74, 158, 255, 0.8));
+        }
+
+        .constellation-label {
+            font-family: 'Orbitron', 'Space Grotesk', sans-serif;
+            font-size: 16px;
+            fill: rgba(255, 255, 255, 0.95);
+            letter-spacing: 0.04em;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+            pointer-events: none;
+            text-transform: uppercase;
+            filter: drop-shadow(0 0 10px rgba(74, 158, 255, 0.25));
+        }
+
+        .constellation-subtext {
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            fill: rgba(255, 255, 255, 0.62);
+            letter-spacing: 0.05em;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.35s ease 0.04s, transform 0.35s ease 0.04s;
+            pointer-events: none;
+            text-transform: uppercase;
+        }
+
+        .constellation:hover .constellation-line,
+        .constellation.active .constellation-line {
+            stroke: rgba(120, 200, 255, 0.95);
+            stroke-width: 1.95;
+            opacity: 1;
+            filter: drop-shadow(0 0 8px rgba(74, 158, 255, 0.6));
+        }
+
+        .constellation:hover .constellation-star,
+        .constellation.active .constellation-star {
+            fill: rgba(200, 235, 255, 1);
+            filter: drop-shadow(0 0 10px rgba(120, 200, 255, 0.9));
+        }
+
+        .constellation:hover .constellation-label,
+        .constellation:hover .constellation-subtext,
+        .constellation.active .constellation-label,
+        .constellation.active .constellation-subtext {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #project-panel {
+            position: absolute;
+            right: 3rem;
+            bottom: 3rem;
+            width: min(360px, calc(100% - 2rem));
+            background: rgba(8, 14, 28, 0.82);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 1.3rem 1.2rem 1.2rem;
+            color: white;
+            box-shadow: 0 20px 55px rgba(0, 0, 0, 0.35);
+            display: none;
+            z-index: 30;
+        }
+
+        #project-panel.show {
+            display: block;
+            animation: panelFade 0.28s ease;
+        }
+
+        @keyframes panelFade {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #close-panel {
+            position: absolute;
+            top: 0.8rem;
+            right: 0.9rem;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.72);
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        #close-panel:hover {
+            color: white;
+        }
+
+        #project-panel h3 {
+            text-align: left;
+            margin: 0 0 0.65rem 0;
+            font-size: 1.35rem;
+            color: white;
+        }
+
+        .project-panel-tag {
+            display: inline-block;
+            margin-bottom: 0.9rem;
+            padding: 0.45rem 0.85rem;
+            border-radius: 999px;
+            border: 1px solid rgba(74, 158, 255, 0.4);
+            background: rgba(74, 158, 255, 0.12);
+            color: var(--accent);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        #project-panel p {
+            color: rgba(255, 255, 255, 0.82);
+            line-height: 1.7;
+            font-size: 0.98rem;
+        }
+
+        .project-meta {
+            margin-top: 1rem;
+            color: rgba(255, 255, 255, 0.62);
+            font-size: 0.86rem;
+        }
+
+        #project-picker-wrap {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 40;
+            display: flex;
+            align-items: center;
+        }
+
+        #project-picker {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            min-width: 220px;
+            max-width: min(280px, calc(100vw - 2rem));
+            padding: 0.85rem 2.6rem 0.85rem 1rem;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background:
+                linear-gradient(180deg, rgba(12, 20, 36, 0.92), rgba(8, 14, 28, 0.92));
+            color: rgba(255, 255, 255, 0.95);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
+            cursor: pointer;
+            outline: none;
+        }
+
+        #project-picker:hover {
+            border-color: rgba(74, 158, 255, 0.4);
+        }
+
+        #project-picker:focus {
+            border-color: rgba(74, 158, 255, 0.7);
+            box-shadow:
+                0 0 0 3px rgba(74, 158, 255, 0.16),
+                0 14px 34px rgba(0, 0, 0, 0.28);
+        }
+
+        #project-picker-wrap::after {
+            content: "▾";
+            position: absolute;
+            right: 0.95rem;
+            pointer-events: none;
+            color: rgba(255, 255, 255, 0.72);
+            font-size: 0.95rem;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        #tile-transition {
+            position: fixed;
+            inset: 0;
+            z-index: 20000;
+            pointer-events: none;
+            display: grid;
+
+            background: black; /* prevents page flash */
+        }
+
+        .tile {
+            background: black;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+
+        .tile.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        @media (max-width: 768px) {
+            #project-picker-wrap {
+                top: 0.75rem;
+                right: 0.75rem;
+                left: 0.75rem;
+            }
+
+            #project-picker {
+                width: 100%;
+                max-width: none;
+                min-width: 0;
+            }
+        }
+
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -442,27 +696,35 @@
                 display: block;
             }
 
-            .projects-container {
-                padding: 3rem 1.5rem;
-            }
-
-            .project-header,
-            .project-content {
-                padding: 2rem 1.5rem;
-            }
-
-            .screenshots-grid {
-                grid-template-columns: 1fr;
-            }
-
             .hero {
                 padding-top: 3rem;
+            }
+
+            #sky-container {
+                width: calc(100% - 1rem);
+                height: 72vh;
+                min-height: 520px;
+                border-radius: 20px;
+            }
+
+            #project-panel {
+                right: 0.5rem;
+                left: 0.5rem;
+                width: auto;
+                bottom: 0.75rem;
+            }
+
+            .constellation-label {
+                font-size: 14px;
+            }
+
+            .constellation-subtext {
+                font-size: 10px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo">EASTVALE INNOVATORS</a>
@@ -486,8 +748,6 @@
         <a href="contact.html">Contact</a>
     </div>
 
-
-    <!-- Hero Section -->
     <section class="hero">
         <div class="hero-bg"></div>
         <div class="hero-grid"></div>
@@ -497,107 +757,990 @@
         </div>
     </section>
 
-    <!-- Projects Container -->
-    <div class="projects-container">
+    <section class="constellation-section">
         <div class="projects-intro">
-            <h2>What We're Building</h2>
-            <p>Explore our latest innovations and initiatives across computer science, engineering, medicine, and finance</p>
+            <h2>Explore Our Projects</h2>
+            <p>Navigate a live map of our ideas, experiments, and in-progress builds.</p>
         </div>
 
-        <!-- Project Card 1 -->
-        <div class="project-card">
-            <div class="project-header">
-                <h3 class="project-title">Project Title Here</h3>
-                <a href="#" class="project-team">Computer Science Team</a>
-            </div>
-            <div class="project-content">
-                <p class="project-description">
-                    Add your project description here. Explain what the project is about, its goals, impact, and current status. This is where you can detail the innovative aspects and the problem you're solving.
-                </p>
-                <div class="project-screenshots">
-                    <h4 class="screenshots-title">Project Showcase</h4>
-                    <div class="screenshots-grid">
-                        <div class="screenshot-placeholder">Screenshot 1</div>
-                        <div class="screenshot-placeholder">Screenshot 2</div>
-                        <div class="screenshot-placeholder">Screenshot 3</div>
-                    </div>
-                </div>
-            </div>
+        <div class="sky-ui-hint">
+            Drag to explore • Scroll to zoom • Click a constellation to focus • Click empty space to launch a comet
         </div>
 
-        <!-- Project Card 2 -->
-        <div class="project-card">
-            <div class="project-header">
-                <h3 class="project-title">Another Project Title</h3>
-                <a href="#" class="project-team">Engineering Team</a>
+        <div id="sky-container">
+            <div id="project-picker-wrap">
+                <select id="project-picker">
+                    <option value="">Jump to project…</option>
+                </select>
             </div>
-            <div class="project-content">
-                <p class="project-description">
-                    Add your project description here. Explain what the project is about, its goals, impact, and current status. This is where you can detail the innovative aspects and the problem you're solving.
-                </p>
-                <div class="project-screenshots">
-                    <h4 class="screenshots-title">Project Showcase</h4>
-                    <div class="screenshots-grid">
-                        <div class="screenshot-placeholder">Screenshot 1</div>
-                        <div class="screenshot-placeholder">Screenshot 2</div>
-                    </div>
-                </div>
+            <canvas id="nebula"></canvas>
+            <canvas id="stars-back"></canvas>
+            <canvas id="stars-mid"></canvas>
+            <canvas id="stars-front"></canvas>
+            <canvas id="fx-layer"></canvas>
+            <canvas id="shooting-stars"></canvas>
+            <svg id="constellations"></svg>
+
+            <div id="project-panel">
+                <button id="close-panel" aria-label="Close project panel">✕</button>
+                <div id="project-panel-content"></div>
             </div>
         </div>
-
-        <!-- Project Card 3 -->
-        <div class="project-card">
-            <div class="project-header">
-                <h3 class="project-title">Medical Innovation Project</h3>
-                <a href="#" class="project-team">Medicine Team</a>
-            </div>
-            <div class="project-content">
-                <p class="project-description">
-                    Add your project description here. Explain what the project is about, its goals, impact, and current status. This is where you can detail the innovative aspects and the problem you're solving.
-                </p>
-                <div class="project-screenshots">
-                    <h4 class="screenshots-title">Project Showcase</h4>
-                    <div class="screenshots-grid">
-                        <div class="screenshot-placeholder">Screenshot 1</div>
-                        <div class="screenshot-placeholder">Screenshot 2</div>
-                        <div class="screenshot-placeholder">Screenshot 3</div>
-                        <div class="screenshot-placeholder">Screenshot 4</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- Footer -->
+    </section>
+    <div id="tile-transition"></div>
     <footer>
-        <p>Copyright © Eastvale Innovators 2025</p>
+        <p>Copyright © Eastvale Innovators 2026</p>
     </footer>
 
     <script>
-        // Navbar scroll effect
-        window.addEventListener('scroll', function() {
+        window.addEventListener('scroll', function () {
             const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
+            if (window.scrollY > 50) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
         });
 
-        // Mobile menu toggle
         const mobileBtn = document.querySelector('.mobile-menu-btn');
         const mobileMenu = document.getElementById('mobileMenu');
         const closeBtn = document.querySelector('.close-menu-btn');
 
-        mobileBtn.addEventListener('click', () => {
-            mobileMenu.classList.add('active');
+        mobileBtn.addEventListener('click', () => mobileMenu.classList.add('active'));
+        closeBtn.addEventListener('click', () => mobileMenu.classList.remove('active'));
+
+        const heroTitle = document.querySelector(".hero h1");
+        document.addEventListener("mousemove", (e) => {
+            if (!heroTitle) return;
+            const rect = heroTitle.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const offsetX = (e.clientX - centerX) / rect.width;
+            const offsetY = (e.clientY - centerY) / rect.height;
+            const rotateY = offsetX * 2;
+            const rotateX = -offsetY * 1;
+            heroTitle.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
         });
 
-        closeBtn.addEventListener('click', () => {
-            mobileMenu.classList.remove('active');
+        const heroSection = document.querySelector('.hero');
+        let targetStarX = 50;
+        let targetStarY = 50;
+        let currentStarX = 50;
+        let currentStarY = 50;
+
+        document.addEventListener('mousemove', (e) => {
+            if (!heroSection) return;
+
+            const heroRect = heroSection.getBoundingClientRect();
+
+            if (e.clientY < heroRect.bottom) {
+                const relX = e.clientX - heroRect.left;
+                const relY = e.clientY - heroRect.top;
+
+                targetStarX = (relX / heroRect.width) * 100;
+                targetStarY = (relY / heroRect.height) * 100;
+            }
         });
 
+        const tileContainer = document.getElementById("tile-transition");
+        const TILE_ROWS = 12;
+        const TILE_COLS = 20;
+        let tiles = [];
+
+        function createTiles() {
+            if (!tileContainer) return;
+
+            tileContainer.innerHTML = "";
+            tileContainer.style.gridTemplateRows = `repeat(${TILE_ROWS}, 1fr)`;
+            tileContainer.style.gridTemplateColumns = `repeat(${TILE_COLS}, 1fr)`;
+
+            tiles = [];
+
+            for (let r = 0; r < TILE_ROWS; r++) {
+                for (let c = 0; c < TILE_COLS; c++) {
+                    const tile = document.createElement("div");
+                    tile.className = "tile";
+                    tile.dataset.row = r;
+                    tile.dataset.col = c;
+                    tileContainer.appendChild(tile);
+                    tiles.push(tile);
+                }
+            }
+        }
+
+        function getTileOrder() {
+            return tiles.slice().sort((a, b) => {
+                const ar = Number(a.dataset.row);
+                const ac = Number(a.dataset.col);
+                const br = Number(b.dataset.row);
+                const bc = Number(b.dataset.col);
+                return (ar + ac) - (br + bc);
+            });
+        }
+
+        function coverTiles() {
+            const ordered = getTileOrder();
+            ordered.forEach((tile, i) => {
+                setTimeout(() => {
+                    tile.classList.add("active");
+                }, i * 2);
+            });
+        }
+
+        function revealTiles() {
+            const ordered = getTileOrder().reverse();
+            ordered.forEach((tile, i) => {
+                setTimeout(() => {
+                    tile.classList.remove("active");
+                }, i * 2);
+            });
+            setTimeout(() => {
+                tileContainer.style.background = "transparent";
+            }, ordered.length * 2 - 240);
+        }
+
+        function startTileNavigation(href) {
+            coverTiles();
+
+            setTimeout(() => {
+                window.location.href = href;
+            }, tiles.length * 2 + 200);
+        }
+
+        document.querySelectorAll("a").forEach(link => {
+            link.addEventListener("click", e => {
+                const href = link.getAttribute("href");
+
+                if (!href) return;
+                if (href.startsWith("#")) return;
+                if (href.startsWith("mailto:")) return;
+                if (href.startsWith("tel:")) return;
+                if (link.target === "_blank") return;
+
+                e.preventDefault();
+                startTileNavigation(href);
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            createTiles();
+            tiles.forEach(tile => tile.classList.add("active"));
+            setTimeout(() => {
+                revealTiles();
+            }, 120);
+        });
+
+        (function () {
+            const sky = document.getElementById('sky-container');
+            const svg = document.getElementById('constellations');
+
+            const nebulaCanvas = document.getElementById('nebula');
+            const backCanvas = document.getElementById('stars-back');
+            const midCanvas = document.getElementById('stars-mid');
+            const frontCanvas = document.getElementById('stars-front');
+            const fxCanvas = document.getElementById('fx-layer');
+            const shootingCanvas = document.getElementById('shooting-stars');
+
+            const nebulaCtx = nebulaCanvas.getContext('2d');
+            const backCtx = backCanvas.getContext('2d');
+            const midCtx = midCanvas.getContext('2d');
+            const frontCtx = frontCanvas.getContext('2d');
+            const fxCtx = fxCanvas.getContext('2d');
+            const shootingCtx = shootingCanvas.getContext('2d');
+
+            const panel = document.getElementById('project-panel');
+            const projectPicker = document.getElementById('project-picker');
+            const panelContent = document.getElementById('project-panel-content');
+            const closePanelBtn = document.getElementById('close-panel');
+
+            const SVG_NS = "http://www.w3.org/2000/svg";
+
+            const world = { width: 2400, height: 1800 };
+
+            const camera = {
+                x: world.width / 2,
+                y: world.height / 2,
+                zoom: 1,
+                targetX: world.width / 2,
+                targetY: world.height / 2,
+                targetZoom: 1,
+                vx: 0,
+                vy: 0,
+                isDragging: false,
+                lastPointerX: 0,
+                lastPointerY: 0
+            };
+
+            const ZOOM_MIN = 0.72;
+            const ZOOM_MAX = 1.85;
+
+            let viewWidth = 0;
+            let viewHeight = 0;
+            let activeProjectIndex = null;
+            let pointerMoved = false;
+
+            const starLayers = {
+                back: [],
+                mid: [],
+                front: []
+            };
+
+            const particles = [];
+            const shootingStars = [];
+            const cursorTrail = [];
+
+            const projects = [
+                {
+                    name: "AI Assistant",
+                    team: "Computer Science Team",
+                    description: "An AI tool designed to help students automate research, summarize information, and explore new ideas more efficiently.",
+                    status: "In Progress",
+                    stars: [
+                        { x: 420, y: 520, r: 4.2 },
+                        { x: 500, y: 455, r: 3.6 },
+                        { x: 590, y: 520, r: 5.4 },
+                        { x: 520, y: 625, r: 4.0 },
+                        { x: 650, y: 590, r: 3.4 }
+                    ],
+                    connections: [[0,1],[1,2],[2,3],[3,0],[2,4],[0,2],[1,3]]
+                },
+                {
+                    name: "Robotics Navigation",
+                    team: "Engineering Team",
+                    description: "A robotics system focused on autonomous navigation, pathing logic, and responsive control in dynamic environments.",
+                    status: "Prototype",
+                    stars: [
+                        { x: 1540, y: 710, r: 4.4 },
+                        { x: 1630, y: 640, r: 3.8 },
+                        { x: 1715, y: 715, r: 5.2 },
+                        { x: 1638, y: 818, r: 4.3 },
+                        { x: 1765, y: 805, r: 3.4 }
+                    ],
+                    connections: [[0,1],[1,2],[2,3],[3,0],[2,4]]
+                },
+                {
+                    name: "Medical Data Research",
+                    team: "Medicine Team",
+                    description: "A project exploring data patterns in health and medicine through modeling, visualization, and responsible research practices.",
+                    status: "Research",
+                    stars: [
+                        { x: 980, y: 1210, r: 4.4 },
+                        { x: 1070, y: 1128, r: 3.7 },
+                        { x: 1178, y: 1214, r: 5.0 },
+                        { x: 1088, y: 1320, r: 4.4 },
+                        { x: 1242, y: 1280, r: 3.2 }
+                    ],
+                    connections: [[0,1],[1,2],[2,3],[3,0],[2,4]]
+                },
+                {
+                    name: "FinTech Insights",
+                    team: "Finance Team",
+                    description: "A data-driven initiative focused on financial literacy, forecasting, and practical tools for real-world decision making.",
+                    status: "Planning",
+                    stars: [
+                        { x: 1910, y: 1180, r: 4.1 },
+                        { x: 2000, y: 1110, r: 3.5 },
+                        { x: 2085, y: 1186, r: 5.1 },
+                        { x: 2010, y: 1280, r: 4.0 },
+                        { x: 2142, y: 1252, r: 3.0 }
+                    ],
+                    connections: [[0,1],[1,2],[2,3],[3,0],[2,4]]
+                }
+            ];
+
+            const nebula1 = new Image();
+            const nebula2 = new Image();
+
+            nebula1.src = "assets/img/nebula1.jpg";
+            nebula2.src = "assets/img/nebula2.avif";
+
+            function rand(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            function wrapValue(value, max) {
+                return ((value % max) + max) % max;
+            }
+
+            function shortestWrappedDelta(delta, size) {
+                return ((delta + size / 2) % size + size) % size - size / 2;
+            }
+
+            function resizeCanvases() {
+                const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                viewWidth = sky.clientWidth;
+                viewHeight = sky.clientHeight;
+
+                [nebulaCanvas, backCanvas, midCanvas, frontCanvas, fxCanvas, shootingCanvas].forEach((canvas) => {
+                    canvas.width = Math.floor(viewWidth * dpr);
+                    canvas.height = Math.floor(viewHeight * dpr);
+                    canvas.style.width = viewWidth + 'px';
+                    canvas.style.height = viewHeight + 'px';
+                    const ctx = canvas.getContext('2d');
+                    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                });
+
+                svg.setAttribute('viewBox', `0 0 ${viewWidth} ${viewHeight}`);
+                drawNebula();
+                updateConstellationPositions();
+            }
+
+            function generateStarLayer(count, sizeMin, sizeMax, alphaMin, alphaMax) {
+                const stars = [];
+                for (let i = 0; i < count; i++) {
+                    stars.push({
+                        x: rand(0, world.width),
+                        y: rand(0, world.height),
+                        r: rand(sizeMin, sizeMax),
+                        alpha: rand(alphaMin, alphaMax),
+                        twinkleSpeed: rand(0.2, 1.1),
+                        twinkleOffset: rand(0, Math.PI * 2)
+                    });
+                }
+                return stars;
+            }
+
+            function initStars() {
+                starLayers.back = generateStarLayer(280, 0.7, 1.5, 0.14, 0.44);
+                starLayers.mid = generateStarLayer(220, 1.0, 2.2, 0.18, 0.66);
+                starLayers.front = generateStarLayer(150, 1.3, 3.0, 0.28, 0.96);
+            }
+
+            function getWrappedScreenPosition(wx, wy, parallax = 1) {
+                const baseCamX = camera.x * parallax;
+                const baseCamY = camera.y * parallax;
+
+                const dx = shortestWrappedDelta(wx - baseCamX, world.width);
+                const dy = shortestWrappedDelta(wy - baseCamY, world.height);
+
+                return {
+                    x: dx * camera.zoom + viewWidth / 2,
+                    y: dy * camera.zoom + viewHeight / 2
+                };
+            }
+
+            function screenToWorld(sx, sy) {
+                return {
+                    x: wrapValue(camera.x + (sx - viewWidth / 2) / camera.zoom, world.width),
+                    y: wrapValue(camera.y + (sy - viewHeight / 2) / camera.zoom, world.height)
+                };
+            }
+
+            function drawNebula() {
+                nebulaCtx.clearRect(0, 0, viewWidth, viewHeight);
+
+                const shiftX = wrapValue(camera.x * 0.05, world.width) / world.width;
+                const shiftY = wrapValue(camera.y * 0.04, world.height) / world.height;
+
+                const scale = 1.45;
+                const imgW = viewWidth * scale;
+                const imgH = viewHeight * scale;
+
+                const offsetX = -(shiftX * (imgW - viewWidth));
+                const offsetY = -(shiftY * (imgH - viewHeight));
+
+                if (nebula1.complete) {
+                    nebulaCtx.globalAlpha = 0.22;
+                    nebulaCtx.filter = "saturate(1.3) brightness(0.75)";
+                    nebulaCtx.drawImage(nebula1, offsetX, offsetY, imgW, imgH);
+                }
+
+                if (nebula2.complete) {
+                    nebulaCtx.globalAlpha = 0.18;
+                    nebulaCtx.filter = "saturate(1.5) brightness(0.8)";
+                    nebulaCtx.drawImage(nebula2, offsetX - 120, offsetY - 80, imgW * 1.1, imgH * 1.1);
+                }
+
+                nebulaCtx.filter = "none";
+                nebulaCtx.globalAlpha = 1;
+            }
+
+            function drawGalaxyCore(ctx) {
+                const core = getWrappedScreenPosition(world.width * 0.52, world.height * 0.48, 0.45);
+                const radius = Math.max(180, 320 * camera.zoom);
+
+                const gradient = ctx.createRadialGradient(core.x, core.y, 10, core.x, core.y, radius);
+                gradient.addColorStop(0, 'rgba(160,210,255,0.42)');
+                gradient.addColorStop(0.35, 'rgba(90,150,255,0.16)');
+                gradient.addColorStop(1, 'rgba(0,0,0,0)');
+
+                ctx.beginPath();
+                ctx.fillStyle = gradient;
+                ctx.arc(core.x, core.y, radius, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            function drawStarAt(ctx, p, radius, alpha) {
+                if (p.x < -30 || p.y < -30 || p.x > viewWidth + 30 || p.y > viewHeight + 30) return;
+
+                ctx.beginPath();
+                ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+                ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
+                ctx.fill();
+
+                if (radius > 1.6) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(140,200,255,${alpha * 0.35})`;
+                    ctx.lineWidth = 1;
+                    ctx.moveTo(p.x - radius * 2.2, p.y);
+                    ctx.lineTo(p.x + radius * 2.2, p.y);
+                    ctx.moveTo(p.x, p.y - radius * 2.2);
+                    ctx.lineTo(p.x, p.y + radius * 2.2);
+                    ctx.stroke();
+                }
+            }
+
+            function drawStarLayer(ctx, stars, parallax, timeFactor) {
+                ctx.clearRect(0, 0, viewWidth, viewHeight);
+
+                for (const star of stars) {
+                    const twinkle = 0.65 + 0.35 * Math.sin(timeFactor * star.twinkleSpeed + star.twinkleOffset);
+                    const alpha = star.alpha * twinkle;
+                    const radius = star.r * (0.8 + 0.3 * twinkle) * Math.max(0.75, camera.zoom * 0.92);
+
+                    const baseCamX = camera.x * parallax;
+                    const baseCamY = camera.y * parallax;
+                    const dx = shortestWrappedDelta(star.x - baseCamX, world.width);
+                    const dy = shortestWrappedDelta(star.y - baseCamY, world.height);
+
+                    const xOffsets = [0];
+                    const yOffsets = [0];
+
+                    if (dx > world.width / 2 - 220 / camera.zoom) xOffsets.push(-world.width);
+                    if (dx < -world.width / 2 + 220 / camera.zoom) xOffsets.push(world.width);
+                    if (dy > world.height / 2 - 220 / camera.zoom) yOffsets.push(-world.height);
+                    if (dy < -world.height / 2 + 220 / camera.zoom) yOffsets.push(world.height);
+
+                    for (const ox of xOffsets) {
+                        for (const oy of yOffsets) {
+                            drawStarAt(ctx, {
+                                x: (dx + ox) * camera.zoom + viewWidth / 2,
+                                y: (dy + oy) * camera.zoom + viewHeight / 2
+                            }, radius, alpha);
+                        }
+                    }
+                }
+            }
+
+            function spawnParticleBurst(x, y, count = 20) {
+                for (let i = 0; i < count; i++) {
+                    particles.push({
+                        x,
+                        y,
+                        vx: rand(-1.8, 1.8),
+                        vy: rand(-1.8, 1.8),
+                        life: rand(18, 36),
+                        maxLife: rand(18, 36),
+                        size: rand(1.2, 2.6)
+                    });
+                }
+            }
+
+            function drawCursorTrail() {
+                fxCtx.globalCompositeOperation = "lighter";
+
+                for (let i = cursorTrail.length - 1; i >= 0; i--) {
+                    const p = cursorTrail[i];
+                    p.life -= 1;
+
+                    if (p.life <= 0) {
+                        cursorTrail.splice(i, 1);
+                        continue;
+                    }
+
+                    if (i > 0) {
+                        const prev = cursorTrail[i - 1];
+                        const alpha = p.life / p.maxLife;
+
+                        fxCtx.beginPath();
+                        fxCtx.strokeStyle = `rgba(120,200,255,${alpha * 0.9})`;
+                        fxCtx.lineWidth = alpha * 4;
+                        fxCtx.lineCap = "round";
+                        fxCtx.moveTo(p.x, p.y);
+                        fxCtx.lineTo(prev.x, prev.y);
+                        fxCtx.stroke();
+                    }
+
+                    fxCtx.beginPath();
+                    fxCtx.fillStyle = `rgba(180,235,255,${(p.life / p.maxLife) * 0.7})`;
+                    fxCtx.arc(p.x, p.y, 1.5 + (p.life / p.maxLife) * 2, 0, Math.PI * 2);
+                    fxCtx.fill();
+                }
+
+                fxCtx.globalCompositeOperation = "source-over";
+            }
+
+            function drawParticles() {
+                fxCtx.clearRect(0, 0, viewWidth, viewHeight);
+
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    const p = particles[i];
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vx *= 0.98;
+                    p.vy *= 0.98;
+                    p.life--;
+
+                    const alpha = p.life / p.maxLife;
+
+                    fxCtx.beginPath();
+                    fxCtx.fillStyle = `rgba(180,225,255,${alpha})`;
+                    fxCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    fxCtx.fill();
+
+                    if (p.life <= 0) particles.splice(i, 1);
+                }
+
+                drawCursorTrail();
+            }
+
+            function maybeSpawnShootingStar() {
+                if (Math.random() > 0.012 || shootingStars.length > 3) return;
+
+                shootingStars.push({
+                    x: rand(viewWidth * 0.15, viewWidth * 0.85),
+                    y: rand(20, viewHeight * 0.35),
+                    vx: rand(9, 14),
+                    vy: rand(4, 7),
+                    life: 0,
+                    maxLife: rand(28, 42),
+                    length: rand(100, 180)
+                });
+            }
+
+            function spawnClickComet(x, y) {
+                shootingStars.push({
+                    x,
+                    y,
+                    vx: rand(7, 12),
+                    vy: rand(2.4, 5.2),
+                    life: 0,
+                    maxLife: 42,
+                    length: rand(90, 150)
+                });
+            }
+
+            function drawShootingStars() {
+                shootingCtx.clearRect(0, 0, viewWidth, viewHeight);
+                maybeSpawnShootingStar();
+
+                for (let i = shootingStars.length - 1; i >= 0; i--) {
+                    const s = shootingStars[i];
+                    s.x += s.vx;
+                    s.y += s.vy;
+                    s.life++;
+
+                    const alpha = 1 - (s.life / s.maxLife);
+
+                    const grad = shootingCtx.createLinearGradient(
+                        s.x, s.y,
+                        s.x - s.length, s.y - s.length * 0.4
+                    );
+                    grad.addColorStop(0, `rgba(255,255,255,${alpha})`);
+                    grad.addColorStop(0.25, `rgba(160,210,255,${alpha * 0.75})`);
+                    grad.addColorStop(1, `rgba(160,210,255,0)`);
+
+                    shootingCtx.beginPath();
+                    shootingCtx.strokeStyle = grad;
+                    shootingCtx.lineWidth = 2;
+                    shootingCtx.moveTo(s.x, s.y);
+                    shootingCtx.lineTo(s.x - s.length, s.y - s.length * 0.4);
+                    shootingCtx.stroke();
+
+                    if (s.life >= s.maxLife || s.x > viewWidth + 220 || s.y > viewHeight + 220) {
+                        shootingStars.splice(i, 1);
+                    }
+                }
+            }
+
+            function projectCenter(project) {
+                const xs = project.stars.map(s => s.x);
+                const ys = project.stars.map(s => s.y);
+                return {
+                    x: xs.reduce((a, b) => a + b, 0) / xs.length,
+                    y: ys.reduce((a, b) => a + b, 0) / ys.length
+                };
+            }
+
+            function renderConstellations() {
+                svg.innerHTML = '';
+
+                projects.forEach((project, index) => {
+                    const g = document.createElementNS(SVG_NS, 'g');
+                    g.classList.add('constellation');
+                    g.dataset.index = index;
+
+                    if (activeProjectIndex === index) {
+                        g.classList.add('active');
+                    }
+
+                    const hitbox = document.createElementNS(SVG_NS, 'circle');
+                    hitbox.classList.add('constellation-hitbox');
+                    hitbox.setAttribute('fill', 'transparent');
+                    hitbox.setAttribute('pointer-events', 'all');
+                    g.appendChild(hitbox);
+
+                    project.connections.forEach(() => {
+                        const line = document.createElementNS(SVG_NS, 'line');
+                        line.classList.add('constellation-line');
+                        g.appendChild(line);
+                    });
+
+                    project.stars.forEach((star, starIndex) => {
+                        const circle = document.createElementNS(SVG_NS, 'circle');
+                        circle.classList.add('constellation-star');
+                        if (starIndex === 2 || star.r >= 5) {
+                            circle.classList.add('constellation-core');
+                        }
+                        g.appendChild(circle);
+                    });
+
+                    const label = document.createElementNS(SVG_NS, 'text');
+                    label.classList.add('constellation-label');
+                    label.textContent = project.name;
+                    g.appendChild(label);
+
+                    const subtext = document.createElementNS(SVG_NS, 'text');
+                    subtext.classList.add('constellation-subtext');
+                    subtext.textContent = project.team;
+                    g.appendChild(subtext);
+
+                    g.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        warpJump();
+                        focusProject(index);
+                        openProject(index);
+                    });
+
+                    g.addEventListener('mouseenter', () => {
+                        const c = projectCenter(project);
+                        const screen = getWrappedScreenPosition(c.x, c.y, 1);
+                        spawnParticleBurst(screen.x, screen.y, 18);
+                        if (activeProjectIndex === null) {
+                            g.classList.add('active');
+                        }
+                    });
+
+                    g.addEventListener('mouseleave', () => {
+                        if (activeProjectIndex === null) {
+                            g.classList.remove('active');
+                        }
+                    });
+
+                    svg.appendChild(g);
+                });
+
+                updateConstellationPositions();
+            }
+
+            function updateConstellationPositions() {
+                const groups = svg.querySelectorAll('.constellation');
+
+                groups.forEach((g, projectIndex) => {
+                    const project = projects[projectIndex];
+
+                    const hitbox = g.querySelector('.constellation-hitbox');
+                    if (hitbox) {
+                        const center = projectCenter(project);
+                        const p = getWrappedScreenPosition(center.x, center.y, 1);
+                        hitbox.setAttribute('cx', p.x);
+                        hitbox.setAttribute('cy', p.y);
+                        hitbox.setAttribute('r', window.innerWidth < 768 ? 180 : 130);
+                    }
+
+                    const lines = g.querySelectorAll('.constellation-line');
+                    const lineWidth = Math.max(1.1, 1.2 * camera.zoom);
+                    lines.forEach((line, i) => {
+                        // Inside your lines.forEach loop:
+                        const [a, b] = project.connections[i];
+                        const p1 = getWrappedScreenPosition(project.stars[a].x, project.stars[a].y, 1);
+                        const p2 = getWrappedScreenPosition(project.stars[b].x, project.stars[b].y, 1);
+
+                        // Add this check to hide lines that stretch across the whole screen
+                        const dx = Math.abs(p1.x - p2.x);
+                        const dy = Math.abs(p1.y - p2.y);
+
+                        if (dx > viewWidth / 2 || dy > viewHeight / 2) {
+                            line.setAttribute('opacity', '0'); // Hide the "glitch" line
+                        } else {
+                            line.setAttribute('opacity', '1');
+                            line.setAttribute('x1', p1.x);
+                            line.setAttribute('y1', p1.y);
+                            line.setAttribute('x2', p2.x);
+                            line.setAttribute('y2', p2.y);
+                        }
+                    });
+
+                    const circles = g.querySelectorAll('.constellation-star');
+                    circles.forEach((circle, i) => {
+                        const star = project.stars[i];
+                        const p = getWrappedScreenPosition(star.x, star.y, 1);
+                        circle.setAttribute('cx', p.x);
+                        circle.setAttribute('cy', p.y);
+                        circle.setAttribute('r', Math.max(2.3, star.r * camera.zoom * 0.9));
+                    });
+
+                    const center = projectCenter(project);
+                    const labelPos = getWrappedScreenPosition(center.x + 24, center.y - 26, 1);
+                    const subPos = getWrappedScreenPosition(center.x + 24, center.y - 8, 1);
+
+                    const label = g.querySelector('.constellation-label');
+                    const subtext = g.querySelector('.constellation-subtext');
+
+                    label.setAttribute('x', labelPos.x);
+                    label.setAttribute('y', labelPos.y);
+
+                    subtext.setAttribute('x', subPos.x);
+                    subtext.setAttribute('y', subPos.y);
+
+                    const visible =
+                        labelPos.x > -260 &&
+                        labelPos.x < viewWidth + 260 &&
+                        labelPos.y > -100 &&
+                        labelPos.y < viewHeight + 100;
+
+                    g.style.display = visible ? 'block' : 'none';
+                });
+            }
+
+            function openProject(index) {
+                activeProjectIndex = index;
+                const project = projects[index];
+
+                panelContent.innerHTML = `
+                    <h3>${project.name}</h3>
+                    <div class="project-panel-tag">${project.team}</div>
+                    <p>${project.description}</p>
+                    <div class="project-meta">Status: ${project.status}</div>
+                `;
+
+                panel.classList.add('show');
+
+                svg.querySelectorAll('.constellation').forEach((g, i) => {
+                    g.classList.toggle('active', i === index);
+                });
+
+                if (projectPicker) {
+                    projectPicker.value = String(index);
+                }
+            }
+
+            function closeProject() {
+                activeProjectIndex = null;
+                panel.classList.remove('show');
+                svg.querySelectorAll('.constellation').forEach(g => g.classList.remove('active'));
+
+                if (projectPicker) {
+                    projectPicker.value = '';
+                }
+            }
+
+            function warpJump() {
+                sky.classList.add('warping');
+                setTimeout(() => sky.classList.remove('warping'), 260);
+            }
+
+            function focusProject(index) {
+                const center = projectCenter(projects[index]);
+                camera.targetX = wrapValue(center.x, world.width);
+                camera.targetY = wrapValue(center.y, world.height);
+                camera.targetZoom = 1.28;
+            }
+
+            function applyZoomAtPoint(clientX, clientY, zoomDelta) {
+                const rect = sky.getBoundingClientRect();
+                const px = clientX - rect.left;
+                const py = clientY - rect.top;
+
+                const before = screenToWorld(px, py);
+
+                camera.targetZoom = Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, camera.targetZoom * zoomDelta));
+                camera.targetX = wrapValue(before.x - (px - viewWidth / 2) / camera.targetZoom, world.width);
+                camera.targetY = wrapValue(before.y - (py - viewHeight / 2) / camera.targetZoom, world.height);
+            }
+
+            function onPointerDown(e) {
+                camera.isDragging = true;
+                pointerMoved = false;
+                sky.classList.add('dragging');
+                camera.lastPointerX = e.clientX;
+                camera.lastPointerY = e.clientY;
+                camera.vx = 0;
+                camera.vy = 0;
+            }
+
+            function onPointerMove(e) {
+                if (!camera.isDragging) return;
+
+                const dx = e.clientX - camera.lastPointerX;
+                const dy = e.clientY - camera.lastPointerY;
+
+                if (Math.abs(dx) > 1 || Math.abs(dy) > 1) pointerMoved = true;
+
+                camera.lastPointerX = e.clientX;
+                camera.lastPointerY = e.clientY;
+
+                const worldDx = -dx / camera.zoom;
+                const worldDy = -dy / camera.zoom;
+
+                camera.x += worldDx;
+                camera.y += worldDy;
+                camera.x = wrapValue(camera.x, world.width);
+                camera.y = wrapValue(camera.y, world.height);
+
+                camera.targetX = camera.x;
+                camera.targetY = camera.y;
+
+                camera.vx = camera.vx * 0.4 + worldDx * 0.6;
+                camera.vy = camera.vy * 0.4 + worldDy * 0.6;
+
+                const rect = sky.getBoundingClientRect();
+                const px = e.clientX - rect.left;
+                const py = e.clientY - rect.top;
+
+                cursorTrail.push({
+                    x: px,
+                    y: py,
+                    life: 24,
+                    maxLife: 24
+                });
+
+                if (cursorTrail.length > 35) cursorTrail.shift();
+            }
+
+            function onPointerUp() {
+                camera.isDragging = false;
+                sky.classList.remove('dragging');
+            }
+
+            function animate() {
+                const t = performance.now() * 0.001;
+
+                drawNebula();
+
+                if (!camera.isDragging) {
+                    const dx = shortestWrappedDelta(camera.targetX - camera.x, world.width);
+                    const dy = shortestWrappedDelta(camera.targetY - camera.y, world.height);
+
+                    camera.x = wrapValue(camera.x + dx * 0.085, world.width);
+                    camera.y = wrapValue(camera.y + dy * 0.085, world.height);
+                    camera.zoom += (camera.targetZoom - camera.zoom) * 0.08;
+
+                    camera.x += camera.vx;
+                    camera.y += camera.vy;
+                    camera.x = wrapValue(camera.x, world.width);
+                    camera.y = wrapValue(camera.y, world.height);
+
+                    camera.vx *= 0.92;
+                    camera.vy *= 0.92;
+
+                    if (Math.abs(camera.vx) < 0.001) camera.vx = 0;
+                    if (Math.abs(camera.vy) < 0.001) camera.vy = 0;
+
+                    currentStarX += (targetStarX - currentStarX) * 0.05;
+                    currentStarY += (targetStarY - currentStarY) * 0.05;
+
+                    if (heroSection) {
+                        heroSection.style.setProperty('--star-x', `${currentStarX}%`);
+                        heroSection.style.setProperty('--star-y', `${currentStarY}%`);
+                    }
+                } else {
+                    camera.zoom += (camera.targetZoom - camera.zoom) * 0.16;
+                }
+
+                if (Math.abs(camera.vx) + Math.abs(camera.vy) > 1) {
+                    particles.push({
+                        x: rand(0, viewWidth),
+                        y: rand(0, viewHeight),
+                        vx: rand(-0.5, 0.5),
+                        vy: rand(-0.5, 0.5),
+                        life: rand(20, 40),
+                        maxLife: 40,
+                        size: rand(1, 2)
+                    });
+                }
+
+                drawStarLayer(backCtx, starLayers.back, 0.35, t);
+                drawStarLayer(midCtx, starLayers.mid, 0.6, t * 1.2);
+                drawStarLayer(frontCtx, starLayers.front, 0.95, t * 1.45);
+                drawParticles();
+                drawShootingStars();
+                updateConstellationPositions();
+
+                requestAnimationFrame(animate);
+            }
+
+            sky.addEventListener('mousedown', onPointerDown);
+            window.addEventListener('mousemove', onPointerMove);
+            window.addEventListener('mouseup', onPointerUp);
+            window.addEventListener('mouseleave', onPointerUp);
+
+            sky.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 1) onPointerDown(e.touches[0]);
+            }, { passive: false });
+
+            window.addEventListener('touchmove', (e) => {
+                if (e.touches.length === 1 && camera.isDragging) onPointerMove(e.touches[0]);
+            }, { passive: false });
+
+            window.addEventListener('touchend', onPointerUp);
+            window.addEventListener('touchcancel', onPointerUp);
+
+            sky.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                const zoomFactor = e.deltaY < 0 ? 1.12 : 0.9;
+                applyZoomAtPoint(e.clientX, e.clientY, zoomFactor);
+            }, { passive: false });
+
+            sky.addEventListener('click', (e) => {
+                if (e.target.closest('.constellation')) return;
+                if (pointerMoved) return;
+
+                const rect = sky.getBoundingClientRect();
+                spawnClickComet(e.clientX - rect.left, e.clientY - rect.top);
+                closeProject();
+            });
+
+            closePanelBtn.addEventListener('click', closeProject);
+            window.addEventListener('resize', resizeCanvases);
+
+            initStars();
+            resizeCanvases();
+            renderConstellations();
+            animate();
+            initProjectPicker();
+
+            function initProjectPicker() {
+                const picker = document.getElementById("project-picker");
+                if (!picker) return;
+
+                // Ensure the dropdown is populated correctly
+                picker.innerHTML = '<option value="">Jump to project…</option>';
+                projects.forEach((project, index) => {
+                    const option = document.createElement("option");
+                    option.value = index;
+                    option.textContent = project.name;
+                    picker.appendChild(option);
+                });
+
+                picker.addEventListener("change", () => {
+                    const val = picker.value;
+                    if (val === "") {
+                        closeProject(); // Close panel if they pick the default option
+                        return;
+                    }
+                    
+                    const index = Number(val);
+                    
+                    // 1. Visual Warp Effect
+                    warpJump(); 
+                    
+                    // 2. Move Camera to the constellation center
+                    focusProject(index); 
+                    
+                    // 3. Open the project panel and highlight the stars
+                    // This is the missing link that makes it "select" the project
+                    openProject(index); 
+                });
+            }
+        })();
     </script>
 </body>
 </html>
