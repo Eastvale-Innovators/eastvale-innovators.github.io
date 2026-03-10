@@ -45,7 +45,7 @@
             background:
                 radial-gradient(circle at top, rgba(74, 158, 255, 0.09), transparent 30%),
                 linear-gradient(180deg, #06101c 0%, #001f3f 100%);
-            overflow-x: hidden;
+            overflow-x: clip;
             line-height: 1.6;
         }
 
@@ -602,9 +602,26 @@
             .team-member {
                 grid-column: span 6;
             }
+
+            .nav-links {
+                gap: 1.8rem;
+            }
+
+            .logo {
+                font-size: 1.25rem;
+            }
         }
 
         @media (max-width: 900px) {
+            .nav-links {
+                gap: 1.2rem;
+                font-size: 0.88rem;
+            }
+
+            .logo {
+                font-size: 1.1rem;
+            }
+
             .team-head-layout {
                 grid-template-columns: 1fr;
             }
@@ -658,6 +675,22 @@
             .team-jump a {
                 font-size: 0.84rem;
                 padding: 0.55rem 0.8rem;
+            }
+
+            .member-image {
+                height: 200px;
+                min-height: 200px;
+            }
+
+            .team-head .member-image {
+                height: 240px;
+                min-height: 240px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 0 1rem;
             }
         }
     </style>

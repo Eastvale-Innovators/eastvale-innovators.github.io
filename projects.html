@@ -34,7 +34,7 @@
             font-family: 'Inter', sans-serif;
             color: var(--text-light);
             background: var(--bg-dark);
-            overflow-x: hidden;
+            overflow-x: clip;
             line-height: 1.6;
             /* cursor: none; */
         }
@@ -673,6 +673,27 @@
             transform: scale(1);
         }
 
+        @media (max-width: 1100px) {
+            .nav-links {
+                gap: 1.8rem;
+            }
+
+            .logo {
+                font-size: 1.25rem;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .nav-links {
+                gap: 1.2rem;
+                font-size: 0.88rem;
+            }
+
+            .logo {
+                font-size: 1.1rem;
+            }
+        }
+
         @media (max-width: 768px) {
             #project-picker-wrap {
                 top: 0.75rem;
@@ -720,6 +741,12 @@
 
             .constellation-subtext {
                 font-size: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 0 1rem;
             }
         }
     </style>
@@ -787,6 +814,7 @@
             </div>
         </div>
     </section>
+    <div style="height: 4rem;"></div>
     <div id="tile-transition"></div>
     <footer>
         <p>Copyright © Eastvale Innovators 2026</p>

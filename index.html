@@ -37,7 +37,7 @@
             font-family: 'Inter', sans-serif;
             color: var(--text-light);
             background: var(--bg-dark);
-            overflow-x: hidden;
+            overflow-x: clip;
             line-height: 1.6;
             /* cursor: none; */
         }
@@ -253,9 +253,10 @@
         }
 
         .hero h1 {
-            font-size: clamp(3.5rem, 8vw, 6rem);
+            font-size: clamp(1.6rem, 8vw, 6rem);
             margin-bottom: 1.5rem;
             line-height: 1.1;
+            overflow-wrap: break-word;
             background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -483,6 +484,7 @@
 
         .instagram-embed {
             max-width: 540px;
+            width: 100%;
             margin: 4rem auto;
             background: rgba(255, 255, 255, 0.02);
             border-radius: 15px;
@@ -620,7 +622,37 @@
             transform: scale(0.9);
         }
 
+        .container {
+            display: flex;
+            gap: 20px; /* Horizontal/vertical space */
+            }
+
         /* Responsive */
+        @media (max-width: 1100px) {
+            .nav-links {
+                gap: 1.8rem;
+            }
+
+            .logo {
+                font-size: 1.25rem;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .nav-links {
+                gap: 1.2rem;
+                font-size: 0.88rem;
+            }
+
+            .logo {
+                font-size: 1.1rem;
+            }
+
+            section {
+                padding: 6rem 1.5rem;
+            }
+        }
+
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -642,6 +674,33 @@
                 max-width: none;
                 margin: 0;
                 width: 100vw;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .hero-content {
+                padding: 0 1rem;
+            }
+
+            .cta-button {
+                padding: 0.8rem 2rem;
+                font-size: 1rem;
+            }
+
+            .about-card {
+                padding: 2rem;
+            }
+
+            .about-card h3 {
+                font-size: 1.5rem;
+            }
+
+            section {
+                padding: 3rem 1rem;
             }
         }
     </style>
@@ -724,11 +783,13 @@
             </div>
         </section>
 
+        <div style="height: 4rem;"></div>
         <footer>
             <p>Copyright © Eastvale Innovators 2026</p>
         </footer>
     </div>
     <div id="tile-transition"></div>
+    <div id="container"></div>
     <script>
         // Navbar scroll effect and parallax hero
         const navbar = document.getElementById('navbar');
@@ -824,9 +885,38 @@
 
         const loader = new THREE.OBJLoader();
         let gearGroup = null;
+        let gearObjRef = null;
+        let gearSize = 0;
         let gearRotationY = 0;
         let gearVelocity = 0.0015;
         let gearAxle = null;
+
+        let tiltGroup = null;
+
+        function updateGearLayout() {
+            if (!gearGroup || !gearObjRef || gearSize === 0) return;
+            const w = container.clientWidth;
+            const h = container.clientHeight;
+            const isMobile = w < 768;
+
+            // Scale: gear bounding sphere diameter should be about 55% of the
+            // smaller viewport dimension on desktop, 40% on mobile.
+            const targetFraction = isMobile ? 0.40 : 0.55;
+            const scale = (Math.min(w, h) * targetFraction) / gearSize;
+            gearObjRef.scale.setScalar(scale);
+
+            // Position in world space (tiltGroup sits at origin).
+            // On mobile: center, on desktop: offset right+up.
+            gearGroup.position.x = isMobile ? 0 : 30;
+            gearGroup.position.y = isMobile ? 0 : 15;
+
+            // Pull camera back further on mobile (portrait = narrow FOV),
+            // closer on desktop so the gear fills the right side nicely.
+            const camZ = gearSize * 0.5;
+            camera.position.set(0, 0, camZ + 100);
+            camera.lookAt(0, 0, 0);
+            camera.updateProjectionMatrix();
+        }
 
         loader.load('assets/models/gear.obj', (gear) => {
             gear.traverse((child) => {
@@ -842,26 +932,21 @@
             const box = new THREE.Box3().setFromObject(gear);
             const size = box.getSize(new THREE.Vector3()).length();
             const center = box.getCenter(new THREE.Vector3());
-            const pivot = center.clone();
+
+            gearObjRef = gear;
+            gearSize = size;
 
             gearGroup = new THREE.Group();
             gearGroup.add(gear);
-            gear.position.copy(pivot).negate();
+            gear.position.copy(center).negate();
 
-            // move gear to the right
-            gearGroup.position.x = 30;
-            gearGroup.position.y = 15;
-            const scale = Math.min(container.clientWidth, container.clientHeight) / (size * 3.2);
-            gear.scale.setScalar(scale);
-
-            const tiltGroup = new THREE.Group();
+            tiltGroup = new THREE.Group();
             tiltGroup.add(gearGroup);
             tiltGroup.rotation.y = (45 * Math.PI) / 180;
             tiltGroup.rotation.x = -(25 * Math.PI) / 180;
             scene.add(tiltGroup);
 
-            camera.position.set(0,0, size * 0.5);
-            camera.lookAt(0, 0, 0);
+            updateGearLayout();
 
             gearAxle = new THREE.Vector3(0, 0, 1);
         }, undefined, (error) => {
@@ -873,6 +958,7 @@
             camera.aspect = container.clientWidth / container.clientHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(container.clientWidth, container.clientHeight);
+            updateGearLayout();
         });
 
         // Custom cursor effects
