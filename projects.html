@@ -3,6 +3,19 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Explore Eastvale Innovators projects, from current builds to past initiatives across software, engineering, and community impact.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.eastvaleinnovators.org/projects.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Eastvale Innovators">
+    <meta property="og:title" content="Projects - Eastvale Innovators">
+    <meta property="og:description" content="Discover the projects Eastvale Innovators is building across multiple disciplines and real-world challenges.">
+    <meta property="og:url" content="https://www.eastvaleinnovators.org/projects.html">
+    <meta property="og:image" content="https://www.eastvaleinnovators.org/assets/img/eastvale%20innovators%20banner.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Projects - Eastvale Innovators">
+    <meta name="twitter:description" content="Discover the projects Eastvale Innovators is building across multiple disciplines and real-world challenges.">
+    <meta name="twitter:image" content="https://www.eastvaleinnovators.org/assets/img/eastvale%20innovators%20banner.png">
     <title>Projects - Eastvale Innovators</title>
     <link rel="icon" type="image/png" href="assets/img/logo_favicon.png" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
@@ -153,7 +166,8 @@
             vertical-align: middle;
         }
 
-        .nav-dropdown:hover .dropdown-arrow {
+        .nav-dropdown:hover .dropdown-arrow,
+        .nav-dropdown.open .dropdown-arrow {
             transform: rotate(180deg);
         }
 
@@ -185,7 +199,8 @@
             display: none !important;
         }
 
-        .nav-dropdown:hover .dropdown-menu {
+        .nav-dropdown:hover .dropdown-menu,
+        .nav-dropdown.open .dropdown-menu {
             opacity: 1;
             pointer-events: auto;
             transform: translateX(-50%) translateY(0);
@@ -555,6 +570,11 @@
             cursor: pointer;
         }
 
+        .constellation.filtered {
+            opacity: 0.16;
+            pointer-events: none;
+        }
+
         .constellation-line {
             stroke: rgba(130, 190, 255, 0.34);
             stroke-width: 1.35;
@@ -716,7 +736,26 @@
             right: 1rem;
             z-index: 40;
             display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
             align-items: center;
+        }
+
+        #project-search {
+            width: min(280px, calc(100vw - 2rem));
+            padding: 0.76rem 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: linear-gradient(180deg, rgba(12, 20, 36, 0.9), rgba(8, 14, 28, 0.92));
+            color: rgba(255, 255, 255, 0.95);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        #project-search:focus {
+            border-color: rgba(74, 158, 255, 0.7);
+            box-shadow: 0 0 0 3px rgba(74, 158, 255, 0.16);
         }
 
         #project-picker {
@@ -761,9 +800,105 @@
             content: "▾";
             position: absolute;
             right: 0.95rem;
+            bottom: 0.9rem;
             pointer-events: none;
             color: rgba(255, 255, 255, 0.72);
             font-size: 0.95rem;
+        }
+
+        #sky-tools {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 40;
+            display: flex;
+            gap: 0.45rem;
+            align-items: center;
+            padding: 0.45rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            background: rgba(6, 12, 26, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .sky-tool-btn {
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 0.45rem 0.7rem;
+            font-size: 0.84rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .sky-tool-btn:hover {
+            border-color: rgba(74, 158, 255, 0.6);
+            background: rgba(74, 158, 255, 0.14);
+        }
+
+        .project-directory {
+            width: min(1400px, calc(100% - 2rem));
+            margin: 1.25rem auto 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 0.9rem;
+        }
+
+        .project-item {
+            text-align: left;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 14px;
+            padding: 0.95rem;
+            color: rgba(255, 255, 255, 0.9);
+            cursor: pointer;
+            transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+        }
+
+        .project-item:hover {
+            transform: translateY(-2px);
+            border-color: rgba(74, 158, 255, 0.55);
+            background: rgba(74, 158, 255, 0.08);
+        }
+
+        .project-item.active {
+            border-color: rgba(120, 200, 255, 0.95);
+            background: rgba(74, 158, 255, 0.18);
+        }
+
+        .project-item h4 {
+            margin: 0 0 0.35rem;
+            font-size: 1rem;
+            color: #fff;
+        }
+
+        .project-item p {
+            margin: 0;
+            font-size: 0.83rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .project-item .status {
+            display: inline-block;
+            margin-top: 0.55rem;
+            padding: 0.28rem 0.55rem;
+            border-radius: 999px;
+            font-size: 0.72rem;
+            border: 1px solid rgba(74, 158, 255, 0.45);
+            color: rgba(180, 225, 255, 0.95);
+            background: rgba(74, 158, 255, 0.14);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .project-empty {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.62);
+            padding: 1.2rem;
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 14px;
         }
 
         .sr-only {
@@ -828,10 +963,24 @@
                 left: 0.75rem;
             }
 
+            #sky-tools {
+                top: auto;
+                bottom: 0.75rem;
+                left: 0.75rem;
+                right: 0.75rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
             #project-picker {
                 width: 100%;
                 max-width: none;
                 min-width: 0;
+            }
+
+            #project-search {
+                width: 100%;
+                max-width: none;
             }
         }
 
@@ -879,63 +1028,12 @@
     </style>
 </head>
 <body>
-    <nav id="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo">EASTVALE INNOVATORS</a>
-            <ul class="nav-links">
-                <li><a href="index.html#about">About</a></li>
-                <li class="nav-dropdown">
-                    <a href="projects.html" class="dropdown-toggle">Projects <span class="dropdown-arrow">▾</span></a>
-                    <div class="dropdown-menu">
-                        <div class="dropdown-col">
-                            <span class="dropdown-col-label">Past Projects</span>
-                            <a href="projects.html" class="dropdown-item">VMM</a>
-                        </div>
-                        <div class="dropdown-divider-v"></div>
-                        <div class="dropdown-col">
-                            <span class="dropdown-col-label">Current Projects</span>
-                            <a href="projects.html" class="dropdown-item">Roosevelt Connect</a>
-                            <a href="projects.html" class="dropdown-item">Intelligrader</a>
-                        </div>
-                    </div>
-                </li>
-                <!-- <li><a href="leadership.html">Leadership</a></li> -->
-                <li class="nav-dropdown">
-                    <a href="teams.html" class="dropdown-toggle">Teams <span class="dropdown-arrow">▾</span></a>
-                    <div class="dropdown-menu">
-                        <div class="dropdown-col" style="min-width:150px">
-                            <a href="teams.html#computer-science" class="dropdown-item">Computer Science</a>
-                            <a href="teams.html#engineering" class="dropdown-item">Engineering</a>
-                            <a href="teams.html#medicine" class="dropdown-item">Medicine</a>
-                            <a href="teams.html#finance" class="dropdown-item">Finance</a>
-                        </div>
-                    </div>
-                </li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-            <button class="mobile-menu-btn">☰</button>
-        </div>
-    </nav>
-
-    <div class="mobile-menu-overlay" id="mobileMenu">
-        <button class="close-menu-btn">✕</button>
-        <a href="index.html#about">About</a>
-        <a href="projects.html">Projects</a>
-        <div class="mobile-sub-links">
-            <a href="projects.html" class="mobile-sub-link">VMM</a>
-            <a href="projects.html" class="mobile-sub-link">Roosevelt Connect</a>
-            <a href="projects.html" class="mobile-sub-link">Intelligrader</a>
-        </div>
-        <!-- <a href="leadership.html">Leadership</a> -->
-        <a href="teams.html">Teams</a>
-        <div class="mobile-sub-links">
-            <a href="teams.html#computer-science" class="mobile-sub-link">Computer Science</a>
-            <a href="teams.html#engineering" class="mobile-sub-link">Engineering</a>
-            <a href="teams.html#medicine" class="mobile-sub-link">Medicine</a>
-            <a href="teams.html#finance" class="mobile-sub-link">Finance</a>
-        </div>
-        <a href="contact.html">Contact</a>
-    </div>
+    <div id="site-header"></div>
+    <script src="assets/js/shared-header.js"></script>
+    <script src="assets/js/site-common.js"></script>
+    <script>
+        loadSharedHeader('#site-header');
+    </script>
 
     <section class="hero">
         <div class="hero-bg"></div>
@@ -957,7 +1055,14 @@
         </div>
 
         <div id="sky-container">
+            <div id="sky-tools" role="toolbar" aria-label="Constellation controls">
+                <button class="sky-tool-btn" id="zoom-in-btn" type="button">Zoom In</button>
+                <button class="sky-tool-btn" id="zoom-out-btn" type="button">Zoom Out</button>
+                <button class="sky-tool-btn" id="fit-view-btn" type="button">Reset View</button>
+            </div>
             <div id="project-picker-wrap">
+                <label class="sr-only" for="project-search">Search projects</label>
+                <input id="project-search" type="search" placeholder="Search projects or teams">
                 <select id="project-picker">
                     <option value="">Jump to project…</option>
                 </select>
@@ -975,6 +1080,8 @@
                 <div id="project-panel-content"></div>
             </div>
         </div>
+
+        <div class="project-directory" id="project-directory" aria-label="Project list"></div>
     </section>
     <div style="height: 4rem;"></div>
     <div id="tile-transition"></div>
@@ -983,18 +1090,6 @@
     </footer>
 
     <script>
-        window.addEventListener('scroll', function () {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) navbar.classList.add('scrolled');
-            else navbar.classList.remove('scrolled');
-        });
-
-        const mobileBtn = document.querySelector('.mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const closeBtn = document.querySelector('.close-menu-btn');
-
-        mobileBtn.addEventListener('click', () => mobileMenu.classList.add('active'));
-        closeBtn.addEventListener('click', () => mobileMenu.classList.remove('active'));
 
         const heroTitle = document.querySelector(".hero h1");
         document.addEventListener("mousemove", (e) => {
@@ -1137,8 +1232,13 @@
 
             const panel = document.getElementById('project-panel');
             const projectPicker = document.getElementById('project-picker');
+            const projectSearch = document.getElementById('project-search');
+            const projectDirectory = document.getElementById('project-directory');
             const panelContent = document.getElementById('project-panel-content');
             const closePanelBtn = document.getElementById('close-panel');
+            const zoomInBtn = document.getElementById('zoom-in-btn');
+            const zoomOutBtn = document.getElementById('zoom-out-btn');
+            const fitViewBtn = document.getElementById('fit-view-btn');
 
             const SVG_NS = "http://www.w3.org/2000/svg";
 
@@ -1165,6 +1265,16 @@
             let viewHeight = 0;
             let activeProjectIndex = null;
             let pointerMoved = false;
+            let searchQuery = '';
+            let lastNebulaUpdate = 0;
+            let lastConstellationUpdate = 0;
+            let forceSkyRefresh = true;
+            let forceConstellationRefresh = true;
+            let lastRenderCamera = {
+                x: camera.x,
+                y: camera.y,
+                zoom: camera.zoom
+            };
 
             const starLayers = {
                 back: [],
@@ -1235,6 +1345,21 @@
                 }
             ];
 
+            function normalizeText(value) {
+                return String(value || '').toLowerCase();
+            }
+
+            function projectMatchesFilter(project, query) {
+                if (!query) return true;
+                const haystack = `${project.name} ${project.team} ${project.status}`.toLowerCase();
+                return haystack.includes(query);
+            }
+
+            function projectIsVisible(index) {
+                const project = projects[index];
+                return project ? projectMatchesFilter(project, searchQuery) : false;
+            }
+
             const nebula1 = new Image();
             const nebula2 = new Image();
 
@@ -1270,6 +1395,8 @@
                 svg.setAttribute('viewBox', `0 0 ${viewWidth} ${viewHeight}`);
                 drawNebula();
                 updateConstellationPositions();
+                forceSkyRefresh = true;
+                forceConstellationRefresh = true;
             }
 
             function generateStarLayer(count, sizeMin, sizeMax, alphaMin, alphaMax) {
@@ -1288,9 +1415,14 @@
             }
 
             function initStars() {
-                starLayers.back = generateStarLayer(280, 0.7, 1.5, 0.14, 0.44);
-                starLayers.mid = generateStarLayer(220, 1.0, 2.2, 0.18, 0.66);
-                starLayers.front = generateStarLayer(150, 1.3, 3.0, 0.28, 0.96);
+                const viewportArea = window.innerWidth * window.innerHeight;
+                const densityScale = Math.max(0.55, Math.min(1, viewportArea / (1440 * 900)));
+                const mobileScale = window.innerWidth < 768 ? 0.72 : 0.9;
+                const scale = densityScale * mobileScale;
+
+                starLayers.back = generateStarLayer(Math.floor(280 * scale), 0.7, 1.5, 0.14, 0.44);
+                starLayers.mid = generateStarLayer(Math.floor(220 * scale), 1.0, 2.2, 0.18, 0.66);
+                starLayers.front = generateStarLayer(Math.floor(150 * scale), 1.3, 3.0, 0.28, 0.96);
             }
 
             function getWrappedScreenPosition(wx, wy, parallax = 1) {
@@ -1557,6 +1689,10 @@
                     g.classList.add('constellation');
                     g.dataset.index = index;
 
+                    if (!projectIsVisible(index)) {
+                        g.classList.add('filtered');
+                    }
+
                     if (activeProjectIndex === index) {
                         g.classList.add('active');
                     }
@@ -1564,7 +1700,7 @@
                     const hitbox = document.createElementNS(SVG_NS, 'circle');
                     hitbox.classList.add('constellation-hitbox');
                     hitbox.setAttribute('fill', 'transparent');
-                    hitbox.setAttribute('pointer-events', 'all');
+                    hitbox.setAttribute('pointer-events', projectIsVisible(index) ? 'all' : 'none');
                     g.appendChild(hitbox);
 
                     project.connections.forEach(() => {
@@ -1625,6 +1761,9 @@
 
                 groups.forEach((g, projectIndex) => {
                     const project = projects[projectIndex];
+                    const isVisibleProject = projectIsVisible(projectIndex);
+
+                    g.classList.toggle('filtered', !isVisibleProject);
 
                     const hitbox = g.querySelector('.constellation-hitbox');
                     if (hitbox) {
@@ -1633,6 +1772,7 @@
                         hitbox.setAttribute('cx', p.x);
                         hitbox.setAttribute('cy', p.y);
                         hitbox.setAttribute('r', window.innerWidth < 768 ? 180 : 130);
+                        hitbox.setAttribute('pointer-events', isVisibleProject ? 'all' : 'none');
                     }
 
                     const lines = g.querySelectorAll('.constellation-line');
@@ -1680,17 +1820,27 @@
                     subtext.setAttribute('x', subPos.x);
                     subtext.setAttribute('y', subPos.y);
 
-                    const visible =
+                    const labelIsNearViewport =
                         labelPos.x > -260 &&
                         labelPos.x < viewWidth + 260 &&
                         labelPos.y > -100 &&
                         labelPos.y < viewHeight + 100;
 
-                    g.style.display = visible ? 'block' : 'none';
+                    if (!labelIsNearViewport && activeProjectIndex !== projectIndex) {
+                        label.style.opacity = '0';
+                        subtext.style.opacity = '0';
+                    } else {
+                        label.style.opacity = '';
+                        subtext.style.opacity = '';
+                    }
                 });
             }
 
             function openProject(index) {
+                if (!projectIsVisible(index)) {
+                    return;
+                }
+
                 activeProjectIndex = index;
                 const project = projects[index];
 
@@ -1710,6 +1860,9 @@
                 if (projectPicker) {
                     projectPicker.value = String(index);
                 }
+
+                renderProjectDirectory();
+                forceConstellationRefresh = true;
             }
 
             function closeProject() {
@@ -1720,6 +1873,72 @@
                 if (projectPicker) {
                     projectPicker.value = '';
                 }
+
+                renderProjectDirectory();
+                forceConstellationRefresh = true;
+            }
+
+            function renderProjectDirectory() {
+                if (!projectDirectory) {
+                    return;
+                }
+
+                const visibleProjects = projects
+                    .map((project, index) => ({ project, index }))
+                    .filter(({ index }) => projectIsVisible(index));
+
+                if (visibleProjects.length === 0) {
+                    projectDirectory.innerHTML = '<div class="project-empty">No projects match your search. Try a broader keyword.</div>';
+                    return;
+                }
+
+                projectDirectory.innerHTML = visibleProjects.map(({ project, index }) => `
+                    <button type="button" class="project-item${activeProjectIndex === index ? ' active' : ''}" data-project-index="${index}" aria-label="Open ${project.name}">
+                        <h4>${project.name}</h4>
+                        <p>${project.team}</p>
+                        <span class="status">${project.status}</span>
+                    </button>
+                `).join('');
+
+                projectDirectory.querySelectorAll('[data-project-index]').forEach((item) => {
+                    item.addEventListener('click', () => {
+                        const index = Number(item.getAttribute('data-project-index'));
+                        warpJump();
+                        focusProject(index);
+                        openProject(index);
+                    });
+                });
+            }
+
+            function populateProjectPicker() {
+                if (!projectPicker) {
+                    return;
+                }
+
+                projectPicker.innerHTML = '<option value="">Jump to project…</option>';
+                projects.forEach((project, index) => {
+                    if (!projectIsVisible(index)) {
+                        return;
+                    }
+
+                    const option = document.createElement('option');
+                    option.value = String(index);
+                    option.textContent = `${project.name} - ${project.team}`;
+                    projectPicker.appendChild(option);
+                });
+            }
+
+            function applyProjectFilter(query) {
+                searchQuery = normalizeText(query).trim();
+
+                if (activeProjectIndex !== null && !projectIsVisible(activeProjectIndex)) {
+                    closeProject();
+                }
+
+                populateProjectPicker();
+                renderConstellations();
+                renderProjectDirectory();
+                forceConstellationRefresh = true;
             }
 
             function warpJump() {
@@ -1732,6 +1951,8 @@
                 camera.targetX = wrapValue(center.x, world.width);
                 camera.targetY = wrapValue(center.y, world.height);
                 camera.targetZoom = 1.28;
+                forceSkyRefresh = true;
+                forceConstellationRefresh = true;
             }
 
             function applyZoomAtPoint(clientX, clientY, zoomDelta) {
@@ -1744,6 +1965,8 @@
                 camera.targetZoom = Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, camera.targetZoom * zoomDelta));
                 camera.targetX = wrapValue(before.x - (px - viewWidth / 2) / camera.targetZoom, world.width);
                 camera.targetY = wrapValue(before.y - (py - viewHeight / 2) / camera.targetZoom, world.height);
+                forceSkyRefresh = true;
+                forceConstellationRefresh = true;
             }
 
             function onPointerDown(e) {
@@ -1780,6 +2003,8 @@
 
                 camera.vx = camera.vx * 0.4 + worldDx * 0.6;
                 camera.vy = camera.vy * 0.4 + worldDy * 0.6;
+                forceSkyRefresh = true;
+                forceConstellationRefresh = true;
 
                 const rect = sky.getBoundingClientRect();
                 const px = e.clientX - rect.left;
@@ -1800,10 +2025,8 @@
                 sky.classList.remove('dragging');
             }
 
-            function animate() {
-                const t = performance.now() * 0.001;
-
-                drawNebula();
+            function animate(now) {
+                const t = now * 0.001;
 
                 if (!camera.isDragging) {
                     const dx = shortestWrappedDelta(camera.targetX - camera.x, world.width);
@@ -1835,6 +2058,18 @@
                     camera.zoom += (camera.targetZoom - camera.zoom) * 0.16;
                 }
 
+                const camShiftX = Math.abs(shortestWrappedDelta(camera.x - lastRenderCamera.x, world.width));
+                const camShiftY = Math.abs(shortestWrappedDelta(camera.y - lastRenderCamera.y, world.height));
+                const camShift = camShiftX + camShiftY;
+                const zoomShift = Math.abs(camera.zoom - lastRenderCamera.zoom);
+
+                const shouldRedrawNebula = forceSkyRefresh || (now - lastNebulaUpdate > 66 && (camShift > 0.25 || zoomShift > 0.002));
+                if (shouldRedrawNebula) {
+                    drawNebula();
+                    lastNebulaUpdate = now;
+                    forceSkyRefresh = false;
+                }
+
                 if (Math.abs(camera.vx) + Math.abs(camera.vy) > 1) {
                     particles.push({
                         x: rand(0, viewWidth),
@@ -1852,7 +2087,17 @@
                 drawStarLayer(frontCtx, starLayers.front, 0.95, t * 1.45);
                 drawParticles();
                 drawShootingStars();
-                updateConstellationPositions();
+
+                const shouldUpdateConstellations = forceConstellationRefresh || (now - lastConstellationUpdate > 33 && (camShift > 0.15 || zoomShift > 0.0015));
+                if (shouldUpdateConstellations) {
+                    updateConstellationPositions();
+                    lastConstellationUpdate = now;
+                    forceConstellationRefresh = false;
+                }
+
+                lastRenderCamera.x = camera.x;
+                lastRenderCamera.y = camera.y;
+                lastRenderCamera.zoom = camera.zoom;
 
                 requestAnimationFrame(animate);
             }
@@ -1881,6 +2126,9 @@
 
             sky.addEventListener('click', (e) => {
                 if (e.target.closest('.constellation')) return;
+                if (e.target.closest('#project-picker-wrap')) return;
+                if (e.target.closest('#project-panel')) return;
+                if (e.target.closest('#sky-tools')) return;
                 if (pointerMoved) return;
 
                 const rect = sky.getBoundingClientRect();
@@ -1889,47 +2137,59 @@
             });
 
             closePanelBtn.addEventListener('click', closeProject);
+
+            if (zoomInBtn) {
+                zoomInBtn.addEventListener('click', () => {
+                    const rect = sky.getBoundingClientRect();
+                    applyZoomAtPoint(rect.left + rect.width / 2, rect.top + rect.height / 2, 1.18);
+                });
+            }
+
+            if (zoomOutBtn) {
+                zoomOutBtn.addEventListener('click', () => {
+                    const rect = sky.getBoundingClientRect();
+                    applyZoomAtPoint(rect.left + rect.width / 2, rect.top + rect.height / 2, 0.84);
+                });
+            }
+
+            if (fitViewBtn) {
+                fitViewBtn.addEventListener('click', () => {
+                    camera.targetX = world.width / 2;
+                    camera.targetY = world.height / 2;
+                    camera.targetZoom = 1;
+                    forceSkyRefresh = true;
+                    forceConstellationRefresh = true;
+                    closeProject();
+                });
+            }
+
+            if (projectSearch) {
+                projectSearch.addEventListener('input', () => {
+                    applyProjectFilter(projectSearch.value);
+                });
+            }
+
+            if (projectPicker) {
+                projectPicker.addEventListener('change', () => {
+                    const val = projectPicker.value;
+                    if (val === '') {
+                        closeProject();
+                        return;
+                    }
+
+                    const index = Number(val);
+                    warpJump();
+                    focusProject(index);
+                    openProject(index);
+                });
+            }
+
             window.addEventListener('resize', resizeCanvases);
 
             initStars();
             resizeCanvases();
-            renderConstellations();
-            animate();
-            initProjectPicker();
-
-            function initProjectPicker() {
-                const picker = document.getElementById("project-picker");
-                if (!picker) return;
-
-                // Ensure the dropdown is populated correctly
-                picker.innerHTML = '<option value="">Jump to project…</option>';
-                projects.forEach((project, index) => {
-                    const option = document.createElement("option");
-                    option.value = index;
-                    option.textContent = project.name;
-                    picker.appendChild(option);
-                });
-
-                picker.addEventListener("change", () => {
-                    const val = picker.value;
-                    if (val === "") {
-                        closeProject(); // Close panel if they pick the default option
-                        return;
-                    }
-                    
-                    const index = Number(val);
-                    
-                    // 1. Visual Warp Effect
-                    warpJump(); 
-                    
-                    // 2. Move Camera to the constellation center
-                    focusProject(index); 
-                    
-                    // 3. Open the project panel and highlight the stars
-                    // This is the missing link that makes it "select" the project
-                    openProject(index); 
-                });
-            }
+            applyProjectFilter('');
+            requestAnimationFrame(animate);
         })();
     </script>
 </body>
