@@ -1260,6 +1260,7 @@
                 vx: 0,
                 vy: 0,
                 isDragging: false,
+                isAutoCentering: false,
                 lastPointerX: 0,
                 lastPointerY: 0
             };
@@ -1291,6 +1292,11 @@
             const particles = [];
             const shootingStars = [];
             const cursorTrail = [];
+            const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+            const cpuThreads = navigator.hardwareConcurrency || 8;
+            const isLowPowerDevice = reduceMotionQuery.matches || cpuThreads <= 4;
+            const qualityScale = isLowPowerDevice ? 0.62 : 1;
+            let frameCount = 0;
 
             const projects = [
                 {
@@ -1444,7 +1450,7 @@
                 const viewportArea = window.innerWidth * window.innerHeight;
                 const densityScale = Math.max(0.55, Math.min(1, viewportArea / (1440 * 900)));
                 const mobileScale = window.innerWidth < 768 ? 0.72 : 0.9;
-                const scale = densityScale * mobileScale;
+                const scale = densityScale * mobileScale * qualityScale;
 
                 starLayers.back = generateStarLayer(Math.floor(280 * scale), 0.7, 1.5, 0.14, 0.44);
                 starLayers.mid = generateStarLayer(Math.floor(220 * scale), 1.0, 2.2, 0.18, 0.66);
@@ -1486,17 +1492,14 @@
 
                 if (nebula1.complete) {
                     nebulaCtx.globalAlpha = 0.22;
-                    nebulaCtx.filter = "saturate(1.3) brightness(0.75)";
                     nebulaCtx.drawImage(nebula1, offsetX, offsetY, imgW, imgH);
                 }
 
                 if (nebula2.complete) {
-                    nebulaCtx.globalAlpha = 0.18;
-                    nebulaCtx.filter = "saturate(1.5) brightness(0.8)";
+                    nebulaCtx.globalAlpha = 0.16;
                     nebulaCtx.drawImage(nebula2, offsetX - 120, offsetY - 80, imgW * 1.1, imgH * 1.1);
                 }
 
-                nebulaCtx.filter = "none";
                 nebulaCtx.globalAlpha = 1;
             }
 
@@ -1568,6 +1571,10 @@
             }
 
             function spawnParticleBurst(x, y, count = 20) {
+                if (isLowPowerDevice) {
+                    count = Math.max(6, Math.floor(count * 0.4));
+                }
+
                 for (let i = 0; i < count; i++) {
                     particles.push({
                         x,
@@ -1616,6 +1623,10 @@
             }
 
             function drawParticles() {
+                if (isLowPowerDevice && frameCount % 2 !== 0) {
+                    return;
+                }
+
                 fxCtx.clearRect(0, 0, viewWidth, viewHeight);
 
                 for (let i = particles.length - 1; i >= 0; i--) {
@@ -1640,7 +1651,9 @@
             }
 
             function maybeSpawnShootingStar() {
-                if (Math.random() > 0.012 || shootingStars.length > 3) return;
+                const spawnChance = isLowPowerDevice ? 0.004 : 0.012;
+                const maxComets = isLowPowerDevice ? 1 : 3;
+                if (Math.random() > spawnChance || shootingStars.length > maxComets) return;
 
                 shootingStars.push({
                     x: rand(viewWidth * 0.15, viewWidth * 0.85),
@@ -1887,7 +1900,7 @@
                     projectPicker.value = String(index);
                 }
 
-                renderProjectDirectory();
+                syncProjectDirectoryActiveState();
                 forceConstellationRefresh = true;
             }
 
@@ -1900,8 +1913,19 @@
                     projectPicker.value = '';
                 }
 
-                renderProjectDirectory();
+                syncProjectDirectoryActiveState();
                 forceConstellationRefresh = true;
+            }
+
+            function syncProjectDirectoryActiveState() {
+                if (!projectDirectory) {
+                    return;
+                }
+
+                projectDirectory.querySelectorAll('[data-project-index]').forEach((item) => {
+                    const index = Number(item.getAttribute('data-project-index'));
+                    item.classList.toggle('active', activeProjectIndex === index);
+                });
             }
 
             function renderProjectDirectory() {
@@ -1925,15 +1949,6 @@
                         <span class="status">${project.status}</span>
                     </button>
                 `).join('');
-
-                projectDirectory.querySelectorAll('[data-project-index]').forEach((item) => {
-                    item.addEventListener('click', () => {
-                        const index = Number(item.getAttribute('data-project-index'));
-                        warpJump();
-                        focusProject(index);
-                        openProject(index);
-                    });
-                });
             }
 
             function populateProjectPicker() {
@@ -1972,11 +1987,21 @@
                 setTimeout(() => sky.classList.remove('warping'), 120);
             }
 
-            function focusProject(index) {
+            function focusProject(index, instant = false) {
                 const center = projectCenter(projects[index]);
                 camera.targetX = wrapValue(center.x, world.width);
                 camera.targetY = wrapValue(center.y, world.height);
                 camera.targetZoom = 1.28;
+                camera.isAutoCentering = true;
+
+                if (instant) {
+                    camera.x = camera.targetX;
+                    camera.y = camera.targetY;
+                    camera.zoom = camera.targetZoom;
+                    camera.vx = 0;
+                    camera.vy = 0;
+                }
+
                 forceSkyRefresh = true;
                 forceConstellationRefresh = true;
             }
@@ -2043,7 +2068,8 @@
                     maxLife: 24
                 });
 
-                if (cursorTrail.length > 35) cursorTrail.shift();
+                const trailLimit = isLowPowerDevice ? 14 : 35;
+                if (cursorTrail.length > trailLimit) cursorTrail.shift();
             }
 
             function onPointerUp() {
@@ -2053,14 +2079,18 @@
 
             function animate(now) {
                 const t = now * 0.001;
+                frameCount += 1;
 
                 if (!camera.isDragging) {
                     const dx = shortestWrappedDelta(camera.targetX - camera.x, world.width);
                     const dy = shortestWrappedDelta(camera.targetY - camera.y, world.height);
 
-                    camera.x = wrapValue(camera.x + dx * 0.085, world.width);
-                    camera.y = wrapValue(camera.y + dy * 0.085, world.height);
-                    camera.zoom += (camera.targetZoom - camera.zoom) * 0.08;
+                    const centerLerp = camera.isAutoCentering ? 0.17 : 0.085;
+                    const zoomLerp = camera.isAutoCentering ? 0.15 : 0.08;
+
+                    camera.x = wrapValue(camera.x + dx * centerLerp, world.width);
+                    camera.y = wrapValue(camera.y + dy * centerLerp, world.height);
+                    camera.zoom += (camera.targetZoom - camera.zoom) * zoomLerp;
 
                     camera.x += camera.vx;
                     camera.y += camera.vy;
@@ -2072,6 +2102,10 @@
 
                     if (Math.abs(camera.vx) < 0.001) camera.vx = 0;
                     if (Math.abs(camera.vy) < 0.001) camera.vy = 0;
+
+                    if (camera.isAutoCentering && Math.abs(dx) + Math.abs(dy) < 1.8 && Math.abs(camera.targetZoom - camera.zoom) < 0.01) {
+                        camera.isAutoCentering = false;
+                    }
 
                     currentStarX += (targetStarX - currentStarX) * 0.05;
                     currentStarY += (targetStarY - currentStarY) * 0.05;
@@ -2096,7 +2130,7 @@
                     forceSkyRefresh = false;
                 }
 
-                if (Math.abs(camera.vx) + Math.abs(camera.vy) > 1) {
+                if (!camera.isAutoCentering && Math.abs(camera.vx) + Math.abs(camera.vy) > 1) {
                     particles.push({
                         x: rand(0, viewWidth),
                         y: rand(0, viewHeight),
@@ -2192,6 +2226,20 @@
             if (projectSearch) {
                 projectSearch.addEventListener('input', () => {
                     applyProjectFilter(projectSearch.value);
+                });
+            }
+
+            if (projectDirectory) {
+                projectDirectory.addEventListener('click', (event) => {
+                    const item = event.target.closest('[data-project-index]');
+                    if (!item) {
+                        return;
+                    }
+
+                    const index = Number(item.getAttribute('data-project-index'));
+                    warpJump();
+                    focusProject(index);
+                    openProject(index);
                 });
             }
 
