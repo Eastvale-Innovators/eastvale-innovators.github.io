@@ -1,7 +1,22 @@
 (function () {
+    function ensureSharedHeaderStylesheet() {
+        const stylesheetId = 'ei-shared-header-styles';
+        if (document.getElementById(stylesheetId)) {
+            return;
+        }
+
+        const link = document.createElement('link');
+        link.id = stylesheetId;
+        link.rel = 'stylesheet';
+        link.href = 'assets/css/shared-header.css';
+        document.head.appendChild(link);
+    }
+
     async function loadSharedHeader(mountSelector) {
         const mount = document.querySelector(mountSelector || '#site-header');
         if (!mount) return;
+
+        ensureSharedHeaderStylesheet();
 
         try {
             const response = await fetch('partials/header.html', { cache: 'no-cache' });
