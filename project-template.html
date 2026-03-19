@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="[PROJECT_NAME] - An Eastvale Innovators project focused on [BRIEF_DESCRIPTION].">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.eastvaleinnovators.org/projects/[PROJECT_SLUG].html">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Eastvale Innovators">
+    <meta property="og:title" content="[PROJECT_NAME] - Eastvale Innovators">
+    <meta property="og:description" content="[PROJECT_NAME] - An Eastvale Innovators project focused on [BRIEF_DESCRIPTION].">
+    <meta property="og:url" content="https://www.eastvaleinnovators.org/projects/[PROJECT_SLUG].html">
+    <meta property="og:image" content="https://www.eastvaleinnovators.org/assets/img/[PROJECT_SLUG]-banner.png">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="[PROJECT_NAME] - Eastvale Innovators">
+    <meta name="twitter:description" content="[PROJECT_NAME] - An Eastvale Innovators project focused on [BRIEF_DESCRIPTION].">
+    <meta name="twitter:image" content="https://www.eastvaleinnovators.org/assets/img/[PROJECT_SLUG]-banner.png">
+    
+    <title>[PROJECT_NAME] - Eastvale Innovators</title>
+    <link rel="icon" type="image/png" href="../assets/img/logo_favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ============================================
+           PROJECT-SPECIFIC COLOR CUSTOMIZATION
+           ============================================
+              Set --project-accent to any brand color.
+              The rest of the palette adapts from that choice.
+        */
+        :root {
+            /* Brand Colors - Change these for each project */
+            --project-accent: #4a9eff;         /* Primary project color */
+            --project-accent-strong: #1f6fd6;  /* Darker accent shade */
+            --project-accent-soft: #e9f3ff;    /* Soft accent tint */
+            --project-accent-glow: rgba(74, 158, 255, 0.22);
+
+            /* Global Colors */
+            --text-main: #1f2937;
+            --text-muted: #4b5563;
+            --text-inverse: #ffffff;
+            --bg-page: #ffffff;
+            --bg-soft: #f8fafc;
+            --border-subtle: #dbe6f3;
+
+            /* Gradients */
+            --gradient-primary: linear-gradient(140deg, #ffffff 0%, var(--project-accent-soft) 100%);
+            --gradient-accent: linear-gradient(135deg, var(--project-accent) 0%, var(--project-accent-strong) 100%);
+            
+            /* Transitions */
+            --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            background: var(--bg-page);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: 'Orbitron', 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            margin: 1rem 0;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+        }
+
+        p {
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+
+        a {
+            color: var(--project-accent);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        a:hover {
+            filter: brightness(1.2);
+        }
+
+        /* Scrollbar Styling */
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: auto;
+        }
+
+        html::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        html::-webkit-scrollbar-track {
+            background: var(--bg-soft);
+        }
+
+        html::-webkit-scrollbar-thumb {
+            background: var(--project-accent);
+            border-radius: 4px;
+        }
+
+        html::-webkit-scrollbar-thumb:hover {
+            background: var(--project-accent-strong);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 0;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.88);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        nav.scrolled {
+            padding: 1rem 0;
+            background: rgba(255, 255, 255, 0.96);
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100svh;
+            height: 100svh;
+            padding-top: 0;
+            overflow: hidden;
+            text-align: center;
+            background: var(--gradient-primary);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle at 80% 15%, rgba(74, 158, 255, 0.18), transparent 42%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--project-accent);
+            color: var(--text-inverse);
+            border-radius: 4px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            transition: var(--transition);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px var(--project-accent-glow);
+        }
+
+        /* Content Sections */
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-alternate {
+            background: var(--bg-soft);
+            border-top: 1px solid var(--border-subtle);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .section-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .section-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #f2f8ff 0%, #e4efff 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .section-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .section-text h2 {
+            text-align: left;
+        }
+
+        /* Grid Layout for Features/Stats */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .grid-item {
+            padding: 2rem;
+            background: #ffffff;
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .grid-item:hover {
+            border-color: var(--project-accent);
+            box-shadow: 0 10px 28px var(--project-accent-glow);
+            transform: translateY(-3px);
+        }
+
+        .grid-item h4 {
+            color: var(--project-accent);
+            margin-bottom: 1rem;
+        }
+
+        .grid-item p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        /* Team Section */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .team-member {
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 8px;
+            background: #ffffff;
+            border: 1px solid var(--border-subtle);
+            transition: var(--transition);
+        }
+
+        .team-member:hover {
+            border-color: var(--project-accent);
+            box-shadow: 0 10px 28px var(--project-accent-glow);
+        }
+
+        .team-member-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--project-accent-soft) 0%, #dbeaff 100%);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            border: 2px solid var(--project-accent);
+        }
+
+        .team-member-name {
+            font-weight: 600;
+            margin: 0.5rem 0;
+        }
+
+        .team-member-role {
+            font-size: 0.85rem;
+            color: var(--project-accent);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 1px solid var(--border-subtle);
+            aspect-ratio: 16 / 10;
+            background: linear-gradient(135deg, #f2f8ff 0%, #dceaff 100%);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover {
+            border-color: var(--project-accent);
+            box-shadow: 0 12px 32px var(--project-accent-glow);
+            transform: scale(1.02);
+        }
+
+        .gallery-item:hover img {
+            filter: brightness(1.1);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            padding: 2rem 1.5rem 1.5rem;
+            color: var(--text-inverse);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* Team Link Section */
+        .team-link-section {
+            position: relative;
+            padding: 4rem 2rem;
+            text-align: center;
+            background: #ffffff;
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            margin: 0 auto;
+            max-width: 900px;
+            transition: var(--transition);
+        }
+
+        .team-link-section:hover {
+            border-color: var(--project-accent);
+            box-shadow: 0 12px 30px var(--project-accent-glow);
+            background: #ffffff;
+        }
+
+        .team-link-section h3 {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .team-link-section p {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .team-link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1.2rem 2.5rem;
+            background: var(--gradient-accent);
+            color: var(--text-inverse);
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .team-link-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px var(--project-accent-glow);
+        }
+
+        .team-link-btn::before {
+            content: '👥';
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 1rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 18px;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--project-accent) 0%, transparent 100%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 1.5rem;
+            width: 100%;
+            padding-left: 3.2rem;
+            text-align: left;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 11px;
+            top: 10px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--project-accent);
+            box-shadow: 0 0 0 5px rgba(74, 158, 255, 0.16);
+        }
+
+        .timeline-date {
+            font-weight: 600;
+            color: var(--project-accent);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content {
+            padding: 1.5rem;
+            background: #ffffff;
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+        }
+
+        /* Call to Action */
+        .cta-section {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: var(--bg-soft);
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .cta-section h2 {
+            color: var(--text-main);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--project-accent);
+            color: var(--text-inverse);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px var(--project-accent-glow);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--project-accent);
+            border: 2px solid var(--project-accent);
+        }
+
+        .btn-secondary:hover {
+            background: var(--project-accent-soft);
+        }
+
+        /* Footer */
+        footer {
+            background: #ffffff;
+            color: var(--text-muted);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border-subtle);
+            margin-top: 0;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .section-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .section-image {
+                height: 300px;
+            }
+
+            .timeline::before {
+                left: 12px;
+            }
+
+            .timeline-item {
+                padding-left: 2.6rem;
+            }
+
+            .timeline-item::before {
+                left: 5px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section {
+                padding: 3rem 1rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 1.4rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                min-height: 100svh;
+                height: 100svh;
+            }
+
+            .team-link-section {
+                padding: 2.5rem 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="site-header"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>[PROJECT_NAME]</h1>
+            <p class="hero-subtitle">[PROJECT_TAGLINE]</p>
+            <a href="#overview" class="hero-cta">Explore Project</a>
+        </div>
+    </section>
+
+    <!-- Project Overview -->
+    <section class="section" id="overview">
+        <div class="section-content">
+            <div class="section-text">
+                <h2>Project Overview</h2>
+                <p>[DETAILED_PROJECT_DESCRIPTION_PARAGRAPH_1]</p>
+                <p>[DETAILED_PROJECT_DESCRIPTION_PARAGRAPH_2]</p>
+            </div>
+            <div class="section-image">
+                <img src="../assets/img/[PROJECT_SLUG]-overview.png" alt="[PROJECT_NAME] Overview">
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery/Images Section -->
+    <section class="section" id="gallery">
+        <h2>Project Gallery</h2>
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="../assets/img/[PROJECT_SLUG]-image-1.jpg" alt="[PROJECT_NAME] - Image 1">
+                <div class="gallery-caption">[IMAGE_1_CAPTION]</div>
+            </div>
+            <div class="gallery-item">
+                <img src="../assets/img/[PROJECT_SLUG]-image-2.jpg" alt="[PROJECT_NAME] - Image 2">
+                <div class="gallery-caption">[IMAGE_2_CAPTION]</div>
+            </div>
+            <div class="gallery-item">
+                <img src="../assets/img/[PROJECT_SLUG]-image-3.jpg" alt="[PROJECT_NAME] - Image 3">
+                <div class="gallery-caption">[IMAGE_3_CAPTION]</div>
+            </div>
+            <div class="gallery-item">
+                <img src="../assets/img/[PROJECT_SLUG]-image-4.jpg" alt="[PROJECT_NAME] - Image 4">
+                <div class="gallery-caption">[IMAGE_4_CAPTION]</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features/Goals -->
+    <section class="section section-alternate">
+        <h2>Key Features</h2>
+        <div class="grid">
+            <div class="grid-item">
+                <h4>🎯 Feature 1</h4>
+                <p>[DESCRIPTION_OF_FEATURE_1]</p>
+            </div>
+            <div class="grid-item">
+                <h4>🚀 Feature 2</h4>
+                <p>[DESCRIPTION_OF_FEATURE_2]</p>
+            </div>
+            <div class="grid-item">
+                <h4>💡 Feature 3</h4>
+                <p>[DESCRIPTION_OF_FEATURE_3]</p>
+            </div>
+            <div class="grid-item">
+                <h4>⚙️ Feature 4</h4>
+                <p>[DESCRIPTION_OF_FEATURE_4]</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technologies/Technical Stack -->
+    <section class="section">
+        <h2>Technology Stack</h2>
+        <div class="grid">
+            <div class="grid-item">
+                <h4>Backend</h4>
+                <p>[BACKEND_TECHNOLOGIES]</p>
+            </div>
+            <div class="grid-item">
+                <h4>Frontend</h4>
+                <p>[FRONTEND_TECHNOLOGIES]</p>
+            </div>
+            <div class="grid-item">
+                <h4>Infrastructure</h4>
+                <p>[INFRASTRUCTURE_TECHNOLOGIES]</p>
+            </div>
+            <div class="grid-item">
+                <h4>Tools & Services</h4>
+                <p>[TOOLS_AND_SERVICES]</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Timeline -->
+    <section class="section section-alternate">
+        <h2>Project Timeline</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">[DATE_1]</div>
+                <div class="timeline-content">
+                    <h4>[MILESTONE_1_TITLE]</h4>
+                    <p>[MILESTONE_1_DESCRIPTION]</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">[DATE_2]</div>
+                <div class="timeline-content">
+                    <h4>[MILESTONE_2_TITLE]</h4>
+                    <p>[MILESTONE_2_DESCRIPTION]</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">[DATE_3]</div>
+                <div class="timeline-content">
+                    <h4>[MILESTONE_3_TITLE]</h4>
+                    <p>[MILESTONE_3_DESCRIPTION]</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="section">
+        <h2>Project Team</h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <div class="team-member-avatar">👥</div>
+                <div class="team-member-name">[TEAM_MEMBER_1_NAME]</div>
+                <div class="team-member-role">[ROLE_1]</div>
+                <p>[BRIEF_BIO_1]</p>
+            </div>
+            <div class="team-member">
+                <div class="team-member-avatar">👥</div>
+                <div class="team-member-name">[TEAM_MEMBER_2_NAME]</div>
+                <div class="team-member-role">[ROLE_2]</div>
+                <p>[BRIEF_BIO_2]</p>
+            </div>
+            <div class="team-member">
+                <div class="team-member-avatar">👥</div>
+                <div class="team-member-name">[TEAM_MEMBER_3_NAME]</div>
+                <div class="team-member-role">[ROLE_3]</div>
+                <p>[BRIEF_BIO_3]</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Link Section -->
+    <section class="section section-alternate">
+        <div class="team-link-section">
+            <h3>Join the Team</h3>
+            <p>Want to learn more about the [ASSOCIATED_TEAM_NAME] team or see other projects they're working on?</p>
+            <a href="../teams.html#[TEAM_ANCHOR]" class="team-link-btn">Visit [ASSOCIATED_TEAM_NAME] Team</a>
+        </div>
+    </section>
+
+    <!-- Call to Action / Next Steps -->
+    <section class="cta-section">
+        <h2>Get Involved</h2>
+        <p>Interested in this project? Join us or learn more about how you can contribute.</p>
+        <div class="cta-buttons">
+            <a href="../contact.html" class="btn btn-primary">Contact Us</a>
+            <a href="[PROJECT_GITHUB_LINK]" class="btn btn-secondary">View on GitHub</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Eastvale Innovators. All rights reserved.</p>
+        <p>For more information, visit <a href="../index.html">eastvale-innovators.org</a></p>
+    </footer>
+
+    <script src="assets/js/shared-header.js"></script>
+    <script src="assets/js/site-common.js"></script>
+    <script>
+        loadSharedHeader('#site-header');
+    </script>
+</body>
+</html>
