@@ -1,0 +1,12 @@
+/* Shared site footer styles */
+footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: var(--footer-bg, var(--bg-page, rgba(26, 39, 64, 0.8)));
+    border-top: 1px solid var(--footer-border, var(--border-subtle, rgba(255, 255, 255, 0.1)));
+    color: var(--footer-text, var(--text-muted, rgba(255, 255, 255, 0.6)));
+}
+
+footer p {
+    margin: 0;
+}

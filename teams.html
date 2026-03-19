@@ -448,14 +448,6 @@
             transform: translateY(0) scale(1);
         }
 
-        footer {
-            text-align: center;
-            padding: 3rem 2rem;
-            background: rgba(26, 39, 64, 0.8);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.6);
-        }
-
         /* TILE TRANSITION */
         #tile-transition {
             position: fixed;
@@ -551,9 +543,11 @@
 
     <div id="site-header"></div>
     <script src="assets/js/shared-header.js"></script>
+    <script src="assets/js/shared-footer.js"></script>
     <script src="assets/js/site-common.js"></script>
     <script>
         loadSharedHeader('#site-header');
+        loadSharedFooter('#site-footer');
     </script>
 
     <section class="hero">
@@ -832,9 +826,7 @@
         </div>
     </div>
 
-    <footer>
-        <p>Copyright © Eastvale Innovators 2026</p>
-    </footer>
+    <div id="site-footer"></div>
 
     <div id="tile-transition"></div>
 
