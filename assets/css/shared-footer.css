@@ -32,6 +32,78 @@ footer p {
     white-space: nowrap;
 }
 
+.footer-name-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+    border-radius: 0.5rem;
+    border: 1px solid rgba(37, 99, 235, 0.5);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.footer-name-link:hover {
+    background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4), inset 0 -2px 0 rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.footer-name-link::before {
+    content: "View LinkedIn profile";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    background: rgba(0, 0, 0, 0.95);
+    color: #fff;
+    padding: 0.6rem 0.9rem;
+    border-radius: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 10;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.footer-name-link::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: rgba(0, 0, 0, 0.95);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.footer-name-link:hover::before,
+.footer-name-link:hover::after {
+    opacity: 1;
+}
+
+.footer-link-icon {
+    font-size: 0.9em;
+    display: inline-flex;
+    align-items: center;
+    opacity: 0.9;
+    transition: transform 0.3s ease;
+}
+
+.footer-name-link:hover .footer-link-icon {
+    transform: rotate(45deg) scale(1.15);
+    opacity: 1;
+}
+
 .footer-support {
     margin-top: 0.55rem;
     font-size: 0.9rem;
