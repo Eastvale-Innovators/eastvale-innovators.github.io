@@ -117,17 +117,84 @@
             return;
         }
 
-        accordionSections.forEach((section) => {
-            section.addEventListener('toggle', () => {
-                if (!section.open) {
+        const motionReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        const finishAccordionAnimation = (section) => {
+            section.style.height = '';
+            section.style.overflow = '';
+            section.dataset.animating = 'false';
+        };
+
+        const animateAccordion = (section, openSection) => {
+            if (section.dataset.animating === 'true') {
+                return;
+            }
+
+            const summary = section.querySelector('.mobile-accordion-summary');
+            if (!summary) {
+                return;
+            }
+
+            if (motionReduced) {
+                section.open = openSection;
+                return;
+            }
+
+            section.dataset.animating = 'true';
+
+            const startHeight = section.offsetHeight;
+
+            if (openSection) {
+                section.open = true;
+            }
+
+            const endHeight = openSection ? section.offsetHeight : summary.offsetHeight;
+
+            section.style.overflow = 'hidden';
+            section.style.height = `${startHeight}px`;
+            // Force style flush before transitioning to the target height.
+            section.offsetHeight;
+            section.style.transition = 'height 240ms cubic-bezier(0.4, 0, 0.2, 1)';
+            section.style.height = `${endHeight}px`;
+
+            const onTransitionEnd = (event) => {
+                if (event.propertyName !== 'height') {
                     return;
                 }
 
-                accordionSections.forEach((otherSection) => {
-                    if (otherSection !== section) {
-                        otherSection.open = false;
-                    }
-                });
+                section.removeEventListener('transitionend', onTransitionEnd);
+                section.style.transition = '';
+
+                if (!openSection) {
+                    section.open = false;
+                }
+
+                finishAccordionAnimation(section);
+            };
+
+            section.addEventListener('transitionend', onTransitionEnd);
+        };
+
+        accordionSections.forEach((section) => {
+            const summary = section.querySelector('.mobile-accordion-summary');
+            if (!summary) {
+                return;
+            }
+
+            summary.addEventListener('click', (event) => {
+                event.preventDefault();
+
+                const shouldOpen = !section.open;
+
+                if (shouldOpen) {
+                    accordionSections.forEach((otherSection) => {
+                        if (otherSection !== section && otherSection.open) {
+                            animateAccordion(otherSection, false);
+                        }
+                    });
+                }
+
+                animateAccordion(section, shouldOpen);
             });
         });
 
