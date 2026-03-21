@@ -111,10 +111,25 @@
         const mobileBtn = document.querySelector('.mobile-menu-btn');
         const mobileMenu = document.getElementById('mobileMenu');
         const closeBtn = document.querySelector('.close-menu-btn');
+        const accordionSections = mobileMenu ? mobileMenu.querySelectorAll('.mobile-accordion') : [];
 
         if (!mobileBtn || !mobileMenu || !closeBtn || mobileBtn.dataset.menuBound === 'true') {
             return;
         }
+
+        accordionSections.forEach((section) => {
+            section.addEventListener('toggle', () => {
+                if (!section.open) {
+                    return;
+                }
+
+                accordionSections.forEach((otherSection) => {
+                    if (otherSection !== section) {
+                        otherSection.open = false;
+                    }
+                });
+            });
+        });
 
         const onEscape = (event) => {
             if (event.key === 'Escape') {

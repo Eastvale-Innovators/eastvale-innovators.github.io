@@ -38,21 +38,37 @@
 </nav>
 
 <div class="mobile-menu-overlay" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Mobile navigation menu">
-    <button class="close-menu-btn" type="button" aria-label="Close navigation menu">✕</button>
-    <a href="index.html#about">About</a>
-    <a href="projects.html">Projects</a>
-    <div class="mobile-sub-links">
-        <a href="projects.html" class="mobile-sub-link">VMM</a>
-        <a href="projects.html" class="mobile-sub-link">Roosevelt Connect</a>
-        <a href="projects.html" class="mobile-sub-link">Intelligrader</a>
+    <div class="mobile-menu-panel">
+        <div class="mobile-menu-header">
+            <span class="mobile-menu-title">Menu</span>
+            <button class="close-menu-btn" type="button" aria-label="Close navigation menu">✕</button>
+        </div>
+
+        <a href="index.html#about" class="mobile-main-link">About</a>
+
+        <details class="mobile-accordion">
+            <summary class="mobile-accordion-summary">Projects</summary>
+            <div class="mobile-sub-links" aria-label="Project links">
+                <a href="projects.html" class="mobile-sub-link">All Projects</a>
+                <a href="projects.html" class="mobile-sub-link">VMM</a>
+                <a href="projects.html" class="mobile-sub-link">Roosevelt Connect</a>
+                <a href="projects.html" class="mobile-sub-link">Intelligrader</a>
+            </div>
+        </details>
+
+        <!-- <a href="leadership.html" class="mobile-main-link">Leadership</a> -->
+
+        <details class="mobile-accordion">
+            <summary class="mobile-accordion-summary">Teams</summary>
+            <div class="mobile-sub-links" aria-label="Team links">
+                <a href="teams.html" class="mobile-sub-link">All Teams</a>
+                <a href="teams.html#computer-science" class="mobile-sub-link">Computer Science</a>
+                <a href="teams.html#engineering" class="mobile-sub-link">Engineering</a>
+                <a href="teams.html#medicine" class="mobile-sub-link">Medicine</a>
+                <a href="teams.html#finance" class="mobile-sub-link">Finance</a>
+            </div>
+        </details>
+
+        <a href="contact.html" class="mobile-main-link">Contact</a>
     </div>
-    <!-- <a href="leadership.html">Leadership</a> -->
-    <a href="teams.html">Teams</a>
-    <div class="mobile-sub-links">
-        <a href="teams.html#computer-science" class="mobile-sub-link">Computer Science</a>
-        <a href="teams.html#engineering" class="mobile-sub-link">Engineering</a>
-        <a href="teams.html#medicine" class="mobile-sub-link">Medicine</a>
-        <a href="teams.html#finance" class="mobile-sub-link">Finance</a>
-    </div>
-    <a href="contact.html">Contact</a>
 </div>

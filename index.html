@@ -686,29 +686,56 @@
 
         let tiltGroup = null;
 
+        function centerGearInViewport() {
+            if (!gearGroup || !tiltGroup) return;
+
+            tiltGroup.updateMatrixWorld(true);
+            const box = new THREE.Box3().setFromObject(gearGroup);
+            const centerWorld = box.getCenter(new THREE.Vector3());
+            const centerNdc = centerWorld.clone().project(camera);
+
+            const distance = camera.position.distanceTo(centerWorld);
+            const vFov = THREE.MathUtils.degToRad(camera.fov);
+            const halfHeight = Math.tan(vFov / 2) * distance;
+            const halfWidth = halfHeight * camera.aspect;
+
+            tiltGroup.position.x -= centerNdc.x * halfWidth;
+            tiltGroup.position.y -= centerNdc.y * halfHeight;
+        }
+
         function updateGearLayout() {
             if (!gearGroup || !gearObjRef || gearSize === 0) return;
-            const w = container.clientWidth;
-            const h = container.clientHeight;
+
+            const w = Math.max(container.clientWidth, 1);
+            const h = Math.max(container.clientHeight, 1);
             const isMobile = w < 768;
 
-            // Scale: gear bounding sphere diameter should be about 55% of the
-            // smaller viewport dimension on desktop, 40% on mobile.
-            const targetFraction = isMobile ? 0.40 : 0.55;
-            const scale = (Math.min(w, h) * targetFraction) / gearSize;
+            // Keep the gear centered and scale it to a stable fraction
+            // of the smaller viewport dimension.
+            const targetFraction = isMobile ? 0.40 : 0.52;
+            const targetDiameter = Math.min(w, h) * targetFraction;
+            const scale = targetDiameter / gearSize;
             gearObjRef.scale.setScalar(scale);
 
-            // Position in world space (tiltGroup sits at origin).
-            // On mobile: center, on desktop: offset right+up.
-            gearGroup.position.x = isMobile ? 0 : 30;
-            gearGroup.position.y = isMobile ? 0 : 15;
+            // Always center the gear group after resize.
+            gearGroup.position.set(0, 0, 0);
+            tiltGroup.position.set(0, 0, 0);
 
-            // Pull camera back further on mobile (portrait = narrow FOV),
-            // closer on desktop so the gear fills the right side nicely.
-            const camZ = gearSize * 0.5;
-            camera.position.set(0, 0, camZ + 100);
+            // Fit a sphere to both vertical and horizontal FOV so the
+            // object stays centered and consistently framed across aspect ratios.
+            const radius = (gearSize * scale) / 2;
+            const vFov = THREE.MathUtils.degToRad(camera.fov);
+            const hFov = 2 * Math.atan(Math.tan(vFov / 2) * camera.aspect);
+            const fitDistanceV = radius / Math.tan(vFov / 2);
+            const fitDistanceH = radius / Math.tan(hFov / 2);
+            const fitDistance = Math.max(fitDistanceV, fitDistanceH);
+
+            camera.position.set(0, 0, fitDistance * 1.15);
             camera.lookAt(0, 0, 0);
             camera.updateProjectionMatrix();
+
+            // Correct any visual offset caused by model asymmetry and tilt.
+            centerGearInViewport();
         }
 
         loader.load('assets/models/gear.obj', (gear) => {
@@ -753,6 +780,17 @@
             renderer.setSize(container.clientWidth, container.clientHeight);
             updateGearLayout();
         });
+
+        if (window.ResizeObserver) {
+            const resizeObserver = new ResizeObserver(() => {
+                if (!container) return;
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+                updateGearLayout();
+            });
+            resizeObserver.observe(container);
+        }
 
         // Custom cursor effects
         // const cursor = document.getElementById("cursor-3d");
