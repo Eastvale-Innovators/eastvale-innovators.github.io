@@ -8,7 +8,7 @@
         const link = document.createElement('link');
         link.id = stylesheetId;
         link.rel = 'stylesheet';
-        link.href = 'assets/css/shared-footer.css';
+        link.href = '/assets/css/shared-footer.css';
         document.head.appendChild(link);
     }
 
@@ -18,7 +18,7 @@
         }
 
         try {
-            const response = await fetch('partials/footer.html', { cache: 'no-cache' });
+            const response = await fetch('/partials/footer.html', { cache: 'no-cache' });
             if (!response.ok) {
                 throw new Error('Failed to load shared footer.');
             }
