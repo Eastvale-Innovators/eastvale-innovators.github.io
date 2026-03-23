@@ -923,6 +923,8 @@
                 if (href.startsWith("mailto:")) return;
                 if (href.startsWith("tel:")) return;
                 if (link.target === "_blank") return;
+                if (link.classList.contains("dropdown-toggle")) return;
+                if (link.closest(".dropdown-menu")) return;
 
                 e.preventDefault();
                 startTileNavigation(href);

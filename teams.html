@@ -27,20 +27,22 @@
         }
 
         :root {
-            --primary: #293d62;
-            --accent: #4a9eff;
-            --accent-2: #82c7ff;
-            --accent-glow: rgba(74, 158, 255, 0.3);
-            --text-light: #f5f5f5;
-            --text-muted: rgba(255,255,255,0.72);
-            --bg-dark: #001f3f;
-            --bg-darker: #07111f;
-            --card-bg: rgba(255,255,255,0.04);
-            --card-border: rgba(255,255,255,0.10);
-            --gradient-2: linear-gradient(135deg, #1a2740 0%, #293d62 100%);
+            --primary: #121c2d;
+            --primary-light: #1e2d4a;
+            --primary-dark: #0a0f18;
+            --accent: #3b82f6;
+            --accent-2: #60a5fa;
+            --accent-glow: rgba(59, 130, 246, 0.4);
+            --text-light: #e2e8f0;
+            --text-dark: #0f172a;
+            --text-muted: #94a3b8;
+            --bg-light: #ffffff;
+            --bg-dark: #05080f; /* very dark, almost black navy */
+            --bg-page: #05080f;
+            --card-bg: rgba(8, 12, 22, 0.7);
+            --gradient-1: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            --gradient-2: linear-gradient(135deg, #0a0f18 0%, #121c2d 100%);
             --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            --star-x: 50%;
-            --star-y: 50%;
         }
 
         html {
@@ -149,22 +151,31 @@
         }
 
         /* LEFT NAV */
-        .team-jump{
-            position:sticky;
-            top:120px;
-            height:max-content;
-            display:flex;
-            flex-direction:column;
-            gap:10px;
+        .team-jump {
+            position: sticky;
+            top: 100px;
+            height: max-content;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
 
-            padding:18px;
-            border-radius:20px;
+            padding: 1.5rem;
+            border-radius: 0;
 
-            background:rgba(8,14,28,0.7);
-            backdrop-filter:blur(12px);
+            background: rgba(8, 12, 22, 0.7);
+            backdrop-filter: blur(12px);
 
-            border:1px solid rgba(255,255,255,0.08);
-            box-shadow:0 20px 40px rgba(0,0,0,0.25);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+            /* Sci-fi cut corners */
+            clip-path: polygon(
+                15px 0, 
+                100% 0, 
+                100% calc(100% - 15px), 
+                calc(100% - 15px) 100%, 
+                0 100%, 
+                0 15px
+            );
         }
 
         /* LINKS */
@@ -176,20 +187,27 @@
             font-size:0.9rem;
 
             padding:10px 12px;
-            border-radius:10px;
 
             background:rgba(255,255,255,0.03);
             border:1px solid transparent;
 
             transition:var(--transition);
+            clip-path: polygon(
+                5px 0, 
+                100% 0, 
+                100% calc(100% - 5px), 
+                calc(100% - 5px) 100%, 
+                0 100%, 
+                0 5px
+            );
         }
 
         /* HOVER */
-        .team-jump a:hover{
-            color:white;
-            background:rgba(74,158,255,0.15);
-            border-color:rgba(74,158,255,0.4);
-            transform:translateX(4px);
+        .team-jump a:hover,
+        .team-jump a.active {
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--accent-2);
+            padding-left: 1.25rem;
         }
 
         /* PARTICLE BACKGROUND */
@@ -307,13 +325,22 @@
         .team-member {
             background: var(--card-bg);
             backdrop-filter: blur(12px);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
+            border: 1px solid rgba(59, 130, 246, 0.15);
+            border-radius: 0;
             overflow: hidden;
             transition: var(--transition);
             position: relative;
             transform-style: preserve-3d;
             will-change: transform;
+            /* Sci-fi cut corners */
+            clip-path: polygon(
+                15px 0, 
+                100% 0, 
+                100% calc(100% - 15px), 
+                calc(100% - 15px) 100%, 
+                0 100%, 
+                0 15px
+            );
         }
 
         .team-head {
@@ -342,9 +369,9 @@
 
         .team-head:hover,
         .team-member:hover {
-            transform: translateY(-10px);
-            border-color: rgba(74,158,255,0.42);
-            box-shadow: 0 24px 70px rgba(74,158,255,0.22);
+            transform: translateY(-8px);
+            border-color: rgba(59, 130, 246, 0.4);
+            box-shadow: 0 20px 50px rgba(59, 130, 246, 0.15);
         }
 
         .team-head-layout {
@@ -396,9 +423,8 @@
         .head-badge {
             display: inline-block;
             padding: 0.42rem 0.95rem;
-            background: rgba(74, 158, 255, 0.16);
-            border: 1px solid rgba(74,158,255,0.5);
-            border-radius: 15px;
+            background: rgba(59, 130, 246, 0.16);
+            border: 1px solid rgba(59, 130, 246, 0.5);
             color: var(--accent-2);
             font-size: 0.72rem;
             font-weight: 700;
@@ -406,6 +432,14 @@
             letter-spacing: 1px;
             margin-bottom: 0.9rem;
             width: fit-content;
+            clip-path: polygon(
+                5px 0, 
+                100% 0, 
+                100% calc(100% - 5px), 
+                calc(100% - 5px) 100%, 
+                0 100%, 
+                0 5px
+            );
         }
 
         .member-bio {
@@ -429,12 +463,19 @@
 
         .skill-tags span {
             padding: 0.45rem 0.8rem;
-            border-radius: 999px;
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.08);
             color: rgba(255,255,255,0.82);
             font-size: 0.78rem;
             font-weight: 600;
+            clip-path: polygon(
+                5px 0, 
+                100% 0, 
+                100% calc(100% - 5px), 
+                calc(100% - 5px) 100%, 
+                0 100%, 
+                0 5px
+            );
         }
 
         .reveal {
@@ -554,8 +595,8 @@
         <img src="assets/img/new_innovators.png" alt="Teams" class="hero-img">
         <div class="hero-grid"></div>
         <div class="hero-content">
-            <h1>Our Teams</h1>
-            <p class="hero-subtitle">Innovating across disciplines, collaborating across specialties, and building the future together.</p>
+            <h1>Teams</h1>
+            <p class="hero-subtitle">Browse every team from the directory and explore department members on the right.</p>
         </div>
     </section>
 
@@ -983,6 +1024,8 @@
                 if (href.startsWith("mailto:")) return;
                 if (href.startsWith("tel:")) return;
                 if (link.target === "_blank") return;
+                if (link.classList.contains("dropdown-toggle")) return;
+                if (link.closest(".dropdown-menu")) return;
 
                 e.preventDefault();
                 startTileNavigation(href);

@@ -67,6 +67,7 @@
 
             toggle.addEventListener('keydown', (event) => {
                 if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
                     openDropdown();
                 }
                 if (event.key === 'Escape') {
@@ -74,6 +75,17 @@
                     closeDropdown();
                     toggle.focus();
                 }
+            });
+
+            toggle.addEventListener('click', (event) => {
+                event.preventDefault();
+                const isOpen = dropdown.classList.contains('open');
+                if (isOpen) {
+                    cancelScheduledClose();
+                    closeDropdown();
+                    return;
+                }
+                openDropdown();
             });
 
             menu.addEventListener('keydown', (event) => {
@@ -86,6 +98,22 @@
 
             dropdown.dataset.dropdownBound = 'true';
         });
+
+        if (window.__eiDropdownOutsideBound !== true) {
+            document.addEventListener('click', (event) => {
+                if (event.target.closest('.nav-dropdown')) {
+                    return;
+                }
+                document.querySelectorAll('.nav-dropdown.open').forEach((dropdown) => {
+                    dropdown.classList.remove('open');
+                    const toggle = dropdown.querySelector('.dropdown-toggle');
+                    if (toggle) {
+                        toggle.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            });
+            window.__eiDropdownOutsideBound = true;
+        }
     }
 
     function initNavbarScroll() {

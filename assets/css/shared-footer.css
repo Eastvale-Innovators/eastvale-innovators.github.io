@@ -100,12 +100,19 @@ footer {
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    padding: 0.4rem 1.2rem 0.4rem 0.4rem;
+    padding: 0.55rem 1rem 0.55rem 0.55rem;
     border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 50px;
     text-decoration: none;
     transition: all 0.3s ease;
     background: rgba(255, 255, 255, 0.03);
+    clip-path: polygon(
+        10px 0,
+        100% 0,
+        100% calc(100% - 10px),
+        calc(100% - 10px) 100%,
+        0 100%,
+        0 10px
+    );
 }
 
 .creator-card:hover {
@@ -115,9 +122,16 @@ footer {
 }
 
 .creator-img {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    clip-path: polygon(
+        7px 0,
+        100% 0,
+        100% calc(100% - 7px),
+        calc(100% - 7px) 100%,
+        0 100%,
+        0 7px
+    );
     object-fit: cover;
 }
 
@@ -125,6 +139,30 @@ footer {
     font-size: 0.95rem;
     font-weight: 500;
     color: var(--footer-text-strong, rgba(255, 255, 255, 0.85));
+}
+
+.footer-support {
+    display: inline-block;
+    font-size: 0.86rem;
+    text-decoration: none;
+    color: rgba(180, 225, 255, 0.95);
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    background: rgba(59, 130, 246, 0.12);
+    padding: 0.5rem 0.85rem;
+    clip-path: polygon(
+        8px 0,
+        100% 0,
+        100% calc(100% - 8px),
+        calc(100% - 8px) 100%,
+        0 100%,
+        0 8px
+    );
+    transition: all 0.25s ease;
+}
+
+.footer-support:hover {
+    background: rgba(59, 130, 246, 0.22);
+    transform: translateY(-2px);
 }
 
 @media (max-width: 768px) {
