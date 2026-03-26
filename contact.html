@@ -370,6 +370,35 @@
             box-shadow: 0 10px 30px var(--accent-glow);
         }
 
+        .social-btn[aria-disabled="true"] {
+            opacity: 0.55;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .form-hint {
+            margin-top: 0.9rem;
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 0.9rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-status {
+            margin-top: 1rem;
+            min-height: 1.4rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-status.success {
+            color: #9be6b1;
+        }
+
         .contact-layout{
             display:grid;
             grid-template-columns: 1fr 1fr;
@@ -407,6 +436,16 @@
             border-color:var(--accent);
             background: rgba(255, 255, 255, 0.08);
             box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        select option {
+            background: #0f1d33;
+            color: #f5f8ff;
+        }
+
+        select option:checked {
+            background: #1f4f88;
+            color: #ffffff;
         }
 
         #tile-transition {
@@ -481,25 +520,20 @@
         }
 
         @media (max-width: 768px) {
-            .projects-container {
-                padding: 3rem 1.5rem;
-            }
-
-            .project-header,
-            .project-content {
-                padding: 2rem 1.5rem;
-            }
-
-            .screenshots-grid {
-                grid-template-columns: 1fr;
-            }
-
             .hero {
                 padding-top: 3rem;
             }
 
             .contact-layout{
                 grid-template-columns:1fr;
+            }
+
+            .contact-container {
+                padding: 2rem 1.25rem;
+            }
+
+            .social-links {
+                gap: 1rem;
             }
         }
 
@@ -565,7 +599,7 @@
                 </div>
                 <div class="social-links">
                     <!-- Instagram -->
-                    <a href="#" class="social-btn" aria-label="Instagram">
+                    <a href="https://www.instagram.com/eastvale_innovators/" class="social-btn" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
                         <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor">
                             <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 2A3.75 3.75 0 0 0 4 7.75v8.5A3.75 3.75 0 0 0 7.75 20h8.5A3.75 3.75 0 0 0 20 16.25v-8.5A3.75 3.75 0 0 0 16.25 4h-8.5z"/>
                             <path d="M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/>
@@ -574,14 +608,14 @@
                     </a>
 
                     <!-- LinkedIn -->
-                    <a href="#" class="social-btn" aria-label="LinkedIn">
+                    <a href="#" class="social-btn" aria-label="LinkedIn profile coming soon" aria-disabled="true" title="LinkedIn profile coming soon">
                         <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor">
                             <path d="M4.98 3.5C4.98 4.88 3.86 6 2.48 6 1.1 6 0 4.88 0 3.5S1.1 1 2.48 1c1.38 0 2.5 1.12 2.5 2.5zM0 8h5v16H0V8zm7.5 0h4.7v2.2h.1c.65-1.2 2.25-2.5 4.65-2.5 4.98 0 5.9 3.28 5.9 7.55V24h-5v-7.5c0-1.78-.03-4.08-2.48-4.08-2.48 0-2.86 1.94-2.86 3.95V24h-5V8z"/>
                         </svg>
                     </a>
 
                     <!-- Twitter / X -->
-                    <a href="#" class="social-btn" aria-label="Twitter">
+                    <a href="#" class="social-btn" aria-label="X profile coming soon" aria-disabled="true" title="X profile coming soon">
                         <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor">
                             <path d="M22 5.8c-.8.4-1.6.6-2.5.8.9-.6 1.5-1.4 1.8-2.4-.8.5-1.8.9-2.8 1.1A4.5 4.5 0 0 0 12 9.1c0 .4 0 .8.1 1.1C8.3 10 5.1 8.3 2.9 5.7c-.4.7-.6 1.4-.6 2.2 0 1.5.8 2.9 2 3.7-.7 0-1.4-.2-2-.5v.1c0 2.1 1.5 3.9 3.5 4.3-.4.1-.8.2-1.2.2-.3 0-.6 0-.9-.1.6 1.8 2.4 3.2 4.5 3.2A9 9 0 0 1 2 20.3a12.8 12.8 0 0 0 7 2c8.4 0 13-7 13-13v-.6c.9-.6 1.6-1.4 2.2-2.3z"/>
                         </svg>
@@ -595,29 +629,31 @@
                 <form id="contact-form">
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input type="text" id="name" required placeholder="Your Name">
+                        <input type="text" id="name" name="name" autocomplete="name" maxlength="120" required placeholder="Your Name">
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" required placeholder="your.email@example.com">
+                        <input type="email" id="email" name="email" autocomplete="email" inputmode="email" maxlength="160" required placeholder="your.email@example.com">
                     </div>
                     <div class="form-group">
                         <label for="topic">What is this about?</label>
-                        <select id="topic">
-                            <option>General Question</option>
-                            <option>Joining the Club</option>
-                            <option>Project Collaboration</option>
-                            <option>Sponsorship / Partnership</option>
-                            <option>Other</option>
+                        <select id="topic" name="topic" required>
+                            <option value="General Question">General Question</option>
+                            <option value="Joining the Club">Joining the Club</option>
+                            <option value="Project Collaboration">Project Collaboration</option>
+                            <option value="Sponsorship / Partnership">Sponsorship / Partnership</option>
+                            <option value="Other">Other</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="message">Message</label>
-                        <textarea id="message" required placeholder="Tell us more..."></textarea>
+                        <textarea id="message" name="message" rows="6" maxlength="5000" required placeholder="Tell us more..."></textarea>
                     </div>
                     <button type="submit" class="submit-btn">
                         Send Message
                     </button>
+                    <p class="form-hint">Submitting opens your email app with a pre-filled draft to our team.</p>
+                    <p id="form-status" class="form-status" aria-live="polite"></p>
                 </form>
             </div>
         </div>
@@ -628,12 +664,53 @@
     <div id="tile-transition"></div>
     <script>
 
-        // Form submission
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for your message! We will get back to you soon.');
-            this.reset();
-        });
+        const contactForm = document.getElementById("contact-form");
+        const contactStatus = document.getElementById("form-status");
+
+        if (contactForm) {
+            contactForm.addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                if (!contactForm.reportValidity()) {
+                    return;
+                }
+
+                const submitButton = contactForm.querySelector(".submit-btn");
+                if (submitButton) {
+                    submitButton.textContent = "Opening Email...";
+                }
+
+                const name = document.getElementById("name").value.trim();
+                const email = document.getElementById("email").value.trim();
+                const topic = document.getElementById("topic").value;
+                const message = document.getElementById("message").value.trim();
+
+                const subject = `[${topic}] Message from ${name}`;
+                const body = [
+                    `Name: ${name}`,
+                    `Email: ${email}`,
+                    "",
+                    "Message:",
+                    message,
+                    "",
+                    "Sent from eastvaleinnovators.org/contact.html"
+                ].join("\n");
+
+                const mailtoUrl = `mailto:info@eastvaleinnovators.org?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                window.location.href = mailtoUrl;
+
+                if (contactStatus) {
+                    contactStatus.textContent = "Your email draft is ready. If it did not open, email us directly at info@eastvaleinnovators.org.";
+                    contactStatus.classList.add("success");
+                }
+
+                if (submitButton) {
+                    submitButton.textContent = "Send Message";
+                }
+
+                contactForm.reset();
+            });
+        }
 
         const tileContainer = document.getElementById("tile-transition");
         const TILE_ROWS = 12;
