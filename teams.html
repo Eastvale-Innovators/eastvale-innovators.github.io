@@ -253,20 +253,6 @@
             margin-bottom: 2.8rem;
         }
 
-        .team-kicker {
-            display: inline-block;
-            padding: 0.45rem 1rem;
-            margin-bottom: 1rem;
-            border-radius: 999px;
-            background: rgba(74,158,255,0.12);
-            border: 1px solid rgba(74,158,255,0.35);
-            color: var(--accent);
-            font-weight: 700;
-            font-size: 0.78rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-        }
-
         .team-title {
             font-size: clamp(2rem, 4vw, 3rem);
             margin-bottom: 0.9rem;
@@ -415,28 +401,6 @@
             line-height: 1.7;
         }
 
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.55rem;
-            justify-content: center;
-            margin-top: 1rem;
-        }
-
-        .team-head .skill-tags {
-            justify-content: flex-start;
-        }
-
-        .skill-tags span {
-            padding: 0.45rem 0.8rem;
-            border-radius: 999px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.08);
-            color: rgba(255,255,255,0.82);
-            font-size: 0.78rem;
-            font-weight: 600;
-        }
-
         .reveal {
             opacity: 0;
             transform: translateY(40px) scale(0.98);
@@ -487,10 +451,6 @@
                 align-items: center;
             }
 
-            .team-head .skill-tags {
-                justify-content: center;
-            }
-        }
 
         @media (max-width: 768px) {
             .hero {
@@ -570,7 +530,6 @@
         <div class="teams-container">
             <section class="team-section reveal" id="computer-science">
                 <div class="team-header">
-                    <span class="team-kicker">Discipline</span>
                     <h2 class="team-title">Eastvale Innovators Team</h2>
                     <p class="team-description">Core leadership team guiding strategy, operations, and organizational direction.</p>
                 </div>
@@ -584,12 +543,6 @@
                                 <h3>Member Name</h3>
                                 <p class="role">President</p>
                                 <p class="member-bio">Guides software strategy, project architecture, and the team’s technical direction across applications, AI, and full-stack systems.</p>
-                                <div class="skill-tags">
-                                    <span>AI</span>
-                                    <span>Software</span>
-                                    <span>Full Stack</span>
-                                    <span>Leadership</span>
-                                </div>
                             </div>
                         </div>
                     </article>
@@ -599,10 +552,6 @@
                         <div class="member-info">
                             <h3>Member Name</h3>
                             <p class="role">VP</p>
-                            <div class="skill-tags">
-                                <span>Backend</span>
-                                <span>APIs</span>
-                            </div>
                         </div>
                     </article>
 
@@ -611,10 +560,6 @@
                         <div class="member-info">
                             <h3>Member Name</h3>
                             <p class="role">Treasurer</p>
-                            <div class="skill-tags">
-                                <span>Web</span>
-                                <span>UI/UX</span>
-                            </div>
                         </div>
                     </article>
 
@@ -623,10 +568,6 @@
                         <div class="member-info">
                             <h3>Member Name</h3>
                             <p class="role">Secretary</p>
-                            <div class="skill-tags">
-                                <span>Models</span>
-                                <span>Data</span>
-                            </div>
                         </div>
                     </article>
                 </div>
@@ -634,7 +575,6 @@
 
             <section class="team-section reveal" id="engineering">
                 <div class="team-header">
-                    <span class="team-kicker">Discipline</span>
                     <h2 class="team-title">Roosevelt Connect Team</h2>
                     <p class="team-description">Engineering team focused on building reliable software solutions for Roosevelt Connect initiatives.</p>
                 </div>
@@ -642,18 +582,12 @@
                 <div class="team-grid">
                     <article class="team-head tilt-card">
                         <div class="team-head-layout">
-                            <img src="assets/img/OldImages/nil.jpg" alt="Engineering Team Lead" class="member-image" loading="lazy" decoding="async">
+                            <img src="assets/img/praneetd.jpg" alt="Engineering Team Lead" class="member-image" loading="lazy" decoding="async">
                             <div class="member-info">
                                 <span class="head-badge">Department Head</span>
-                                <h3>Member Name</h3>
+                                <h3>Praneet Dumpa</h3>
                                 <p class="role">Principal Engineer</p>
                                 <p class="member-bio">Leads the team in turning concepts into functional builds through design thinking, prototyping, testing, and iteration.</p>
-                                <div class="skill-tags">
-                                    <span>CAD</span>
-                                    <span>Systems</span>
-                                    <span>Prototyping</span>
-                                    <span>Research</span>
-                                </div>
                             </div>
                         </div>
                     </article>
@@ -661,36 +595,24 @@
                     <article class="team-member tilt-card">
                         <img src="assets/img/OldImages/nil.jpg" alt="Mechanical Engineer" class="member-image" loading="lazy" decoding="async">
                         <div class="member-info">
-                            <h3>Member Name</h3>
-                            <p class="role">Software Engineer</p>
-                            <div class="skill-tags">
-                                <span>Mechanics</span>
-                                <span>Builds</span>
-                            </div>
+                            <h3>Devom Brahmbhatt</h3>
+                            <p class="role">Full-Stack Engineer</p>
                         </div>
                     </article>
 
                     <article class="team-member tilt-card">
                         <img src="assets/img/OldImages/nil.jpg" alt="Electrical Engineer" class="member-image" loading="lazy" decoding="async">
                         <div class="member-info">
-                            <h3>Member Name</h3>
-                            <p class="role">Software Engineer</p>
-                            <div class="skill-tags">
-                                <span>Circuits</span>
-                                <span>Systems</span>
-                            </div>
+                            <h3>Satya Lakkaraju</h3>
+                            <p class="role">Full-Stack Engineer</p>
                         </div>
                     </article>
 
                     <article class="team-member tilt-card">
                         <img src="assets/img/OldImages/nil.jpg" alt="Design Engineer" class="member-image" loading="lazy" decoding="async">
                         <div class="member-info">
-                            <h3>Member Name</h3>
-                            <p class="role">Software Engineer</p>
-                            <div class="skill-tags">
-                                <span>Design</span>
-                                <span>Iteration</span>
-                            </div>
+                            <h3>Jacob Wu</h3>
+                            <p class="role">Full-Stack Engineer</p>
                         </div>
                     </article>
                 </div>
@@ -698,7 +620,6 @@
 
             <section class="team-section reveal" id="medicine">
                 <div class="team-header">
-                    <span class="team-kicker">Discipline</span>
                     <h2 class="team-title">Intelligrader Team</h2>
                     <p class="team-description">Technical team driving Intelligrader platform development and software delivery.</p>
                 </div>
@@ -712,12 +633,6 @@
                                 <h3>Member Name</h3>
                                 <p class="role">Principal Engineer</p>
                                 <p class="member-bio">Coordinates research initiatives, health-focused collaboration, and programs that connect medicine with innovation and community service.</p>
-                                <div class="skill-tags">
-                                    <span>Research</span>
-                                    <span>Health</span>
-                                    <span>Outreach</span>
-                                    <span>Leadership</span>
-                                </div>
                             </div>
                         </div>
                     </article>
@@ -727,10 +642,6 @@
                         <div class="member-info">
                             <h3>Member Name</h3>
                             <p class="role">Software Engineer</p>
-                            <div class="skill-tags">
-                                <span>Lab Work</span>
-                                <span>Analysis</span>
-                            </div>
                         </div>
                     </article>
 
@@ -739,10 +650,6 @@
                         <div class="member-info">
                             <h3>Member Name</h3>
                             <p class="role">Software Engineer</p>
-                            <div class="skill-tags">
-                                <span>Clinical</span>
-                                <span>Care</span>
-                            </div>
                         </div>
                     </article>
 
@@ -751,10 +658,6 @@
                         <div class="member-info">
                             <h3>Member Name</h3>
                             <p class="role">Software Engineer</p>
-                            <div class="skill-tags">
-                                <span>Community</span>
-                                <span>Education</span>
-                            </div>
                         </div>
                     </article>
                 </div>
@@ -762,7 +665,6 @@
 
             <section class="team-section reveal" id="finance">
                 <div class="team-header">
-                    <span class="team-kicker">Discipline</span>
                     <h2 class="team-title">Virtual Medical Missions Team</h2>
                     <p class="team-description">Mission-driven team coordinating technology and operations for virtual medical outreach.</p>
                 </div>
@@ -776,12 +678,6 @@
                                 <h3>Member Name</h3>
                                 <p class="role">President</p>
                                 <p class="member-bio">Oversees budgeting, planning, fundraising strategy, and operational support to keep initiatives ambitious and sustainable.</p>
-                                <div class="skill-tags">
-                                    <span>Budgeting</span>
-                                    <span>Strategy</span>
-                                    <span>Planning</span>
-                                    <span>Operations</span>
-                                </div>
                             </div>
                         </div>
                     </article>
@@ -791,10 +687,6 @@
                         <div class="member-info">
                             <h3>Member Name</h3>
                             <p class="role">CTO</p>
-                            <div class="skill-tags">
-                                <span>Forecasting</span>
-                                <span>Reports</span>
-                            </div>
                         </div>
                     </article>
 
@@ -803,10 +695,6 @@
                         <div class="member-info">
                             <h3>Member Name</h3>
                             <p class="role">Engineer</p>
-                            <div class="skill-tags">
-                                <span>Budgets</span>
-                                <span>Ops</span>
-                            </div>
                         </div>
                     </article>
 
@@ -815,10 +703,6 @@
                         <div class="member-info">
                             <h3>Member Name</h3>
                             <p class="role">Engineer</p>
-                            <div class="skill-tags">
-                                <span>Events</span>
-                                <span>Growth</span>
-                            </div>
                         </div>
                     </article>
                 </div>
