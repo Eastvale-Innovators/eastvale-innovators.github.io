@@ -115,6 +115,7 @@
             margin-bottom: 1rem;
             line-height: 1.1;
             background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -359,6 +360,14 @@
             z-index: 1;
         }
 
+        .team-member .member-info {
+            min-height: 8.4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 0.35rem;
+        }
+
         .team-head .member-info {
             display: flex;
             flex-direction: column;
@@ -371,6 +380,20 @@
             font-size: 1.35rem;
             margin-bottom: 0.4rem;
             color: var(--text-light);
+        }
+
+        .team-member .member-info h3 {
+            min-height: 3.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.2;
+            margin-bottom: 0;
+        }
+
+        .team-member .member-image {
+            height: 300px;
+            min-height: 300px;
         }
 
         .member-info .role {
@@ -450,6 +473,7 @@
                 text-align: center;
                 align-items: center;
             }
+        }
 
 
         @media (max-width: 768px) {
@@ -593,7 +617,7 @@
                     </article>
 
                     <article class="team-member tilt-card">
-                        <img src="assets/img/OldImages/nil.jpg" alt="Devom Brahmbhatt" class="member-image" loading="lazy" decoding="async">
+                        <img src="assets/img/devomb.jpg" alt="Devom Brahmbhatt" class="member-image" loading="lazy" decoding="async">
                         <div class="member-info">
                             <h3>Devom Brahmbhatt</h3>
                             <p class="role">Full-Stack Engineer</p>
@@ -601,7 +625,7 @@
                     </article>
 
                     <article class="team-member tilt-card">
-                        <img src="assets/img/OldImages/nil.jpg" alt="Satya Lakkaraju" class="member-image" loading="lazy" decoding="async">
+                        <img src="assets/img/satyal.jpg" alt="Satya Lakkaraju" class="member-image" loading="lazy" decoding="async">
                         <div class="member-info">
                             <h3>Satya Lakkaraju</h3>
                             <p class="role">Full-Stack Engineer</p>
@@ -609,7 +633,7 @@
                     </article>
 
                     <article class="team-member tilt-card">
-                        <img src="assets/img/OldImages/nil.jpg" alt="Jacob Wu" class="member-image" loading="lazy" decoding="async">
+                        <img src="assets/img/jacobw.jpg" alt="Jacob Wu" class="member-image" loading="lazy" decoding="async">
                         <div class="member-info">
                             <h3>Jacob Wu</h3>
                             <p class="role">Full-Stack Engineer</p>
