@@ -1,4 +1,108 @@
 (function () {
+    function isProjectTemplatePage() {
+        return window.location.pathname.endsWith('project-template.html');
+    }
+
+    function ensurePremiumBodyClass() {
+        if (!document.body || isProjectTemplatePage()) {
+            return false;
+        }
+
+        document.body.classList.add('ei-site');
+        return true;
+    }
+
+    function markRevealTargets() {
+        const targets = document.querySelectorAll([
+            '.hero-content',
+            '.section-header',
+            '.contact-intro',
+            '.projects-intro',
+            '.year-badge',
+            '.about-card',
+            '.info-card',
+            '.contact-container',
+            '.president-card',
+            '.exec-card',
+            '.dept-card',
+            '.advisor-card',
+            '.team-section',
+            '.team-head',
+            '.team-member',
+            '.section-content',
+            '.section-text',
+            '.section-image',
+            '.team-link-section',
+            '.cta-section',
+            '.sky-ui-hint',
+            '.sky-tool-bar',
+            '.social-links',
+            '.tile.reveal',
+            '.fade-section',
+        ].join(', '));
+
+        return Array.from(targets).filter((element) => {
+            if (element.closest('.mobile-menu-overlay') || element.closest('.dropdown-menu')) {
+                return false;
+            }
+
+            return !element.classList.contains('ei-reveal');
+        });
+    }
+
+    function initRevealAnimations() {
+        if (window.__eiRevealBound) {
+            return;
+        }
+
+        if (!ensurePremiumBodyClass()) {
+            return;
+        }
+
+        const revealTargets = markRevealTargets();
+        if (revealTargets.length === 0) {
+            document.body.classList.add('ei-ready');
+            window.__eiRevealBound = true;
+            return;
+        }
+
+        revealTargets.forEach((element, index) => {
+            element.classList.add('ei-reveal');
+            element.style.setProperty('--ei-reveal-delay', `${Math.min(index * 55, 360)}ms`);
+        });
+
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!('IntersectionObserver' in window) || prefersReducedMotion) {
+            revealTargets.forEach((element) => {
+                element.classList.add('is-visible');
+            });
+            document.body.classList.add('ei-ready');
+            window.__eiRevealBound = true;
+            return;
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) {
+                    return;
+                }
+
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+            });
+        }, {
+            threshold: 0.14,
+            rootMargin: '0px 0px -8% 0px',
+        });
+
+        revealTargets.forEach((element) => {
+            observer.observe(element);
+        });
+
+        document.body.classList.add('ei-ready');
+        window.__eiRevealBound = true;
+    }
+
     function setMenuOpenState(mobileBtn, mobileMenu, isOpen) {
         mobileMenu.classList.toggle('active', isOpen);
         mobileBtn.setAttribute('aria-expanded', String(isOpen));
@@ -233,9 +337,11 @@
     }
 
     function initializeSharedSiteUI() {
+        ensurePremiumBodyClass();
         initNavbarScroll();
         initDropdownMenus();
         initMobileMenu();
+        initRevealAnimations();
     }
 
     document.addEventListener('shared-header-loaded', initializeSharedSiteUI);
