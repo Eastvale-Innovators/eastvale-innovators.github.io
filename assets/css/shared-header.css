@@ -101,11 +101,12 @@ nav.scrolled {
 }
 
 .nav-container {
-    max-width: 1400px;
+    max-width: 1600px;
     margin: 0 auto;
     padding: 0 2rem;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    column-gap: 1.5rem;
     align-items: center;
 }
 
@@ -119,6 +120,7 @@ nav.scrolled {
     letter-spacing: -0.5px;
     text-decoration: none;
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    justify-self: start;
 }
 
 .logo:hover {
@@ -129,6 +131,16 @@ nav.scrolled {
     display: flex;
     gap: 3rem;
     list-style: none;
+    margin: 0;
+    padding: 0;
+    justify-self: center;
+}
+
+.nav-actions {
+    justify-self: end;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
 }
 
 .nav-links a {
@@ -532,6 +544,10 @@ nav.scrolled {
 
     .nav-links {
         display: none;
+    }
+
+    .nav-container {
+        grid-template-columns: minmax(0, 1fr) auto;
     }
 
     .mobile-menu-btn {
