@@ -29,7 +29,7 @@
         :root {
             --primary: #293d62;
             --accent: #4a9eff;
-            --accent-glow: rgba(74, 158, 255, 0.3);
+            --accent-glow: rgba(var(--accent-rgb), 0.3);
             --text-light: #f5f5f5;
             --bg-dark: #001f3f;
             --gradient-2: linear-gradient(135deg, #1a2740 0%, #293d62 100%);
@@ -197,8 +197,8 @@
         }
 
         .contact-container:hover {
-            border-color: rgba(74, 158, 255, 0.3);
-            box-shadow: 0 20px 60px rgba(74, 158, 255, 0.2);
+            border-color: rgba(var(--accent-rgb), 0.3);
+            box-shadow: 0 20px 60px rgba(var(--accent-rgb), 0.2);
         }
 
         .form-group {
@@ -308,8 +308,8 @@
 
         .info-card:hover {
             transform: translateY(-8px);
-            border-color: rgba(74, 158, 255, 0.5);
-            box-shadow: 0 15px 40px rgba(74, 158, 255, 0.2);
+            border-color: rgba(var(--accent-rgb), 0.5);
+            box-shadow: 0 15px 40px rgba(var(--accent-rgb), 0.2);
         }
 
         .info-card h3 {
@@ -454,7 +454,7 @@
             z-index: 20000;
             pointer-events: none;
             display: grid;
-            background: black; /* prevents page flash */
+            background: transparent;
         }
 
         .tile {
@@ -777,19 +777,19 @@
             }, tiles.length * 2 + 200);
         }
 
-        document.querySelectorAll("a").forEach(link => {
-            link.addEventListener("click", e => {
-                const href = link.getAttribute("href");
+        document.addEventListener("click", e => {
+            const link = e.target.closest("a");
+            if (!link) return;
 
-                if (!href) return;
-                if (href.startsWith("#")) return;
-                if (href.startsWith("mailto:")) return;
-                if (href.startsWith("tel:")) return;
-                if (link.target === "_blank") return;
+            const href = link.getAttribute("href");
+            if (!href) return;
+            if (href.includes("#")) return;
+            if (href.startsWith("mailto:")) return;
+            if (href.startsWith("tel:")) return;
+            if (link.target === "_blank") return;
 
-                e.preventDefault();
-                startTileNavigation(href);
-            });
+            e.preventDefault();
+            startTileNavigation(href);
         });
 
         document.addEventListener("DOMContentLoaded", () => {
@@ -799,6 +799,15 @@
                 revealTiles();
             }, 120);
         });
+
+        // If DOMContentLoaded has already fired (script loaded after DOM), run immediately
+        if (document.readyState !== 'loading') {
+            createTiles();
+            tiles.forEach(tile => tile.classList.add("active"));
+            setTimeout(() => {
+                revealTiles();
+            }, 120);
+        }
 
         const heroSection = document.getElementById("hero");
 
