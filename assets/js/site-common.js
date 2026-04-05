@@ -232,10 +232,39 @@
         mobileBtn.dataset.menuBound = 'true';
     }
 
+    function applyTheme(theme) {
+        const root = document.documentElement;
+        root.dataset.theme = theme;
+        localStorage.setItem('eiTheme', theme);
+
+        const toggleButton = document.querySelector('.theme-toggle-btn');
+        if (toggleButton) {
+            toggleButton.textContent = theme === 'dark' ? '☀' : '🌙';
+            toggleButton.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`);
+        }
+    }
+
+    function initThemeToggle() {
+        const storedTheme = localStorage.getItem('eiTheme');
+        const defaultTheme = storedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        applyTheme(defaultTheme);
+
+        const themeButton = document.querySelector('.theme-toggle-btn');
+        if (!themeButton) {
+            return;
+        }
+
+        themeButton.addEventListener('click', () => {
+            const currentTheme = document.documentElement.dataset.theme || defaultTheme;
+            applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+        });
+    }
+
     function initializeSharedSiteUI() {
         initNavbarScroll();
         initDropdownMenus();
         initMobileMenu();
+        initThemeToggle();
     }
 
     document.addEventListener('shared-header-loaded', initializeSharedSiteUI);

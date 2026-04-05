@@ -1,4 +1,76 @@
 /* Shared header/nav styles for all pages */
+:root {
+    --bg-page: #001f3f;
+    --bg-dark: #001f3f;
+    --bg-page-soft: rgba(26, 39, 64, 0.92);
+    --nav-bg: rgba(26, 39, 64, 0.8);
+    --nav-bg-scrolled: rgba(26, 39, 64, 0.95);
+    --panel-bg: rgba(10, 18, 34, 0.98);
+    --gradient-2: linear-gradient(135deg, #1a2740 0%, #293d62 100%);
+    --text-light: #f5f5f5;
+    --text-muted: rgba(255, 255, 255, 0.75);
+    --accent: #4a9eff;
+    --accent-2: #82c7ff;
+    --accent-rgb: 74, 158, 255;
+    --accent-glow: rgba(var(--accent-rgb), 0.3);
+    --border-subtle: rgba(255, 255, 255, 0.1);
+    --footer-bg: rgba(26, 39, 64, 0.8);
+    --footer-border: rgba(255, 255, 255, 0.1);
+    --footer-text: rgba(255, 255, 255, 0.65);
+    --footer-text-strong: rgba(255, 255, 255, 0.82);
+    --button-bg: rgba(255, 255, 255, 0.08);
+    --button-border: rgba(255, 255, 255, 0.18);
+    --button-hover: rgba(255, 255, 255, 0.14);
+}
+
+html[data-theme="dark"] {
+    --bg-page: #131a27;
+    --bg-dark: #131a27;
+    --bg-page-soft: rgba(21, 30, 44, 0.94);
+    --nav-bg: rgba(20, 28, 43, 0.88);
+    --nav-bg-scrolled: rgba(17, 24, 37, 0.96);
+    --panel-bg: rgba(22, 30, 45, 0.94);
+    --gradient-2: linear-gradient(135deg, #16212f 0%, #111924 100%);
+    --text-light: #eef2f7;
+    --text-muted: rgba(238, 242, 247, 0.72);
+    --accent: #9ea8b6;
+    --accent-2: #b4bdcf;
+    --accent-rgb: 158, 168, 182;
+    --accent-glow: rgba(var(--accent-rgb), 0.18);
+    --border-subtle: rgba(255, 255, 255, 0.09);
+    --footer-bg: rgba(18, 24, 34, 0.94);
+    --footer-border: rgba(255, 255, 255, 0.08);
+    --footer-text: rgba(238, 242, 247, 0.78);
+    --footer-text-strong: rgba(238, 242, 247, 0.95);
+    --button-bg: rgba(255, 255, 255, 0.08);
+    --button-border: rgba(255, 255, 255, 0.18);
+    --button-hover: rgba(255, 255, 255, 0.12);
+}
+
+html[data-theme="light"] {
+    --bg-page: #293d62;
+    --bg-dark: #293d62;
+    --bg-page-soft: rgba(26, 39, 64, 0.8);
+    --nav-bg: rgba(26, 39, 64, 0.8);
+    --nav-bg-scrolled: rgba(26, 39, 64, 0.95);
+    --panel-bg: rgba(10, 18, 34, 0.95);
+    --gradient-2: linear-gradient(135deg, #1a2740 0%, #293d62 100%);
+    --text-light: #f5f5f5;
+    --text-muted: rgba(255, 255, 255, 0.75);
+    --accent: #4a9eff;
+    --accent-2: #82c7ff;
+    --accent-rgb: 74, 158, 255;
+    --accent-glow: rgba(var(--accent-rgb), 0.3);
+    --border-subtle: rgba(255, 255, 255, 0.1);
+    --footer-bg: rgba(26, 39, 64, 0.8);
+    --footer-border: rgba(255, 255, 255, 0.1);
+    --footer-text: rgba(255, 255, 255, 0.65);
+    --footer-text-strong: rgba(255, 255, 255, 0.82);
+    --button-bg: rgba(255, 255, 255, 0.08);
+    --button-border: rgba(255, 255, 255, 0.18);
+    --button-hover: rgba(255, 255, 255, 0.14);
+}
+
 nav {
     position: fixed;
     top: 0;
@@ -9,13 +81,21 @@ nav {
     padding: 1.5rem 0;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
-    background: rgba(26, 39, 64, 0.8);
-    border-bottom: 1px solid rgba(74, 158, 255, 0.1);
+    background: var(--nav-bg);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+html[data-theme="dark"] body {
+    background: var(--bg-page) !important;
+}
+
+html[data-theme="light"] body {
+    background: var(--bg-page) !important;
 }
 
 nav.scrolled {
     padding: 1rem 0;
-    background: rgba(26, 39, 64, 0.95);
+    background: var(--nav-bg-scrolled);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     border-bottom: 1px solid rgba(74, 158, 255, 0.22);
 }
@@ -52,7 +132,7 @@ nav.scrolled {
 }
 
 .nav-links a {
-    color: var(--text-light, #f5f5f5);
+    color: var(--text-light);
     text-decoration: none;
     font-weight: 500;
     font-size: 0.95rem;
@@ -105,9 +185,9 @@ nav.scrolled {
     top: calc(100% + 16px);
     left: 50%;
     transform: translateX(-50%) translateY(-6px);
-    background: #0a1222;
+    background: var(--panel-bg);
     backdrop-filter: none;
-    border: 1px solid rgba(74, 158, 255, 0.22);
+    border: 1px solid var(--border-subtle);
     border-radius: 14px;
     padding: 1.1rem 1rem;
     display: flex;
@@ -214,10 +294,10 @@ nav.scrolled {
 
 .mobile-menu-btn {
     display: none;
-    background: rgba(74, 158, 255, 0.14);
-    border: 1px solid rgba(74, 158, 255, 0.32);
+    background: var(--button-bg);
+    border: 1px solid var(--button-border);
     border-radius: 10px;
-    color: var(--text-light, #f5f5f5);
+    color: var(--text-light);
     width: 44px;
     height: 40px;
     font-size: 1.35rem;
@@ -228,9 +308,43 @@ nav.scrolled {
 
 .mobile-menu-btn:hover,
 .mobile-menu-btn:focus-visible {
-    background: rgba(74, 158, 255, 0.2);
+    background: var(--button-hover);
     border-color: rgba(74, 158, 255, 0.5);
     transform: translateY(-1px);
+}
+
+.theme-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    height: 44px;
+    background: var(--button-bg);
+    border: 1px solid var(--button-border);
+    border-radius: 999px;
+    color: var(--text-light);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease, color 0.25s ease;
+}
+
+.theme-toggle-btn:hover,
+.theme-toggle-btn:focus-visible {
+    background: var(--button-hover);
+    border-color: rgba(74, 158, 255, 0.5);
+    transform: translateY(-1px);
+}
+
+.theme-toggle-btn .theme-toggle-icon {
+    display: inline-block;
+    font-size: 1.05rem;
+    line-height: 1;
+}
+
+@media (max-width: 940px) {
+    .theme-toggle-btn {
+        display: none;
+    }
 }
 
 .mobile-menu-overlay {
