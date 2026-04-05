@@ -30,17 +30,17 @@
         }
 
         :root {
-            --primary: #293d62;
-            --primary-light: #3d5278;
-            --primary-dark: #1a2740;
-            --accent: #4a9eff;
-            --accent-glow: rgba(74, 158, 255, 0.3);
+            --primary: #1d242f;
+            --primary-light: #2b3345;
+            --primary-dark: #121621;
+            --accent: #394156;
+            --accent-glow: rgba(100, 111, 128, 0.3);
             --text-light: #f5f5f5;
             --text-dark: #1a1a1a;
             --bg-light: #ffffff;
-            --bg-dark: #001f3f; /* darker navy shade */
-            --gradient-1: linear-gradient(135deg, #4a9eff 0%, #4a9eff 100%);
-            --gradient-2: linear-gradient(135deg, #1a2740 0%, #293d62 100%);
+            --bg-dark: #131a24; /* darker charcoal shade */
+            --gradient-1: linear-gradient(135deg, #394156 0%, #394156 100%);
+            --gradient-2: linear-gradient(135deg, #0f1116 0%, #16181d 100%);
             --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
             --star-x: 50%;
             --star-y: 50%;
@@ -151,8 +151,8 @@
             width: 100%;
             height: 100%;
             background-image: 
-                linear-gradient(rgba(74, 158, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(74, 158, 255, 0.03) 1px, transparent 1px);
+                linear-gradient(rgba(100, 111, 128, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(100, 111, 128, 0.03) 1px, transparent 1px);
             background-size: 50px 50px;
             z-index: 1;
             animation: gridDrift 40s linear infinite;
@@ -303,8 +303,8 @@
         .section-tag {
             display: inline-block;
             padding: 0.6rem 1.8rem;
-            background: rgba(74, 158, 255, 0.15);
-            border: 1px solid rgba(74, 158, 255, 0.4);
+            background: rgba(100, 111, 128, 0.15);
+            border: 1px solid rgba(100, 111, 128, 0.4);
             border-radius: 50px;
             color: var(--accent);
             font-size: 0.85rem;
@@ -316,7 +316,7 @@
         }
 
         .section-tag:hover {
-            background: rgba(74, 158, 255, 0.25);
+            background: rgba(100, 111, 128, 0.25);
             border-color: var(--accent);
         }
 
@@ -388,8 +388,8 @@
 
         .about-card:hover {
             transform: translateY(-12px);
-            border-color: rgba(74, 158, 255, 0.5);
-            box-shadow: 0 20px 60px rgba(74, 158, 255, 0.2);
+            border-color: rgba(100, 111, 128, 0.5);
+            box-shadow: 0 20px 60px rgba(100, 111, 128, 0.2);
         }
 
         .about-card h3 {
@@ -712,7 +712,7 @@
 
             // Keep the gear centered and scale it to a stable fraction
             // of the smaller viewport dimension.
-            const targetFraction = isMobile ? 0.40 : 0.52;
+            const targetFraction = isMobile ? 0.48 : 0.60;
             const targetDiameter = Math.min(w, h) * targetFraction;
             const scale = targetDiameter / gearSize;
             gearObjRef.scale.setScalar(scale);
@@ -863,7 +863,7 @@
         //     ctx.lineJoin = "round";
         //     ctx.lineCap = "round";
         //     ctx.shadowBlur = 10;
-        //     ctx.shadowColor = "#4a9eff";
+        //     ctx.shadowColor = "#394156";
         //     for(let i = 0; i < trail.length-1; i++){
         //         const p1 = trail[i];
         //         const p2 = trail[i+1];
