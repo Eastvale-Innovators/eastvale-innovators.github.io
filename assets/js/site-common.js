@@ -265,6 +265,134 @@
         initDropdownMenus();
         initMobileMenu();
         initThemeToggle();
+        initTeamsPageAssetWarmup();
+    }
+
+    function shouldWarmTeamsAssets() {
+        if (window.location.pathname.toLowerCase().endsWith('/teams.html')) {
+            return false;
+        }
+
+        if (sessionStorage.getItem('eiTeamsAssetsWarmed') === 'true') {
+            return false;
+        }
+
+        const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        if (connection) {
+            if (connection.saveData) {
+                return false;
+            }
+
+            const effectiveType = connection.effectiveType || '';
+            if (effectiveType.includes('2g')) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    function prefetchTeamsDocument() {
+        if (document.querySelector('link[data-ei-teams-prefetch="true"]')) {
+            return;
+        }
+
+        const link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.as = 'document';
+        link.href = 'teams.html';
+        link.dataset.eiTeamsPrefetch = 'true';
+        document.head.appendChild(link);
+    }
+
+    function parseTeamsImageUrls(htmlText) {
+        const parser = new DOMParser();
+        const parsedDoc = parser.parseFromString(htmlText, 'text/html');
+        const images = parsedDoc.querySelectorAll('.hero-img, .member-image');
+        const urls = [];
+
+        images.forEach((img) => {
+            const rawSrc = img.getAttribute('src');
+            if (!rawSrc) {
+                return;
+            }
+
+            try {
+                const absoluteUrl = new URL(rawSrc, window.location.href).href;
+                urls.push(absoluteUrl);
+            } catch (_) {
+                // Ignore malformed paths.
+            }
+        });
+
+        return Array.from(new Set(urls));
+    }
+
+    function prefetchTeamsImages(imageUrls) {
+        // Keep warmup bounded to avoid large background bursts.
+        const maxImagesToWarm = 18;
+        const queue = imageUrls.slice(0, maxImagesToWarm);
+
+        queue.forEach((url, index) => {
+            const link = document.createElement('link');
+            link.rel = 'prefetch';
+            link.as = 'image';
+            link.href = url;
+            document.head.appendChild(link);
+
+            const img = new Image();
+            img.decoding = 'async';
+
+            setTimeout(() => {
+                img.src = url;
+            }, index * 120);
+        });
+    }
+
+    function warmTeamsAssets() {
+        prefetchTeamsDocument();
+
+        fetch('teams.html', { credentials: 'same-origin' })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Unable to prefetch teams document');
+                }
+                return response.text();
+            })
+            .then((htmlText) => {
+                const imageUrls = parseTeamsImageUrls(htmlText);
+                prefetchTeamsImages(imageUrls);
+                sessionStorage.setItem('eiTeamsAssetsWarmed', 'true');
+            })
+            .catch(() => {
+                // Silent failure keeps navigation behavior unchanged.
+            });
+    }
+
+    function initTeamsPageAssetWarmup() {
+        if (!shouldWarmTeamsAssets()) {
+            return;
+        }
+
+        const runWarmup = () => {
+            if ('requestIdleCallback' in window) {
+                window.requestIdleCallback(() => {
+                    warmTeamsAssets();
+                }, { timeout: 2200 });
+                return;
+            }
+
+            setTimeout(() => {
+                warmTeamsAssets();
+            }, 1400);
+        };
+
+        if (document.readyState === 'complete') {
+            runWarmup();
+            return;
+        }
+
+        window.addEventListener('load', runWarmup, { once: true });
     }
 
     document.addEventListener('shared-header-loaded', initializeSharedSiteUI);
