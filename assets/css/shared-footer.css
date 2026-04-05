@@ -2,102 +2,75 @@
 footer {
     text-align: center;
     padding: 3rem 2rem;
-    background: var(--footer-bg, var(--bg-page, rgba(8, 10, 14, 0.8)));
+    background: var(--footer-bg, var(--bg-page, rgba(26, 39, 64, 0.8)));
     border-top: 1px solid var(--footer-border, var(--border-subtle, rgba(255, 255, 255, 0.1)));
     color: var(--footer-text, var(--text-muted, rgba(255, 255, 255, 0.6)));
+}
+
+.footer-inner {
+    max-width: 860px;
+    margin: 0 auto;
 }
 
 footer p {
     margin: 0;
 }
 
-.footer-inner {
-    max-width: 860px;
-    margin: 0 auto;
-    display: grid;
-    gap: 1rem;
-}
-
 .footer-copyright {
     font-size: 0.95rem;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.01em;
 }
 
 .footer-creators {
-    display: inline-flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.75rem;
-    align-items: center;
+    margin-top: 0.8rem;
     font-size: 1rem;
-    color: var(--footer-text-strong, rgba(255, 255, 255, 0.92));
+    color: var(--footer-text-strong, rgba(255, 255, 255, 0.82));
 }
 
 .footer-name {
-    font-weight: 700;
+    font-weight: 600;
     white-space: nowrap;
 }
 
 .footer-name-link {
-    position: relative;
     display: inline-flex;
     align-items: center;
-    gap: 0.45rem;
-    padding: 0.52rem 0.95rem;
-    background: #394156;
-    border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.16);
+    gap: 0.4rem;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+    border-radius: 0.5rem;
+    border: 1px solid rgba(37, 99, 235, 0.5);
     color: white;
     text-decoration: none;
-    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
-}
-
-.footer-link-separator {
-    color: rgba(255, 255, 255, 0.8);
-    opacity: 0.8;
-}
-
-.footer-link-icon {
-    display: inline-flex;
-    width: 1rem;
-    height: 1rem;
-    color: white;
-    opacity: 0.95;
-    transition: transform 0.25s ease;
-}
-
-.footer-link-icon svg {
-    width: 100%;
-    height: 100%;
+    transition: all 0.3s ease;
+    position: relative;
 }
 
 .footer-name-link:hover {
-    background: #2c3442;
-    box-shadow: 0 8px 18px rgba(100, 111, 128, 0.22);
-    transform: translateY(-1px);
-}
-
-.footer-name-link:hover .footer-link-icon {
-    transform: scale(1.08);
+    background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4), inset 0 -2px 0 rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
 }
 
 .footer-name-link::before {
-    content: attr(data-tooltip);
+    content: "View LinkedIn profile";
     position: absolute;
-    bottom: calc(100% + 0.55rem);
+    bottom: 100%;
     left: 50%;
-    transform: translateX(-50%) scale(0.95);
-    background: rgba(15, 15, 15, 0.94);
+    transform: translateX(-50%) translateY(-8px);
+    background: rgba(0, 0, 0, 0.95);
     color: #fff;
-    padding: 0.45rem 0.75rem;
-    border-radius: 0.35rem;
-    font-size: 0.78rem;
+    padding: 0.6rem 0.9rem;
+    border-radius: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 500;
     white-space: nowrap;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.18s ease, transform 0.18s ease;
+    transition: opacity 0.2s ease;
     z-index: 10;
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .footer-name-link::after {
@@ -107,21 +80,34 @@ footer p {
     left: 50%;
     transform: translateX(-50%);
     border: 5px solid transparent;
-    border-top-color: rgba(15, 15, 15, 0.94);
+    border-top-color: rgba(0, 0, 0, 0.95);
     opacity: 0;
-    transition: opacity 0.18s ease;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
 }
 
 .footer-name-link:hover::before,
 .footer-name-link:hover::after {
     opacity: 1;
-    transform: translateX(-50%) scale(1);
+}
+
+.footer-link-icon {
+    font-size: 0.9em;
+    display: inline-flex;
+    align-items: center;
+    opacity: 0.9;
+    transition: transform 0.3s ease;
+}
+
+.footer-name-link:hover .footer-link-icon {
+    transform: rotate(45deg) scale(1.15);
+    opacity: 1;
 }
 
 .footer-support {
     margin-top: 0.55rem;
-    font-size: 0.92rem;
-    color: var(--footer-text, rgba(255, 255, 255, 0.72));
+    font-size: 0.9rem;
+    color: var(--footer-text, rgba(255, 255, 255, 0.65));
 }
 
 @media (max-width: 640px) {
@@ -131,12 +117,5 @@ footer p {
 
     .footer-creators {
         line-height: 1.6;
-        justify-content: center;
-        gap: 0.6rem;
-    }
-
-    .footer-name-link {
-        width: auto;
-        justify-content: center;
     }
 }

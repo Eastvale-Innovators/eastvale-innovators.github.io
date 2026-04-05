@@ -30,17 +30,17 @@
         }
 
         :root {
-            --primary: #1d242f;
-            --primary-light: #2b3345;
-            --primary-dark: #121621;
-            --accent: #394156;
-            --accent-glow: rgba(100, 111, 128, 0.3);
+            --primary: #293d62;
+            --primary-light: #3d5278;
+            --primary-dark: #1a2740;
+            --accent: #4a9eff;
+            --accent-glow: rgba(74, 158, 255, 0.3);
             --text-light: #f5f5f5;
             --text-dark: #1a1a1a;
             --bg-light: #ffffff;
-            --bg-dark: #131a24; /* darker charcoal shade */
-            --gradient-1: linear-gradient(135deg, #394156 0%, #394156 100%);
-            --gradient-2: linear-gradient(135deg, #0f1116 0%, #16181d 100%);
+            --bg-dark: #001f3f; /* darker navy shade */
+            --gradient-1: linear-gradient(135deg, #4a9eff 0%, #4a9eff 100%);
+            --gradient-2: linear-gradient(135deg, #1a2740 0%, #293d62 100%);
             --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
             --star-x: 50%;
             --star-y: 50%;
@@ -130,8 +130,8 @@
             position: absolute;
             inset: 0;
             background-image:
-                linear-gradient(rgba(100, 111, 128, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(100, 111, 128, 0.03) 1px, transparent 1px);
+                linear-gradient(rgba(74, 158, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(74, 158, 255, 0.03) 1px, transparent 1px);
             background-size: 50px 50px;
             z-index: 2;
             animation: gridDrift 40s linear infinite;
@@ -243,14 +243,14 @@
             border-radius: 28px;
             cursor: grab;
             background:
-                radial-gradient(circle at 20% 20%, rgba(100, 111, 128, 0.12), transparent 25%),
+                radial-gradient(circle at 20% 20%, rgba(74, 158, 255, 0.12), transparent 25%),
                 radial-gradient(circle at 80% 30%, rgba(120, 180, 255, 0.08), transparent 22%),
-                radial-gradient(circle at 50% 70%, rgba(100, 111, 128, 0.06), transparent 30%),
+                radial-gradient(circle at 50% 70%, rgba(74, 158, 255, 0.06), transparent 30%),
                 linear-gradient(180deg, rgba(10, 18, 36, 0.98), rgba(2, 6, 16, 1));
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow:
                 0 30px 80px rgba(0, 0, 0, 0.35),
-                inset 0 0 80px rgba(100, 111, 128, 0.05);
+                inset 0 0 80px rgba(74, 158, 255, 0.05);
             user-select: none;
             touch-action: none;
             transition: transform 0.3s ease, filter 0.35s ease;
@@ -341,7 +341,7 @@
 
         .constellation-core {
             fill: rgba(160, 210, 255, 0.95);
-            filter: drop-shadow(0 0 12px rgba(100, 111, 128, 0.8));
+            filter: drop-shadow(0 0 12px rgba(74, 158, 255, 0.8));
         }
 
         .constellation-label {
@@ -354,7 +354,7 @@
             transition: opacity 0.35s ease, transform 0.35s ease;
             pointer-events: none;
             text-transform: uppercase;
-            filter: drop-shadow(0 0 10px rgba(100, 111, 128, 0.25));
+            filter: drop-shadow(0 0 10px rgba(74, 158, 255, 0.25));
         }
 
         .constellation-subtext {
@@ -374,7 +374,7 @@
             stroke: rgba(120, 200, 255, 0.95);
             stroke-width: 1.95;
             opacity: 1;
-            filter: drop-shadow(0 0 8px rgba(100, 111, 128, 0.6));
+            filter: drop-shadow(0 0 8px rgba(74, 158, 255, 0.6));
         }
 
         .constellation:hover .constellation-star,
@@ -450,8 +450,8 @@
             margin-bottom: 0.9rem;
             padding: 0.45rem 0.85rem;
             border-radius: 999px;
-            border: 1px solid rgba(100, 111, 128, 0.4);
-            background: rgba(100, 111, 128, 0.12);
+            border: 1px solid rgba(74, 158, 255, 0.4);
+            background: rgba(74, 158, 255, 0.12);
             color: var(--accent);
             font-size: 0.78rem;
             font-weight: 700;
@@ -495,8 +495,8 @@
         }
 
         #project-search:focus {
-            border-color: rgba(100, 111, 128, 0.7);
-            box-shadow: 0 0 0 3px rgba(100, 111, 128, 0.16);
+            border-color: rgba(74, 158, 255, 0.7);
+            box-shadow: 0 0 0 3px rgba(74, 158, 255, 0.16);
         }
 
         #project-picker {
@@ -522,13 +522,13 @@
         }
 
         #project-picker:hover {
-            border-color: rgba(100, 111, 128, 0.4);
+            border-color: rgba(74, 158, 255, 0.4);
         }
 
         #project-picker:focus {
-            border-color: rgba(100, 111, 128, 0.7);
+            border-color: rgba(74, 158, 255, 0.7);
             box-shadow:
-                0 0 0 3px rgba(100, 111, 128, 0.16),
+                0 0 0 3px rgba(74, 158, 255, 0.16),
                 0 14px 34px rgba(0, 0, 0, 0.28);
         }
 
@@ -574,8 +574,8 @@
         }
 
         .sky-tool-btn:hover {
-            border-color: rgba(100, 111, 128, 0.6);
-            background: rgba(100, 111, 128, 0.14);
+            border-color: rgba(74, 158, 255, 0.6);
+            background: rgba(74, 158, 255, 0.14);
         }
 
         .project-directory {
@@ -599,13 +599,13 @@
 
         .project-item:hover {
             transform: translateY(-2px);
-            border-color: rgba(100, 111, 128, 0.55);
-            background: rgba(100, 111, 128, 0.08);
+            border-color: rgba(74, 158, 255, 0.55);
+            background: rgba(74, 158, 255, 0.08);
         }
 
         .project-item.active {
             border-color: rgba(120, 200, 255, 0.95);
-            background: rgba(100, 111, 128, 0.18);
+            background: rgba(74, 158, 255, 0.18);
         }
 
         .project-item h4 {
@@ -626,9 +626,9 @@
             padding: 0.28rem 0.55rem;
             border-radius: 999px;
             font-size: 0.72rem;
-            border: 1px solid rgba(100, 111, 128, 0.45);
+            border: 1px solid rgba(74, 158, 255, 0.45);
             color: rgba(180, 225, 255, 0.95);
-            background: rgba(100, 111, 128, 0.14);
+            background: rgba(74, 158, 255, 0.14);
             text-transform: uppercase;
             letter-spacing: 0.04em;
         }
