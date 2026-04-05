@@ -239,7 +239,7 @@
 
         const toggleButton = document.querySelector('.theme-toggle-btn');
         if (toggleButton) {
-            toggleButton.textContent = theme === 'dark' ? '☀' : '🌙';
+            toggleButton.textContent = theme === 'dark' ? '🌙' : '☀';
             toggleButton.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`);
         }
     }
