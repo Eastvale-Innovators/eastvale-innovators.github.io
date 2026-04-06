@@ -457,6 +457,16 @@
             font-weight: 700;
             letter-spacing: 0.05em;
             text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+
+        a.project-panel-tag:hover {
+            background: rgba(var(--accent-rgb), 0.25);
+            border-color: rgba(var(--accent-rgb), 0.8);
+            box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.3);
+            transform: translateY(-2px);
         }
 
         #project-panel p {
@@ -1026,6 +1036,7 @@
                 {
                     name: "Eleanor Roosevelt School App",
                     team: "Roosevelt Connect Team",
+                    team_link: "teams.html#roosevelt-connect-team",
                     description: "A reliable software platform for Roosevelt Connect initiatives, built through iterative design, prototyping, and testing.",
                     status: "Deployed at Eleanor Roosevelt High School",
                     stars: [
@@ -1040,6 +1051,7 @@
                 {
                     name: "Intelligrader AP FRQ Assistant",
                     team: "Intelligrader Team",
+                    team_link: "teams.html#intelligrader-team",
                     description: "An AI-powered grading and feedback platform with frontend, backend API, and model tuning workflows.",
                     status: "Pending Approval",
                     stars: [
@@ -1054,6 +1066,7 @@
                 {
                     name: "Electronic Medical Recordkeeping System",
                     team: "Virtual Medical Missions Team",
+                    team_link: "teams.html#virtual-medical-missions-team",
                     description: "A secure, scalable portal supporting virtual medical outreach, partnerships, fundraising, and care operations.",
                     status: "Active",
                     stars: [
@@ -1595,7 +1608,7 @@
 
                 panelContent.innerHTML = `
                     <h3>${project.name}</h3>
-                    <div class="project-panel-tag">${project.team}</div>
+                    <a href="${project.team_link}" class="project-panel-tag">${project.team}</a>
                     <p>${project.description}</p>
                     <div class="project-meta">Status: ${project.status}</div>
                 `;
