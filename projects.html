@@ -92,54 +92,6 @@
             content: '';
             position: absolute;
             inset: 0;
-            background-image: url('assets/img/starfield2.jpg');
-            background-size: 200% 200%;
-            background-position: var(--star-x, 50%) var(--star-y, 50%);
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            pointer-events: none;
-            transition: background-position 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            z-index: 1;
-            opacity: 0.15;
-        }
-
-        .hero::after{
-            content:"";
-            position:absolute;
-            inset:0;
-
-            background:
-                radial-gradient(circle at center,
-                rgba(255,255,255,0.15),
-                rgba(74,158,255,0.15) 15%,
-                transparent 60%);
-
-            pointer-events:none;
-            z-index:2;
-        }
-
-        .hero-bg {
-            position: absolute;
-            inset: 0;
-            background: url('assets/img/P1010915%20(1).jpg') center/cover;
-            opacity: 0.12;
-            z-index: 0;
-        }
-
-        .hero-grid {
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(var(--accent-rgb), 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(var(--accent-rgb), 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: 2;
-            animation: gridDrift 40s linear infinite;
-        }
-
-        @keyframes gridDrift {
-            from { background-position: 0px 0px; }
-            to { background-position: 50px 50px; }
         }
 
         .hero-content {
@@ -517,54 +469,6 @@
             box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.16);
         }
 
-        #project-picker {
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            min-width: 220px;
-            max-width: min(280px, calc(100vw - 2rem));
-            padding: 0.85rem 2.6rem 0.85rem 1rem;
-            border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            background:
-                linear-gradient(180deg, rgba(12, 20, 36, 0.92), rgba(8, 14, 28, 0.92));
-            color: rgba(255, 255, 255, 0.95);
-            font-family: 'Inter', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 600;
-            letter-spacing: 0.01em;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
-            cursor: pointer;
-            outline: none;
-        }
-
-        #project-picker:hover {
-            border-color: rgba(var(--accent-rgb), 0.4);
-        }
-
-        #project-picker:focus {
-            border-color: rgba(var(--accent-rgb), 0.7);
-            box-shadow:
-                0 0 0 3px rgba(var(--accent-rgb), 0.16),
-                0 14px 34px rgba(0, 0, 0, 0.28);
-        }
-
-        #project-picker option {
-            background: #0c1424;
-            color: rgba(255, 255, 255, 0.95);
-        }
-
-        #project-picker-wrap::after {
-            content: "▾";
-            position: absolute;
-            right: 0.95rem;
-            bottom: 0.9rem;
-            pointer-events: none;
-            color: rgba(255, 255, 255, 0.72);
-            font-size: 0.95rem;
-        }
-
         #sky-tools {
             position: absolute;
             top: 1rem;
@@ -710,12 +614,6 @@
                 flex-wrap: wrap;
             }
 
-            #project-picker {
-                width: 100%;
-                max-width: none;
-                min-width: 0;
-            }
-
             #project-search {
                 width: 100%;
                 max-width: none;
@@ -790,9 +688,6 @@
             <div id="project-picker-wrap">
                 <label class="sr-only" for="project-search">Search projects</label>
                 <input id="project-search" type="search" placeholder="Search projects or teams">
-                <select id="project-picker">
-                    <option value="">Jump to project…</option>
-                </select>
             </div>
             <canvas id="nebula"></canvas>
             <canvas id="stars-back"></canvas>
@@ -965,7 +860,6 @@
             const shootingCtx = shootingCanvas.getContext('2d');
 
             const panel = document.getElementById('project-panel');
-            const projectPicker = document.getElementById('project-picker');
             const projectSearch = document.getElementById('project-search');
             const projectDirectory = document.getElementById('project-directory');
             const panelContent = document.getElementById('project-panel-content');
@@ -1628,10 +1522,6 @@
                     g.classList.toggle('active', i === index);
                 });
 
-                if (projectPicker) {
-                    projectPicker.value = String(index);
-                }
-
                 syncProjectDirectoryActiveState();
                 forceConstellationRefresh = true;
             }
@@ -1640,10 +1530,6 @@
                 activeProjectIndex = null;
                 panel.classList.remove('show');
                 svg.querySelectorAll('.constellation').forEach(g => g.classList.remove('active'));
-
-                if (projectPicker) {
-                    projectPicker.value = '';
-                }
 
                 syncProjectDirectoryActiveState();
                 forceConstellationRefresh = true;
@@ -1683,24 +1569,6 @@
                 `).join('');
             }
 
-            function populateProjectPicker() {
-                if (!projectPicker) {
-                    return;
-                }
-
-                projectPicker.innerHTML = '<option value="">Jump to project…</option>';
-                projects.forEach((project, index) => {
-                    if (!projectIsVisible(index)) {
-                        return;
-                    }
-
-                    const option = document.createElement('option');
-                    option.value = String(index);
-                    option.textContent = `${project.name} - ${project.team}`;
-                    projectPicker.appendChild(option);
-                });
-            }
-
             function applyProjectFilter(query) {
                 searchQuery = normalizeText(query).trim();
 
@@ -1708,7 +1576,6 @@
                     closeProject();
                 }
 
-                populateProjectPicker();
                 renderConstellations();
                 renderProjectDirectory();
                 forceConstellationRefresh = true;
@@ -1969,21 +1836,6 @@
                     }
 
                     const index = Number(item.getAttribute('data-project-index'));
-                    warpJump();
-                    focusProject(index);
-                    openProject(index);
-                });
-            }
-
-            if (projectPicker) {
-                projectPicker.addEventListener('change', () => {
-                    const val = projectPicker.value;
-                    if (val === '') {
-                        closeProject();
-                        return;
-                    }
-
-                    const index = Number(val);
                     warpJump();
                     focusProject(index);
                     openProject(index);
