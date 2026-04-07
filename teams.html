@@ -785,6 +785,14 @@
                 return;
             }
 
+            if (target.classList.contains('reveal') && !target.classList.contains('visible')) {
+                target.classList.add('visible');
+                requestAnimationFrame(() => {
+                    scrollToTeamHash(hash, behavior, extraOffset);
+                });
+                return;
+            }
+
             const offset = syncTeamAnchorOffset() + extraOffset;
             const top = Math.max(0, target.getBoundingClientRect().top + window.scrollY - offset);
 
