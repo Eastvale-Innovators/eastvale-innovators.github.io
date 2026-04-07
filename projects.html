@@ -92,6 +92,15 @@
             content: '';
             position: absolute;
             inset: 0;
+            background-image: url('assets/img/starfield2.jpg');
+            background-size: 200% 200%;
+            background-position: var(--star-x, 50%) var(--star-y, 50%);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            pointer-events: none;
+            transition: background-position 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 1;
+            opacity: 0.15;
         }
 
         .hero-content {
