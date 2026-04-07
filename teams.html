@@ -31,6 +31,7 @@
             --accent: #4a9eff;
             --accent-2: #82c7ff;
             --accent-glow: rgba(var(--accent-rgb), 0.3);
+            --team-anchor-offset: 132px;
             --text-light: #f5f5f5;
             --text-muted: rgba(255,255,255,0.72);
             --bg-dark: #001f3f;
@@ -45,6 +46,7 @@
 
         html {
             scroll-behavior: smooth;
+            scroll-padding-top: var(--team-anchor-offset, 132px);
             scrollbar-width: none;
         }
 
@@ -233,7 +235,7 @@
             box-shadow: 0 24px 60px rgba(0,0,0,0.18);
             position: relative;
             overflow: hidden;
-            scroll-margin-top: 120px;
+            scroll-margin-top: var(--team-anchor-offset, 132px);
         }
 
         .team-section::before {
@@ -761,6 +763,94 @@
     <div id="tile-transition"></div>
 
     <script>
+        const TEAM_ANCHOR_BUFFER = 18;
+        const SIDEBAR_ANCHOR_EXTRA = -50;
+
+        function syncTeamAnchorOffset() {
+            const navbar = document.getElementById('navbar');
+            const baseOffset = navbar ? Math.ceil(navbar.getBoundingClientRect().height) : 114;
+            const offset = Math.max(132, baseOffset + TEAM_ANCHOR_BUFFER);
+
+            document.documentElement.style.setProperty('--team-anchor-offset', `${offset}px`);
+            return offset;
+        }
+
+        function scrollToTeamHash(hash = window.location.hash, behavior = 'auto', extraOffset = 0) {
+            if (!hash || hash === '#') {
+                return;
+            }
+
+            const target = document.querySelector(hash);
+            if (!target) {
+                return;
+            }
+
+            const offset = syncTeamAnchorOffset() + extraOffset;
+            const top = Math.max(0, target.getBoundingClientRect().top + window.scrollY - offset);
+
+            window.scrollTo({ top, behavior });
+        }
+
+        function settleTeamHashScroll(behavior = 'auto', extraOffset = 0) {
+            requestAnimationFrame(() => {
+                syncTeamAnchorOffset();
+                requestAnimationFrame(() => scrollToTeamHash(window.location.hash, behavior, extraOffset));
+            });
+        }
+
+        function bindTeamHashNavigation() {
+            window.addEventListener('hashchange', () => {
+                settleTeamHashScroll('smooth');
+            });
+
+            document.addEventListener('click', event => {
+                const link = event.target.closest('a[href*="#"]');
+                if (!link) {
+                    return;
+                }
+
+                const url = new URL(link.href, window.location.href);
+                if (url.pathname !== window.location.pathname || !url.hash) {
+                    return;
+                }
+
+                event.preventDefault();
+                history.pushState(null, '', url.hash);
+                settleTeamHashScroll('smooth', SIDEBAR_ANCHOR_EXTRA);
+            });
+        }
+
+        function initTeamHashHandling() {
+            if (window.__eiTeamHashBound) {
+                syncTeamAnchorOffset();
+                if (window.location.hash) {
+                    settleTeamHashScroll('auto');
+                }
+                return;
+            }
+
+            syncTeamAnchorOffset();
+            bindTeamHashNavigation();
+            window.__eiTeamHashBound = true;
+
+            if (window.location.hash) {
+                settleTeamHashScroll('auto');
+            }
+        }
+
+        document.addEventListener('shared-header-loaded', initTeamHashHandling);
+
+        window.addEventListener('load', () => {
+            if (window.location.hash) {
+                settleTeamHashScroll('auto');
+            }
+        }, { once: true });
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initTeamHashHandling, { once: true });
+        } else {
+            initTeamHashHandling();
+        }
 
         /* SCROLL REVEAL */
         const revealEls = document.querySelectorAll('.reveal');
@@ -842,6 +932,7 @@
         window.addEventListener('resize', () => {
             resizeBgCanvas();
             initParticles();
+            syncTeamAnchorOffset();
         });
 
         /* TILE TRANSITION */
