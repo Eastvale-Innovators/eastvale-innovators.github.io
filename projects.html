@@ -962,9 +962,10 @@
                 {
                     name: "Intelligrader AP FRQ Assistant",
                     team: "Intelligrader Team",
+                    project_link: "intelligrader.html",
                     team_link: "teams.html#intelligrader-team",
-                    description: "An AI-powered grading and feedback platform with frontend, backend API, and model tuning workflows.",
-                    status: "Pending Approval",
+                    description: "Scores APUSH and AP Euro FRQs with or without extra context and gives targeted feedback that helps students refine historical writing.",
+                    status: "Done and Deployed",
                     stars: [
                         { x: 980, y: 1210, r: 4.4 },
                         { x: 1070, y: 1128, r: 3.7 },
@@ -1517,9 +1518,13 @@
                 activeProjectIndex = index;
                 const project = projects[index];
                 const teamLabel = project.team ? String(project.team) : 'Team';
+                const projectLinkMarkup = project.project_link
+                    ? `<a href="${project.project_link}" class="project-panel-tag" aria-label="${project.name} page">Project Page <span aria-hidden="true">→</span></a>`
+                    : '';
 
                 panelContent.innerHTML = `
                     <h3>${project.name}</h3>
+                    ${projectLinkMarkup}
                     <a href="${project.team_link}" class="project-panel-tag" aria-label="${teamLabel} page">${teamLabel} Page <span aria-hidden="true">→</span></a>
                     <p>${project.description}</p>
                     <div class="project-meta">Status: ${project.status}</div>

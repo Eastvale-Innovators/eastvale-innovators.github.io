@@ -24,7 +24,7 @@
     <meta name="twitter:image" content="https://www.eastvaleinnovators.org/assets/img/[PROJECT_SLUG]-banner.png">
     
     <title>[PROJECT_NAME] - Eastvale Innovators</title>
-    <link rel="icon" type="image/png" href="../assets/img/logo_favicon.png">
+    <link rel="icon" type="image/png" href="assets/img/logo_favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
     
     <style>
@@ -35,25 +35,22 @@
               The rest of the palette adapts from that choice.
         */
         :root {
-            /* Brand Colors - Change these for each project */
-            --project-accent: #4a9eff;         /* Primary project color */
-            --project-accent-strong: #1f6fd6;  /* Darker accent shade */
-            --project-accent-soft: #e9f3ff;    /* Soft accent tint */
-            --project-accent-glow: rgba(var(--accent-rgb), 0.22);
+            --project-accent: #7E3AF2;
+            --project-accent-strong: #2563EB;
+            --project-accent-soft: rgba(126, 58, 242, 0.12);
+            --accent-rgb: 126, 58, 242;
+            --project-accent-glow: rgba(var(--accent-rgb), 0.24);
 
-            /* Global Colors */
-            --text-main: #1f2937;
-            --text-muted: #4b5563;
+            --text-main: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.78);
             --text-inverse: #ffffff;
-            --bg-page: #ffffff;
-            --bg-soft: #f8fafc;
-            --border-subtle: #dbe6f3;
+            --bg-page: #0c1222;
+            --bg-soft: #111a2f;
+            --bg-panel: rgba(14, 20, 36, 0.9);
+            --border-subtle: rgba(255, 255, 255, 0.14);
 
-            /* Gradients */
-            --gradient-primary: linear-gradient(140deg, #ffffff 0%, var(--project-accent-soft) 100%);
+            --gradient-primary: linear-gradient(145deg, #111a2f 0%, #0c1222 55%, #111d3a 100%);
             --gradient-accent: linear-gradient(135deg, var(--project-accent) 0%, var(--project-accent-strong) 100%);
-            
-            /* Transitions */
             --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -151,14 +148,14 @@
             padding: 1.5rem 0;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.88);
+            background: rgba(13, 20, 35, 0.86);
             border-bottom: 1px solid var(--border-subtle);
         }
 
         nav.scrolled {
             padding: 1rem 0;
-            background: rgba(255, 255, 255, 0.96);
-            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+            background: rgba(10, 16, 30, 0.95);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
             border-bottom: 1px solid var(--border-subtle);
         }
 
@@ -207,7 +204,9 @@
             content: '';
             position: absolute;
             inset: 0;
-            background-image: radial-gradient(circle at 80% 15%, rgba(var(--accent-rgb), 0.18), transparent 42%);
+            background-image:
+                radial-gradient(circle at 80% 15%, rgba(var(--accent-rgb), 0.22), transparent 42%),
+                radial-gradient(circle at 18% 72%, rgba(37, 99, 235, 0.16), transparent 38%);
             pointer-events: none;
         }
 
@@ -275,7 +274,7 @@
         .section-image {
             width: 100%;
             height: 400px;
-            background: linear-gradient(135deg, #f2f8ff 0%, #e4efff 100%);
+            background: linear-gradient(135deg, rgba(126, 58, 242, 0.12) 0%, rgba(37, 99, 235, 0.12) 100%);
             border-radius: 8px;
             display: flex;
             align-items: center;
@@ -304,7 +303,7 @@
 
         .grid-item {
             padding: 2rem;
-            background: #ffffff;
+            background: var(--bg-panel);
             border: 1px solid var(--border-subtle);
             border-radius: 8px;
             transition: var(--transition);
@@ -338,7 +337,7 @@
             text-align: center;
             padding: 1.5rem;
             border-radius: 8px;
-            background: #ffffff;
+            background: var(--bg-panel);
             border: 1px solid var(--border-subtle);
             transition: var(--transition);
         }
@@ -351,7 +350,7 @@
         .team-member-avatar {
             width: 100px;
             height: 100px;
-            background: linear-gradient(135deg, var(--project-accent-soft) 0%, #dbeaff 100%);
+            background: linear-gradient(135deg, rgba(126, 58, 242, 0.2) 0%, rgba(37, 99, 235, 0.2) 100%);
             border-radius: 50%;
             margin: 0 auto 1rem;
             display: flex;
@@ -387,9 +386,31 @@
             border-radius: 8px;
             border: 1px solid var(--border-subtle);
             aspect-ratio: 16 / 10;
-            background: linear-gradient(135deg, #f2f8ff 0%, #dceaff 100%);
+            background: linear-gradient(135deg, rgba(126, 58, 242, 0.14) 0%, rgba(37, 99, 235, 0.14) 100%);
             cursor: pointer;
             transition: var(--transition);
+        }
+
+        .broken-image-slot {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed rgba(255, 255, 255, 0.45);
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.82);
+            background: repeating-linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.03) 0,
+                rgba(255, 255, 255, 0.03) 10px,
+                rgba(255, 255, 255, 0.06) 10px,
+                rgba(255, 255, 255, 0.06) 20px
+            );
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            font-size: 0.82rem;
         }
 
         .gallery-item img {
@@ -426,7 +447,7 @@
             position: relative;
             padding: 4rem 2rem;
             text-align: center;
-            background: #ffffff;
+            background: var(--bg-panel);
             border: 1px solid var(--border-subtle);
             border-radius: 8px;
             margin: 0 auto;
@@ -437,7 +458,7 @@
         .team-link-section:hover {
             border-color: var(--project-accent);
             box-shadow: 0 12px 30px var(--project-accent-glow);
-            background: #ffffff;
+            background: var(--bg-panel);
         }
 
         .team-link-section h3 {
@@ -524,7 +545,7 @@
 
         .timeline-content {
             padding: 1.5rem;
-            background: #ffffff;
+            background: var(--bg-panel);
             border: 1px solid var(--border-subtle);
             border-radius: 8px;
         }
@@ -574,12 +595,12 @@
 
         .btn-secondary {
             background: transparent;
-            color: var(--project-accent);
+            color: var(--text-inverse);
             border: 2px solid var(--project-accent);
         }
 
         .btn-secondary:hover {
-            background: var(--project-accent-soft);
+            background: rgba(126, 58, 242, 0.14);
         }
 
         /* Animations */
@@ -691,7 +712,7 @@
                 <p>[DETAILED_PROJECT_DESCRIPTION_PARAGRAPH_2]</p>
             </div>
             <div class="section-image">
-                <img src="../assets/img/[PROJECT_SLUG]-overview.png" alt="[PROJECT_NAME] Overview">
+                <img src="assets/img/[PROJECT_SLUG]-overview.png" alt="[PROJECT_NAME] Overview">
             </div>
         </div>
     </section>
@@ -701,19 +722,19 @@
         <h2>Project Gallery</h2>
         <div class="gallery">
             <div class="gallery-item">
-                <img src="../assets/img/[PROJECT_SLUG]-image-1.jpg" alt="[PROJECT_NAME] - Image 1">
+                <div class="broken-image-slot">Drop image here</div>
                 <div class="gallery-caption">[IMAGE_1_CAPTION]</div>
             </div>
             <div class="gallery-item">
-                <img src="../assets/img/[PROJECT_SLUG]-image-2.jpg" alt="[PROJECT_NAME] - Image 2">
+                <div class="broken-image-slot">Drop image here</div>
                 <div class="gallery-caption">[IMAGE_2_CAPTION]</div>
             </div>
             <div class="gallery-item">
-                <img src="../assets/img/[PROJECT_SLUG]-image-3.jpg" alt="[PROJECT_NAME] - Image 3">
+                <div class="broken-image-slot">Drop image here</div>
                 <div class="gallery-caption">[IMAGE_3_CAPTION]</div>
             </div>
             <div class="gallery-item">
-                <img src="../assets/img/[PROJECT_SLUG]-image-4.jpg" alt="[PROJECT_NAME] - Image 4">
+                <div class="broken-image-slot">Drop image here</div>
                 <div class="gallery-caption">[IMAGE_4_CAPTION]</div>
             </div>
         </div>
@@ -823,7 +844,7 @@
         <div class="team-link-section">
             <h3>Join the Team</h3>
             <p>Want to learn more about the [ASSOCIATED_TEAM_NAME] team or see other projects they're working on?</p>
-            <a href="../teams.html#[TEAM_ANCHOR]" class="team-link-btn">Visit [ASSOCIATED_TEAM_NAME] Team</a>
+            <a href="teams.html#[TEAM_ANCHOR]" class="team-link-btn">Visit [ASSOCIATED_TEAM_NAME] Team</a>
         </div>
     </section>
 
@@ -832,7 +853,7 @@
         <h2>Get Involved</h2>
         <p>Interested in this project? Join us or learn more about how you can contribute.</p>
         <div class="cta-buttons">
-            <a href="../contact.html" class="btn btn-primary">Contact Us</a>
+            <a href="contact.html" class="btn btn-primary">Contact Us</a>
             <a href="[PROJECT_GITHUB_LINK]" class="btn btn-secondary">View on GitHub</a>
         </div>
     </section>
