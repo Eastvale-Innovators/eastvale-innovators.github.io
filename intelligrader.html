@@ -141,12 +141,12 @@
 
         .hero {
             position: relative;
-            min-height: 100svh;
+            min-height: 88svh;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
             text-align: center;
-            padding: 8.4rem 1.5rem 5rem;
+            padding: 7.1rem 1.5rem 3.2rem;
         }
 
         .hero-content {
@@ -246,25 +246,9 @@
             flex-wrap: wrap;
         }
 
-        .hero-cta-row .btn-repo-first {
-            position: relative;
-            margin-left: 1.2rem;
-        }
-
-        .hero-cta-row .btn-repo-first::before {
-            content: '';
-            position: absolute;
-            left: -0.8rem;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 1px;
-            height: 2.2rem;
-            background: linear-gradient(
-                180deg,
-                rgba(124, 58, 237, 0.14),
-                rgba(124, 58, 237, 0.45),
-                rgba(124, 58, 237, 0.14)
-            );
+        .hero-cta-row {
+            width: 100%;
+            justify-content: center;
         }
 
         .btn {
@@ -668,7 +652,8 @@
             }
 
             .hero {
-                padding-top: 7.4rem;
+                min-height: 82svh;
+                padding: 6.3rem 1rem 2.6rem;
             }
 
             .hero-content {
@@ -701,20 +686,14 @@
 
             .hero-cta-row {
                 width: 100%;
+                justify-content: center;
             }
 
             .hero-cta-row .btn {
-                width: 100%;
-                flex: 1 1 100%;
+                width: auto;
+                flex: 0 1 auto;
+                min-width: 220px;
                 text-align: center;
-            }
-
-            .hero-cta-row .btn-repo-first {
-                margin-left: 0;
-            }
-
-            .hero-cta-row .btn-repo-first::before {
-                display: none;
             }
         }
 
@@ -766,8 +745,6 @@
             </div>
             <div class="cta-row hero-cta-row">
                 <a href="https://intelligrader.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Try Intelligrader</a>
-                <a href="https://github.com/Intelligrader/intelligrader" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-repo-first">Frontend Repository</a>
-                <a href="https://github.com/Intelligrader/Intelligrader-API" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">API Repository</a>
             </div>
         </div>
     </section>
