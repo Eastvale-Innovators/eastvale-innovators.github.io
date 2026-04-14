@@ -163,6 +163,28 @@
             flex-wrap: wrap;
         }
 
+        .hero-cta-row .btn-repo-first {
+            position: relative;
+            margin-left: 1.3rem;
+        }
+
+        .hero-cta-row .btn-repo-first::before {
+            content: '';
+            position: absolute;
+            left: -0.85rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 2.2rem;
+            background: linear-gradient(
+                180deg,
+                rgba(124, 58, 237, 0.14),
+                rgba(124, 58, 237, 0.45),
+                rgba(124, 58, 237, 0.14)
+            );
+            pointer-events: none;
+        }
+
         /* ── BUTTONS ──────────────────────────────────── */
         .btn {
             border: none;
@@ -443,6 +465,24 @@
             .timeline-date {
                 justify-content: flex-start;
             }
+
+            .hero-cta-row {
+                width: 100%;
+            }
+
+            .hero-cta-row .btn {
+                width: 100%;
+                flex: 1 1 100%;
+                text-align: center;
+            }
+
+            .hero-cta-row .btn-repo-first {
+                margin-left: 0;
+            }
+
+            .hero-cta-row .btn-repo-first::before {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -460,9 +500,9 @@
                 <span class="badge">Done + Deployed</span>
                 <span class="badge">Completely Free</span>
             </div>
-            <div class="cta-row">
+            <div class="cta-row hero-cta-row">
                 <a href="https://intelligrader.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Try Intelligrader</a>
-                <a href="https://github.com/Intelligrader/intelligrader" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Frontend Repository</a>
+                <a href="https://github.com/Intelligrader/intelligrader" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-repo-first">Frontend Repository</a>
                 <a href="https://github.com/Intelligrader/Intelligrader-API" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">API Repository</a>
             </div>
         </div>
