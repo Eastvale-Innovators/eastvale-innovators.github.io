@@ -146,7 +146,7 @@
             align-items: flex-start;
             justify-content: center;
             text-align: center;
-            padding: 7.1rem 1.5rem 3.2rem;
+            padding: 7.1rem 1.5rem 5rem;
         }
 
         .hero-content {
@@ -249,6 +249,27 @@
         .hero-cta-row {
             width: 100%;
             justify-content: center;
+        }
+
+        .hero-cta-row .btn-repo-first {
+            position: relative;
+            margin-left: 1.2rem;
+        }
+
+        .hero-cta-row .btn-repo-first::before {
+            content: '';
+            position: absolute;
+            left: -0.8rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 2.2rem;
+            background: linear-gradient(
+                180deg,
+                rgba(124, 58, 237, 0.14),
+                rgba(124, 58, 237, 0.45),
+                rgba(124, 58, 237, 0.14)
+            );
         }
 
         .btn {
@@ -598,22 +619,147 @@
         }
 
         .cta {
-            padding-bottom: 5.4rem;
+            padding-bottom: 5.8rem;
         }
 
         .cta-panel {
-            max-width: 820px;
+            position: relative;
+            max-width: 1040px;
             margin: 0 auto;
-            border: 1px solid rgba(124, 58, 237, 0.23);
-            border-radius: 18px;
-            padding: 1.7rem 1.2rem;
-            background: linear-gradient(150deg, rgba(124, 58, 237, 0.09), rgba(249, 169, 6, 0.12));
+            border: 1px solid rgba(124, 58, 237, 0.26);
+            border-radius: 24px;
+            padding: 1.2rem;
+            background:
+                radial-gradient(circle at 12% 14%, rgba(249, 169, 6, 0.2), transparent 42%),
+                radial-gradient(circle at 90% 84%, rgba(124, 58, 237, 0.24), transparent 44%),
+                linear-gradient(150deg, rgba(124, 58, 237, 0.1), rgba(249, 169, 6, 0.12));
+            display: grid;
+            grid-template-columns: minmax(0, 1.22fr) minmax(0, 0.92fr);
+            gap: 1rem;
+            overflow: hidden;
         }
 
-        .cta-panel p {
-            max-width: 700px;
-            margin: 0 auto 1.3rem;
+        .cta-panel::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            pointer-events: none;
+            border: 1px solid rgba(255, 255, 255, 0.34);
+            opacity: 0.56;
+        }
+
+        .cta-main {
+            position: relative;
+            z-index: 1;
+            border-radius: 18px;
+            background: linear-gradient(150deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.84));
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            padding: 1.25rem 1.2rem;
+            box-shadow: 0 8px 22px rgba(124, 58, 237, 0.1);
+            display: grid;
+            gap: 1rem;
+        }
+
+        .cta-lede {
+            margin: 0;
             color: var(--text);
+            font-size: 1rem;
+            line-height: 1.65;
+        }
+
+        .cta-points {
+            display: grid;
+            gap: 0.58rem;
+        }
+
+        .cta-point {
+            margin: 0;
+            position: relative;
+            padding: 0.7rem 0.85rem 0.7rem 1.9rem;
+            border-radius: 12px;
+            border: 1px solid rgba(124, 58, 237, 0.22);
+            background: rgba(255, 255, 255, 0.72);
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.45;
+        }
+
+        .cta-point::before {
+            content: '';
+            position: absolute;
+            left: 0.78rem;
+            top: 50%;
+            width: 8px;
+            height: 8px;
+            transform: translateY(-50%);
+            border-radius: 999px;
+            background: var(--purple);
+            box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.18);
+        }
+
+        .cta-primary-actions {
+            justify-content: flex-start;
+        }
+
+        .cta-side {
+            position: relative;
+            z-index: 1;
+            border-radius: 18px;
+            padding: 1.15rem 1rem;
+            background: linear-gradient(160deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.78));
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            box-shadow: 0 8px 22px rgba(124, 58, 237, 0.08);
+            display: grid;
+            align-content: start;
+            gap: 0.62rem;
+        }
+
+        .cta-side-label {
+            margin: 0;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-weight: 900;
+            color: var(--purple-deep);
+        }
+
+        .cta-repo-card {
+            text-decoration: none;
+            border: 1px solid rgba(124, 58, 237, 0.28);
+            border-radius: 12px;
+            padding: 0.8rem 0.9rem;
+            background: rgba(255, 255, 255, 0.82);
+            transition: var(--transition);
+            display: grid;
+            gap: 0.2rem;
+        }
+
+        .cta-repo-card strong {
+            font-size: 0.84rem;
+            letter-spacing: 0.035em;
+            text-transform: uppercase;
+            color: var(--purple-deep);
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .cta-repo-card span {
+            font-size: 0.84rem;
+            line-height: 1.4;
+            color: var(--text-muted);
+        }
+
+        .cta-repo-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(124, 58, 237, 0.5);
+            background: rgba(124, 58, 237, 0.08);
+            box-shadow: 0 10px 20px rgba(124, 58, 237, 0.16);
+        }
+
+        .cta-note {
+            margin: 0.2rem 0 0;
+            font-size: 0.82rem;
+            color: var(--text-light);
         }
 
         .reveal {
@@ -642,6 +788,15 @@
             .section-shell {
                 padding: 2rem;
             }
+
+            .cta-panel {
+                grid-template-columns: 1fr;
+                max-width: 860px;
+            }
+
+            .cta-primary-actions {
+                justify-content: center;
+            }
         }
 
         @media (max-width: 860px) {
@@ -652,8 +807,7 @@
             }
 
             .hero {
-                min-height: 82svh;
-                padding: 6.3rem 1rem 2.6rem;
+                padding-top: 7.4rem;
             }
 
             .hero-content {
@@ -693,6 +847,34 @@
                 width: auto;
                 flex: 0 1 auto;
                 min-width: 220px;
+                text-align: center;
+            }
+
+            .hero-cta-row .btn-repo-first {
+                margin-left: 0;
+            }
+
+            .hero-cta-row .btn-repo-first::before {
+                display: none;
+            }
+
+            .cta-panel {
+                padding: 0.85rem;
+                border-radius: 20px;
+            }
+
+            .cta-main,
+            .cta-side {
+                border-radius: 14px;
+                padding: 1rem 0.85rem;
+            }
+
+            .cta-primary-actions {
+                width: 100%;
+            }
+
+            .cta-primary-actions .btn {
+                width: 100%;
                 text-align: center;
             }
         }
@@ -922,13 +1104,32 @@
     <section class="section cta" id="contact">
         <div class="section-shell reveal">
             <p class="eyebrow">Collaborate</p>
-            <h2>Get Involved</h2>
+            <h2>Get Involved & Contribute</h2>
             <div class="cta-panel">
-                <p>Interested in collaborating, piloting Intelligrader, or helping shape future versions? Reach out and we can coordinate next steps.</p>
-                <div class="cta-row">
-                    <a href="contact.html" class="btn btn-primary">Contact Us</a>
-                    <a href="teams.html#intelligrader-team" class="btn btn-secondary">Meet The Team</a>
+                <div class="cta-main">
+                    <p class="cta-lede">Interested in collaborating, piloting Intelligrader, or helping shape future versions? Reach out and we can coordinate next steps.</p>
+                    <div class="cta-points" aria-label="Ways to collaborate">
+                        <p class="cta-point">Pilot classroom use and share teacher feedback.</p>
+                        <p class="cta-point">Contribute scoring quality improvements and edge-case tests.</p>
+                        <p class="cta-point">Help ship UI and API enhancements for broader adoption.</p>
+                    </div>
+                    <div class="cta-row cta-primary-actions">
+                        <a href="contact.html" class="btn btn-primary">Contact Us</a>
+                        <a href="teams.html#intelligrader-team" class="btn btn-secondary">Meet The Team</a>
+                    </div>
                 </div>
+                <aside class="cta-side" aria-label="Intelligrader source repositories">
+                    <p class="cta-side-label">Source Code</p>
+                    <a href="https://github.com/Intelligrader/intelligrader" target="_blank" rel="noopener noreferrer" class="cta-repo-card">
+                        <strong>Frontend Repository</strong>
+                        <span>Next.js app and user experience workflows.</span>
+                    </a>
+                    <a href="https://github.com/Intelligrader/Intelligrader-API" target="_blank" rel="noopener noreferrer" class="cta-repo-card">
+                        <strong>API Repository</strong>
+                        <span>FastAPI scoring service and queue orchestration.</span>
+                    </a>
+                    <p class="cta-note">Open source and actively improving with classroom feedback.</p>
+                </aside>
             </div>
         </div>
     </section>
