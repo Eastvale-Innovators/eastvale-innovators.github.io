@@ -19,6 +19,7 @@ footer p {
 .footer-copyright {
     font-size: 0.95rem;
     letter-spacing: 0.01em;
+    color: var(--footer-text-strong, rgba(255, 255, 255, 0.82));
 }
 
 .footer-creators {
