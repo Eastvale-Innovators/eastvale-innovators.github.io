@@ -3,8 +3,8 @@
     --bg-page: #001f3f;
     --bg-dark: #001f3f;
     --bg-page-soft: rgba(26, 39, 64, 0.92);
-    --nav-bg: rgba(26, 39, 64, 0.8);
-    --nav-bg-scrolled: rgba(26, 39, 64, 0.95);
+    --nav-bg: #1a2740;
+    --nav-bg-scrolled: #1a2740;
     --panel-bg: rgba(10, 18, 34, 0.98);
     --gradient-2: linear-gradient(135deg, #1a2740 0%, #293d62 100%);
     --text-light: #f5f5f5;
@@ -27,8 +27,8 @@ html[data-theme="dark"] {
     --bg-page: #131a27;
     --bg-dark: #131a27;
     --bg-page-soft: rgba(21, 30, 44, 0.94);
-    --nav-bg: rgba(20, 28, 43, 0.88);
-    --nav-bg-scrolled: rgba(17, 24, 37, 0.96);
+    --nav-bg: #141c2b;
+    --nav-bg-scrolled: #141c2b;
     --panel-bg: rgba(22, 30, 45, 0.94);
     --gradient-2: linear-gradient(135deg, #16212f 0%, #111924 100%);
     --text-light: #eef2f7;
@@ -51,8 +51,8 @@ html[data-theme="light"] {
     --bg-page: #293d62;
     --bg-dark: #293d62;
     --bg-page-soft: rgba(26, 39, 64, 0.8);
-    --nav-bg: rgba(26, 39, 64, 0.8);
-    --nav-bg-scrolled: rgba(26, 39, 64, 0.95);
+    --nav-bg: #1a2740;
+    --nav-bg-scrolled: #1a2740;
     --panel-bg: rgba(10, 18, 34, 0.95);
     --gradient-2: linear-gradient(135deg, #1a2740 0%, #293d62 100%);
     --text-light: #f5f5f5;
