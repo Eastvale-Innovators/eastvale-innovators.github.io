@@ -20,7 +20,8 @@
 
         const separator = document.createElement('span');
         separator.className = 'footer-creators-separator';
-        separator.textContent = 'and';
+        separator.setAttribute('aria-hidden', 'true');
+        separator.textContent = '|';
 
         const link = document.createElement('a');
         link.href = 'https://linkedin.com/in/videsh-k-ariv';
@@ -30,7 +31,7 @@
 
         const name = document.createElement('span');
         name.className = 'footer-name';
-        name.textContent = 'Videsh Arivazhagan | ';
+        name.textContent = 'Videsh Arivazhagan';
 
         const icon = document.createElement('span');
         icon.className = 'footer-link-icon';
