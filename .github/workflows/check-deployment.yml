@@ -1,0 +1,25 @@
+name: Check for Deployment Blocker
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  check-kaylee:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Check for 'Kaylee' in repository
+      run: |
+        if grep -r -i "kaylee" --include="*.html" --include="*.js" --include="*.css" --include="*.md" .; then
+          echo "❌ DEPLOYMENT BLOCKED: The word 'Kaylee' was found in the repository!"
+          exit 1
+        else
+          echo "✅ No instances of 'Kaylee' found. Safe to deploy."
+          exit 0
+        fi
