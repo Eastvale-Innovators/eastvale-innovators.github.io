@@ -618,6 +618,25 @@
             line-height: 1.45;
         }
 
+        .gallery-slot.has-image {
+            padding: 0;
+            justify-content: center;
+            align-items: center;
+            border: none;
+            background: none;
+            overflow: hidden;
+        }
+
+        .gallery-slot-image {
+            width: 100%;
+            height: 100%;
+            min-height: 185px;
+            object-fit: cover;
+            border-radius: 18px;
+            border: none;
+            display: block;
+        }
+
         .cta {
             padding-bottom: 5.8rem;
         }
@@ -1071,11 +1090,10 @@
     <section class="section" id="gallery">
         <div class="section-shell reveal">
             <p class="eyebrow">Visuals</p>
-            <h2>Image Space</h2>
+            <h2>Platform Preview</h2>
             <div class="gallery-grid">
-                <div class="image-slot gallery-slot reveal">
-                    <strong>Dashboard Overview</strong>
-                    <span>Add the first screen students see when they open Intelligrader.</span>
+                <div class="image-slot gallery-slot has-image reveal">
+                    <img src="assets/img/initial_dashboard.png" alt="Intelligrader dashboard overview" class="gallery-slot-image" loading="lazy" decoding="async">
                 </div>
                 <div class="image-slot gallery-slot reveal">
                     <strong>Feedback Results</strong>
