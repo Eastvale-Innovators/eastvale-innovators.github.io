@@ -1,0 +1,18 @@
+/* shared base extracted for reuse */
+:root {
+  --navy: #020b18;
+  --navy-mid: #071428;
+  --navy-light: #0d2044;
+  --blue: #1a6bff;
+  --blue-glow: rgba(26,107,255,.35);
+  --cyan: #00d4ff;
+  --cyan-glow: rgba(0,212,255,.25);
+  --white: #f0f6ff;
+  --muted: rgba(200,220,255,.55);
+  --accent-rgb: 26,107,255;
+  --nav-h: 72px;
+  --ease: cubic-bezier(.22,1,.36,1);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--blue) var(--navy); }
+body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--white); overflow-x: hidden; line-height: 1.65; }

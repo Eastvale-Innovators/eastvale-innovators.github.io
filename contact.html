@@ -1,848 +1,273 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Contact Eastvale Innovators for collaborations, questions, partnerships, and opportunities to support student-led STEM innovation.">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://www.eastvaleinnovators.org/contact.html">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Eastvale Innovators">
-    <meta property="og:title" content="Eastvale Innovators">
-    <meta property="og:description" content="Reach out to Eastvale Innovators to collaborate, partner, or learn more about our student projects.">
-    <meta property="og:url" content="https://www.eastvaleinnovators.org/contact.html">
-    <meta property="og:image" content="https://www.eastvaleinnovators.org/assets/img/eastvale%20innovators%20banner.png">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Eastvale Innovators">
-    <meta name="twitter:description" content="Reach out to Eastvale Innovators to collaborate, partner, or learn more about our student projects.">
-    <meta name="twitter:image" content="https://www.eastvaleinnovators.org/assets/img/eastvale%20innovators%20banner.png">
-    <title>Eastvale Innovators</title>
-    <link rel="icon" type="image/png" href="assets/img/logo_favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #293d62;
-            --accent: #4a9eff;
-            --accent-glow: rgba(var(--accent-rgb), 0.3);
-            --text-light: #f5f5f5;
-            --bg-dark: #001f3f;
-            --gradient-2: linear-gradient(135deg, #1a2740 0%, #293d62 100%);
-            --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            --star-x: 50%;
-            --star-y: 50%;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            color: var(--text-light);
-            background: var(--bg-dark);
-            overflow-x: clip;
-            line-height: 1.6;
-        }
-
-        h1, h2, h3 {
-            font-family: 'Orbitron', 'Space Grotesk', sans-serif;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.02em;
-            text-align: center;
-            margin: 0.5rem 0;
-            display: block;
-            width: 100%;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            scrollbar-width: none;
-        }
-
-        html::-webkit-scrollbar {
-            display: none;
-        }
-
-        /* Hero Section */
-        .hero {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-            text-align: center;
-            background: var(--gradient-2);
-            padding-top: 6rem;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 3;
-            padding: 0 2rem;
-            max-width: 900px;
-            text-align: center;
-            animation: fadeInDown 1s ease 0.2s backwards;
-        }
-
-        .hero-content::before {
-            content: "";
-            position: absolute;
-            inset: -60px;
-            background: radial-gradient(circle, rgba(74,158,255,0.18), transparent 70%);
-            filter: blur(50px);
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero h1 {
-            font-size: clamp(3rem, 8vw, 5rem);
-            margin-bottom: 1rem;
-            line-height: 1.1;
-            background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-subtitle {
-            font-size: clamp(1.1rem, 2vw, 1.4rem);
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 300;
-        }
-
-        /* Contact Section */
-        .contact-section {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 6rem 2rem;
-        }
-
-        .contact-intro {
-            text-align: center;
-            margin-bottom: 4rem;
-            animation: fadeInUp 0.8s ease;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .contact-intro h2 {
-            font-size: clamp(2rem, 4vw, 3rem);
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .contact-intro p {
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.75);
-            max-width: 700px;
-            margin: 0 auto;
-            line-height: 1.8;
-        }
-
-        /* Contact Container */
-        .contact-container {
-            max-width: 800px;
-            margin: 0 auto 4rem;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 30px;
-            padding: 4rem;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .contact-container::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-
-        .contact-container:hover::before {
-            opacity: 1;
-        }
-
-        .contact-container:hover {
-            border-color: rgba(var(--accent-rgb), 0.3);
-            box-shadow: 0 20px 60px rgba(var(--accent-rgb), 0.2);
-        }
-
-        .form-group {
-            margin-bottom: 2rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.75rem;
-            color: rgba(255, 255, 255, 0.95);
-            font-weight: 600;
-            font-size: 1rem;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 1rem 1.5rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 15px;
-            color: var(--text-light);
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            transition: var(--transition);
-            box-sizing: border-box;
-        }
-
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-            color: rgba(255, 255, 255, 0.4);
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--accent);
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 0 3px var(--accent-glow);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 150px;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 1.2rem;
-            background: var(--accent);
-            color: white;
-            border: none;
-            border-radius: 15px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: 'Inter', sans-serif;
-            position: relative;
-            z-index: 1;
-            box-sizing: border-box;
-        }
-
-        .submit-btn:hover {
-            background: #3d8eef;
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px var(--accent-glow);
-        }
-
-        /* Contact Info */
-        .contact-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2.5rem;
-            margin-bottom: 3rem;
-        }
-
-        .info-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 2.5rem;
-            text-align: center;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .info-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-
-        .info-card:hover::before {
-            opacity: 1;
-        }
-
-        .info-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(var(--accent-rgb), 0.5);
-            box-shadow: 0 15px 40px rgba(var(--accent-rgb), 0.2);
-        }
-
-        .info-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-            color: var(--accent);
-            position: relative;
-            z-index: 1;
-        }
-
-        .info-card p {
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.6;
-            position: relative;
-            z-index: 1;
-        }
-
-        .info-card a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-            position: relative;
-            z-index: 1;
-        }
-
-        .info-card a:hover {
-            color: var(--accent);
-        }
-
-        /* Social Links */
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .social-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-light);
-            text-decoration: none;
-            font-size: 1.5rem;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .social-btn:hover {
-            background: var(--accent);
-            border-color: var(--accent);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px var(--accent-glow);
-        }
-
-        .social-btn[aria-disabled="true"] {
-            opacity: 0.55;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-
-        .form-hint {
-            margin-top: 0.9rem;
-            color: rgba(255, 255, 255, 0.65);
-            font-size: 0.9rem;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .form-status {
-            margin-top: 1rem;
-            min-height: 1.4rem;
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 0.95rem;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .form-status.success {
-            color: #9be6b1;
-        }
-
-        .contact-layout{
-            display:grid;
-            grid-template-columns: 1fr 1fr;
-            gap:4rem;
-            align-items:start;
-        }
-
-        .contact-left{
-            display:flex;
-            flex-direction:column;
-            gap:2.5rem;
-        }
-
-        .contact-info{
-            display:flex;
-            flex-direction:column;
-            gap:1.5rem;
-        }
-
-        select{
-            width:100%;
-            padding:1rem 1.5rem;
-            background:rgba(255,255,255,0.05);
-            border:1px solid rgba(255,255,255,0.15);
-            border-radius:15px;
-            color:white;
-            font-size:1rem;
-            font-family: 'Inter', sans-serif;
-            transition: var(--transition);
-            box-sizing: border-box;
-        }
-
-        select:focus{
-            outline:none;
-            border-color:var(--accent);
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 0 3px var(--accent-glow);
-        }
-
-        select option {
-            background: #0f1d33;
-            color: #f5f8ff;
-        }
-
-        select option:checked {
-            background: #1f4f88;
-            color: #ffffff;
-        }
-
-        #tile-transition {
-            position: fixed;
-            inset: 0;
-            z-index: 20000;
-            pointer-events: none;
-            display: grid;
-            background: transparent;
-        }
-
-        .tile {
-            background: black;
-            opacity: 0;
-            transform: scale(0.9);
-            transition: opacity 0.35s ease, transform 0.35s ease;
-        }
-
-        .tile.active {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .tile.reveal {
-            opacity: 0;
-            transform: scale(0.9);
-        }
-
-        /* STARFIELD BACKGROUND */
-        .starfield {
-            position: absolute;
-            inset: 0;
-            background-image: url("assets/img/starfield3.jpeg");
-            background-size: 150% 150%;
-            background-position: var(--star-x) var(--star-y);
-            background-repeat: no-repeat;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.3;
-            transition: background-position 0.25s ease-out;
-        }
-
-
-        .star-overlay {
-            position: absolute;
-            inset: 0;
-            background:
-                radial-gradient(circle at 20% 30%, rgba(74,158,255,0.20), transparent 35%),
-                radial-gradient(circle at 80% 60%, rgba(74,158,255,0.12), transparent 35%),
-                radial-gradient(circle at 50% 80%, rgba(255,255,255,0.08), transparent 25%);
-            pointer-events: none;
-            z-index: 1;
-        }
-
-
-        /* subtle star drift */
-
-        @keyframes starDrift{
-            from{
-                transform:translateY(0px);
-            }
-            to{
-                transform:translateY(-120px);
-            }
-        }
-
-        /* Responsive */
-        @media (max-width: 900px) {
-            .contact-layout {
-                gap: 2rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero {
-                padding-top: 3rem;
-            }
-
-            .contact-layout{
-                grid-template-columns:1fr;
-            }
-
-            .contact-container {
-                padding: 2rem 1.25rem;
-            }
-
-            .social-links {
-                gap: 1rem;
-            }
-        }
-
-    </style>
-</head>
-<body>
-    <div id="site-header"></div>
-    <script src="assets/js/shared-header.js"></script>
-    <script src="assets/js/shared-footer.js?v=4-15-26"></script>
-    <script src="assets/js/site-common.js"></script>
-    <script>
-        loadSharedHeader('#site-header');
-        loadSharedFooter('#site-footer');
-    </script>
-
-
-    <!-- Hero Section -->
-    <section class="hero" id="hero">
-        <div class="starfield"></div>
-        <div class="star-overlay"></div>
-        <div class="hero-grid"></div>
-
-        <div class="hero-content">
-            <h1>Contact Us</h1>
-            <p class="hero-subtitle">Let's build the future together</p>
-        </div>
-    </section>
-
-    <section class="contact-section">
-        <div class="contact-layout">
-            <!-- LEFT SIDE INFO -->
-            <div class="contact-left">
-                <div class="contact-intro">
-                    <h2>Get In Touch</h2>
-                    <p>
-                        Have a question, idea, or want to collaborate with Eastvale Innovators?
-                        We'd love to hear from you.
-                    </p>
-                </div>
-                <div class="contact-info">
-                    <div class="info-card">
-                        <h3>Email</h3>
-                        <p>
-                            <a href="mailto:devom@moonlit.company">
-                                info@eastvaleinnovators.org
-                            </a>
-                        </p>
-                    </div>
-                    <div class="info-card">
-                        <h3>Location</h3>
-                        <p>
-                            Eleanor Roosevelt High School<br>
-                            Eastvale, California
-                        </p>
-                    </div>
-                    <div class="info-card">
-                        <h3>Response Time</h3>
-                        <p>
-                            We typically respond within<br>
-                            1–3 school days.
-                        </p>
-                    </div>
-                </div>
-                <div class="social-links">
-                    <!-- Instagram -->
-                    <a href="https://www.instagram.com/eastvale_innovators/" class="social-btn" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
-                        <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor">
-                            <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 2A3.75 3.75 0 0 0 4 7.75v8.5A3.75 3.75 0 0 0 7.75 20h8.5A3.75 3.75 0 0 0 20 16.25v-8.5A3.75 3.75 0 0 0 16.25 4h-8.5z"/>
-                            <path d="M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/>
-                            <circle cx="17.5" cy="6.5" r="1"/>
-                        </svg>
-                    </a>
-
-                    <!-- LinkedIn -->
-                    <a href="#" class="social-btn" aria-label="LinkedIn profile coming soon" aria-disabled="true" title="LinkedIn profile coming soon">
-                        <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor">
-                            <path d="M4.98 3.5C4.98 4.88 3.86 6 2.48 6 1.1 6 0 4.88 0 3.5S1.1 1 2.48 1c1.38 0 2.5 1.12 2.5 2.5zM0 8h5v16H0V8zm7.5 0h4.7v2.2h.1c.65-1.2 2.25-2.5 4.65-2.5 4.98 0 5.9 3.28 5.9 7.55V24h-5v-7.5c0-1.78-.03-4.08-2.48-4.08-2.48 0-2.86 1.94-2.86 3.95V24h-5V8z"/>
-                        </svg>
-                    </a>
-
-                    <!-- Twitter / X -->
-                    <a href="#" class="social-btn" aria-label="X profile coming soon" aria-disabled="true" title="X profile coming soon">
-                        <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor">
-                            <path d="M22 5.8c-.8.4-1.6.6-2.5.8.9-.6 1.5-1.4 1.8-2.4-.8.5-1.8.9-2.8 1.1A4.5 4.5 0 0 0 12 9.1c0 .4 0 .8.1 1.1C8.3 10 5.1 8.3 2.9 5.7c-.4.7-.6 1.4-.6 2.2 0 1.5.8 2.9 2 3.7-.7 0-1.4-.2-2-.5v.1c0 2.1 1.5 3.9 3.5 4.3-.4.1-.8.2-1.2.2-.3 0-.6 0-.9-.1.6 1.8 2.4 3.2 4.5 3.2A9 9 0 0 1 2 20.3a12.8 12.8 0 0 0 7 2c8.4 0 13-7 13-13v-.6c.9-.6 1.6-1.4 2.2-2.3z"/>
-                        </svg>
-                    </a>
-
-                </div>
-            </div>
-
-            <!-- RIGHT SIDE FORM -->
-            <div class="contact-container">
-                <form id="contact-form">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" autocomplete="name" maxlength="120" required placeholder="Your Name">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" autocomplete="email" inputmode="email" maxlength="160" required placeholder="your.email@example.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="topic">What is this about?</label>
-                        <select id="topic" name="topic" required>
-                            <option value="General Question">General Question</option>
-                            <option value="Joining the Club">Joining the Club</option>
-                            <option value="Project Collaboration">Project Collaboration</option>
-                            <option value="Sponsorship / Partnership">Sponsorship / Partnership</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="6" maxlength="5000" required placeholder="Tell us more..."></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">
-                        Send Message
-                    </button>
-                    <p class="form-hint">Submitting opens your email app with a pre-filled draft to our team.</p>
-                    <p id="form-status" class="form-status" aria-live="polite"></p>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <div id="site-footer"></div>
-    <div id="tile-transition"></div>
-    <script>
-
-        const contactForm = document.getElementById("contact-form");
-        const contactStatus = document.getElementById("form-status");
-
-        if (contactForm) {
-            contactForm.addEventListener("submit", function (event) {
-                event.preventDefault();
-
-                if (!contactForm.reportValidity()) {
-                    return;
-                }
-
-                const submitButton = contactForm.querySelector(".submit-btn");
-                if (submitButton) {
-                    submitButton.textContent = "Opening Email...";
-                }
-
-                const name = document.getElementById("name").value.trim();
-                const email = document.getElementById("email").value.trim();
-                const topic = document.getElementById("topic").value;
-                const message = document.getElementById("message").value.trim();
-
-                const subject = `[${topic}] Message from ${name}`;
-                const body = [
-                    `Name: ${name}`,
-                    `Email: ${email}`,
-                    "",
-                    "Message:",
-                    message,
-                    "",
-                    "Sent from eastvaleinnovators.org/contact.html"
-                ].join("\n");
-
-                const mailtoUrl = `mailto:info@eastvaleinnovators.org?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-                window.location.href = mailtoUrl;
-
-                if (contactStatus) {
-                    contactStatus.textContent = "Your email draft is ready. If it did not open, email us directly at info@eastvaleinnovators.org.";
-                    contactStatus.classList.add("success");
-                }
-
-                if (submitButton) {
-                    submitButton.textContent = "Send Message";
-                }
-
-                contactForm.reset();
-            });
-        }
-
-        const tileContainer = document.getElementById("tile-transition");
-        const TILE_ROWS = 12;
-        const TILE_COLS = 20;
-        let tiles = [];
-
-        function createTiles() {
-            if (!tileContainer) return;
-
-            tileContainer.innerHTML = "";
-            tileContainer.style.gridTemplateRows = `repeat(${TILE_ROWS}, 1fr)`;
-            tileContainer.style.gridTemplateColumns = `repeat(${TILE_COLS}, 1fr)`;
-
-            tiles = [];
-
-            for (let r = 0; r < TILE_ROWS; r++) {
-                for (let c = 0; c < TILE_COLS; c++) {
-                    const tile = document.createElement("div");
-                    tile.className = "tile";
-                    tile.dataset.row = r;
-                    tile.dataset.col = c;
-                    tileContainer.appendChild(tile);
-                    tiles.push(tile);
-                }
-            }
-        }
-
-        function getTileOrder() {
-            return tiles.slice().sort((a, b) => {
-                const ar = Number(a.dataset.row);
-                const ac = Number(a.dataset.col);
-                const br = Number(b.dataset.row);
-                const bc = Number(b.dataset.col);
-                return (ar + ac) - (br + bc);
-            });
-        }
-
-        function coverTiles() {
-            const ordered = getTileOrder();
-            ordered.forEach((tile, i) => {
-                setTimeout(() => {
-                    tile.classList.add("active");
-                }, i * 2);
-            });
-        }
-
-        function revealTiles() {
-            const ordered = getTileOrder().reverse();
-            ordered.forEach((tile, i) => {
-                setTimeout(() => {
-                    tile.classList.remove("active");
-                }, i * 2);
-            });
-            setTimeout(() => {
-                tileContainer.style.background = "transparent";
-            }, ordered.length * 2 - 240);
-        }
-
-        function startTileNavigation(href) {
-            coverTiles();
-
-            setTimeout(() => {
-                window.location.href = href;
-            }, tiles.length * 2 + 200);
-        }
-
-        document.addEventListener("click", e => {
-            const link = e.target.closest("a");
-            if (!link) return;
-
-            const href = link.getAttribute("href");
-            if (!href) return;
-            if (href.includes("#")) return;
-            if (href.startsWith("mailto:")) return;
-            if (href.startsWith("tel:")) return;
-            if (link.target === "_blank") return;
-
-            e.preventDefault();
-            startTileNavigation(href);
-        });
-
-        document.addEventListener("DOMContentLoaded", () => {
-            createTiles();
-            tiles.forEach(tile => tile.classList.add("active"));
-            setTimeout(() => {
-                revealTiles();
-            }, 120);
-        });
-
-        // If DOMContentLoaded has already fired (script loaded after DOM), run immediately
-        if (document.readyState !== 'loading') {
-            createTiles();
-            tiles.forEach(tile => tile.classList.add("active"));
-            setTimeout(() => {
-                revealTiles();
-            }, 120);
-        }
-
-        const heroSection = document.getElementById("hero");
-
-    let targetStarX = 50;
-    let targetStarY = 50;
-    let currentStarX = 50;
-    let currentStarY = 50;
-
-    document.addEventListener("mousemove", (e) => {
-        if (!heroSection) return;
-
-        const rect = heroSection.getBoundingClientRect();
-
-        if (e.clientY >= rect.top && e.clientY <= rect.bottom) {
-            const relX = (e.clientX - rect.left) / rect.width;
-            const relY = (e.clientY - rect.top) / rect.height;
-
-            targetStarX = 50 + (relX - 0.5) * 28;
-            targetStarY = 50 + (relY - 0.5) * 28;
-        }
-    });
-
-    function animateStarfield() {
-        currentStarX += (targetStarX - currentStarX) * 0.06;
-        currentStarY += (targetStarY - currentStarY) * 0.06;
-
-        if (heroSection) {
-            heroSection.style.setProperty("--star-x", `${currentStarX}%`);
-            heroSection.style.setProperty("--star-y", `${currentStarY}%`);
-        }
-
-        requestAnimationFrame(animateStarfield);
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact Eastvale Innovators for collaborations, questions, partnerships, and opportunities to support student-led STEM innovation.">
+  <title>Contact — Eastvale Innovators</title>
+  <link rel="icon" type="image/png" href="assets/img/logo_favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/pages.css">
+  <style>
+    /* ── CONTACT LAYOUT ── */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
     }
 
-    animateStarfield();
-    </script>
+    .contact-info-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .info-card {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 16px;
+      padding: 1.5rem 1.75rem;
+      transition: border-color .3s, transform .3s var(--ease), background .3s;
+    }
+    .info-card:hover {
+      border-color: rgba(26,107,255,.3);
+      background: rgba(26,107,255,.06);
+      transform: translateX(6px);
+    }
+    .info-card-label {
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: .5rem;
+    }
+    .info-card-value {
+      font-size: 1rem;
+      color: var(--white);
+      line-height: 1.5;
+    }
+    .info-card a { color: inherit; text-decoration: none; transition: color .2s; }
+    .info-card a:hover { color: var(--cyan); }
+
+    /* Social row */
+    .social-row {
+      display: flex;
+      gap: .75rem;
+      margin-top: .5rem;
+    }
+
+    .social-btn {
+      width: 46px; height: 46px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.1);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--white);
+      text-decoration: none;
+      transition: background .2s, border-color .2s, transform .2s var(--ease);
+    }
+    .social-btn:hover {
+      background: rgba(26,107,255,.2);
+      border-color: rgba(26,107,255,.4);
+      transform: translateY(-3px);
+    }
+
+    /* Form */
+    .contact-form-wrap {
+      background: rgba(255,255,255,.025);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 24px;
+      padding: 2.5rem;
+    }
+
+    .form-group { margin-bottom: 1.5rem; }
+
+    .form-group label {
+      display: block;
+      font-size: .85rem;
+      font-weight: 600;
+      color: rgba(200,220,255,.8);
+      margin-bottom: .5rem;
+      letter-spacing: .02em;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: .85rem 1.1rem;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 12px;
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: .95rem;
+      transition: border-color .2s, background .2s, box-shadow .2s;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(200,220,255,.3); }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--blue);
+      background: rgba(26,107,255,.06);
+      box-shadow: 0 0 0 3px rgba(26,107,255,.2);
+    }
+    .form-group select option { background: #0a1628; }
+    .form-group textarea { resize: vertical; min-height: 130px; }
+
+    .form-hint {
+      font-size: .8rem;
+      color: rgba(200,220,255,.4);
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .form-status {
+      font-size: .9rem;
+      color: var(--white);
+      text-align: center;
+      margin-top: .75rem;
+      min-height: 1.2em;
+    }
+    .form-status.success { color: #4ade80; }
+
+    @media (max-width: 900px) {
+      .contact-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="site-header"></div>
+<script src="assets/js/shared-header.js"></script>
+<script src="assets/js/shared-footer.js?v=4-17-26"></script>
+<script src="assets/js/site-common.js"></script>
+<script>
+  loadSharedHeader('#site-header');
+  loadSharedFooter('#site-footer');
+</script>
+
+<!-- ── HERO ── -->
+<section class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-content">
+    <div class="page-hero-eyebrow">Reach Out</div>
+    <h1>Contact Us</h1>
+    <p class="page-hero-sub">Have a question, idea, or want to collaborate? We'd love to hear from you.</p>
+  </div>
+</section>
+
+<!-- ── CONTACT SECTION ── -->
+<section class="section">
+  <div class="contact-layout">
+
+    <!-- Left: info -->
+    <div>
+      <span class="section-eyebrow" data-reveal>Get In Touch</span>
+      <h2 class="section-title" data-reveal data-reveal-delay="1">Let's build<br>something together</h2>
+      <p class="section-desc" data-reveal data-reveal-delay="2" style="margin-bottom:2rem">
+        We're a student-led org based out of Eastvale. Whether you want to join, partner, or just say hi — send us a message.
+      </p>
+
+      <div class="contact-info-stack" data-reveal data-reveal-delay="2">
+        <div class="info-card">
+          <div class="info-card-label">Email</div>
+          <div class="info-card-value">
+            <a href="mailto:info@eastvaleinnovators.org">info@eastvaleinnovators.org</a>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-label">Location</div>
+          <div class="info-card-value">Eleanor Roosevelt High School<br>Eastvale, California</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-label">Response Time</div>
+          <div class="info-card-value">Typically 1–3 school days</div>
+        </div>
+      </div>
+
+      <div class="social-row" data-reveal data-reveal-delay="3" style="margin-top:1.5rem">
+        <a href="https://www.instagram.com/erhs_innovators/" class="social-btn" aria-label="Instagram" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Right: form -->
+    <div class="contact-form-wrap" data-reveal>
+      <form id="contact-form">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required placeholder="Your full name" autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required placeholder="your.email@example.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="topic">Topic</label>
+          <select id="topic" name="topic" required>
+            <option value="General Question">General Question</option>
+            <option value="Joining the Club">Joining the Club</option>
+            <option value="Project Collaboration">Project Collaboration</option>
+            <option value="Sponsorship / Partnership">Sponsorship / Partnership</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required placeholder="Tell us what's on your mind..." rows="5"></textarea>
+        </div>
+        <button type="submit" class="btn-primary" style="width:100%;justify-content:center;padding:1rem">
+          Send Message
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M10 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <p class="form-hint">Submitting will open your email app with a pre-filled draft.</p>
+        <p id="form-status" class="form-status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+<div id="tile-transition"></div>
+
+<script>
+/* ── FORM ── */
+document.getElementById('contact-form')?.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const topic = document.getElementById('topic').value;
+  const message = document.getElementById('message').value.trim();
+  const subject = `[${topic}] Message from ${name}`;
+  const body = [`Name: ${name}`, `Email: ${email}`, '', 'Message:', message, '', 'Sent from eastvaleinnovators.org/contact.html'].join('\n');
+  window.location.href = `mailto:info@eastvaleinnovators.org?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  document.getElementById('form-status').textContent = 'Your email draft is ready. If it didn\'t open, email us directly at info@eastvaleinnovators.org.';
+  document.getElementById('form-status').className = 'form-status success';
+  this.reset();
+});
+
+/* ── REVEAL ── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); obs.unobserve(e.target); }});
+}, { threshold: 0.12 });
+document.querySelectorAll('[data-reveal]').forEach(el => obs.observe(el));
+
+/* ── TILE TRANSITION ── */
+const tc = document.getElementById('tile-transition');
+const R=10,C=18; let tiles=[];
+function createTiles(){tc.innerHTML='';tc.style.gridTemplateRows=`repeat(${R},1fr)`;tc.style.gridTemplateColumns=`repeat(${C},1fr)`;tiles=[];for(let r=0;r<R;r++)for(let c=0;c<C;c++){const t=document.createElement('div');t.className='tile';t.dataset.d=r+c;tc.appendChild(t);tiles.push(t);}}
+function sorted(){return tiles.slice().sort((a,b)=>a.dataset.d-b.dataset.d);}
+function cover(cb){sorted().forEach((t,i)=>setTimeout(()=>t.classList.add('active'),i*2));setTimeout(cb,tiles.length*2+180);}
+function reveal(){sorted().reverse().forEach((t,i)=>setTimeout(()=>t.classList.remove('active'),i*2));}
+document.addEventListener('click',e=>{const a=e.target.closest('a[href]');if(!a)return;const h=a.getAttribute('href');if(!h||h.includes('#')||h.startsWith('mailto:')||h.startsWith('tel:')||a.target==='_blank')return;e.preventDefault();cover(()=>window.location.href=h);});
+createTiles();tiles.forEach(t=>t.classList.add('active'));setTimeout(reveal,80);
+</script>
 </body>
 </html>
