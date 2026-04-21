@@ -28,6 +28,7 @@
       border: 1px solid rgba(255,255,255,.05);
       box-shadow: 0 0 0 1px rgba(200,75,10,.06), 0 50px 120px rgba(0,0,0,.6);
       user-select: none; touch-action: none;
+      overscroll-behavior: contain;
       transition: box-shadow .5s;
       background: #010408;
     }
@@ -51,10 +52,11 @@
     #c-dust { z-index: 5; }
     #c-fx { z-index: 6; }
     #c-shooting { z-index: 7; }
-    #svg-constellations { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 8; overflow: visible; }
+    /* Let wheel/drag reach #sky-container through empty space; groups opt back in */
+    #svg-constellations { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 8; overflow: visible; pointer-events: none; }
 
     /* ─── CONSTELLATION STYLES ─────────────── */
-    .constellation { cursor: pointer; }
+    .constellation { cursor: pointer; pointer-events: all; }
     .constellation.filtered { opacity: .1; pointer-events: none; transition: opacity .4s; }
 
     /* Connection lines — glow on hover */
@@ -433,8 +435,9 @@ document.querySelectorAll('[data-reveal]').forEach(el=>ro.observe(el));
     vx:0, vy:0, drag:false, autoCentering:false,
     lpx:0, lpy:0
   };
-  const ZOOM_MIN=0.6, ZOOM_MAX=2.2;
+  const ZOOM_MIN=0.32, ZOOM_MAX=3.8;
   let W=0,H=0,activeIdx=null,moved=false,query='',frame=0;
+  let pinch=null;
   let lastGalUpdate=0,lastConUpdate=0,forceGal=true,forceCon=true;
   let lastCam={x:cam.x,y:cam.y,zoom:cam.zoom};
 
@@ -765,7 +768,8 @@ document.querySelectorAll('[data-reveal]').forEach(el=>ro.observe(el));
     if(isLowPower) count=Math.max(6,Math.floor(count*.3));
     for(let i=0;i<count;i++){
       const angle=rand(0,Math.PI*2), speed=rand(.4,2.2);
-      particles.push({x:sx,y:sy,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,life:rand(22,45),maxLife:rand(22,45),size:rand(.8,2.6),color:color||'rgba(230,140,60,'});
+      const maxLife=rand(22,45);
+      particles.push({x:sx,y:sy,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,life:maxLife,maxLife,size:rand(.8,2.6),color:color||'rgba(230,140,60,'});
     }
   }
 
@@ -792,11 +796,13 @@ document.querySelectorAll('[data-reveal]').forEach(el=>ro.observe(el));
     for(let i=particles.length-1;i>=0;i--){
       const p=particles[i];
       p.x+=p.vx; p.y+=p.vy; p.vx*=.96; p.vy*=.96; p.life--;
+      if(p.life<=0){ particles.splice(i,1); continue; }
       const a=p.life/p.maxLife;
+      const pr=Math.max(0,p.size*a);
+      if(pr<=0) continue;
       fxCtx.beginPath();
       fxCtx.fillStyle=`${p.color}${a})`;
-      fxCtx.arc(p.x,p.y,p.size*a,0,Math.PI*2); fxCtx.fill();
-      if(p.life<=0) particles.splice(i,1);
+      fxCtx.arc(p.x,p.y,pr,0,Math.PI*2); fxCtx.fill();
     }
   }
 
@@ -1021,9 +1027,11 @@ document.querySelectorAll('[data-reveal]').forEach(el=>ro.observe(el));
     forceGal=true; forceCon=true;
   }
   function applyZoom(cx,cy,dz){
+    if(!Number.isFinite(dz)||dz<=0||dz>100) return;
     const rect=sky.getBoundingClientRect();
     const px=cx-rect.left, py=cy-rect.top;
     const before=screenToWorld(px,py);
+    if(!Number.isFinite(before.x)||!Number.isFinite(before.y)) return;
     cam.tzoom=Math.max(ZOOM_MIN,Math.min(ZOOM_MAX,cam.tzoom*dz));
     cam.tx=wrap(before.x-(px-W/2)/cam.tzoom,WORLD.w);
     cam.ty=wrap(before.y-(py-H/2)/cam.tzoom,WORLD.h);
@@ -1047,15 +1055,56 @@ document.querySelectorAll('[data-reveal]').forEach(el=>ro.observe(el));
     if(trail.length>40) trail.shift();
   }
   function onUp(){ cam.drag=false; sky.classList.remove('dragging'); }
+  function resetPointerGesture(){
+    pinch=null;
+    cam.drag=false;
+    sky.classList.remove('dragging');
+  }
 
   sky.addEventListener('mousedown',onDown);
   window.addEventListener('mousemove',onMove);
   window.addEventListener('mouseup',onUp);
   window.addEventListener('mouseleave',onUp);
-  sky.addEventListener('touchstart',e=>{if(e.touches.length===1)onDown(e.touches[0]);},{passive:false});
-  window.addEventListener('touchmove',e=>{if(e.touches.length===1&&cam.drag)onMove(e.touches[0]);},{passive:false});
-  window.addEventListener('touchend',onUp);
-  window.addEventListener('touchcancel',onUp);
+  /* Catches release when focus leaves tab / OS steals mouse (avoids stuck drag freezing controls) */
+  window.addEventListener('blur',resetPointerGesture);
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden) resetPointerGesture();
+  });
+  window.addEventListener('pointerup',onUp);
+  window.addEventListener('pointercancel',resetPointerGesture);
+  sky.addEventListener('touchstart',e=>{
+    if(e.touches.length===2){
+      e.preventDefault();
+      const a=e.touches[0], b=e.touches[1];
+      pinch={ lastD:Math.max(Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY),1e-3) };
+      cam.drag=false;
+      moved=false;
+      sky.classList.remove('dragging');
+      return;
+    }
+    if(e.touches.length===1){
+      pinch=null;
+      onDown(e.touches[0]);
+    }
+  },{passive:false});
+  window.addEventListener('touchmove',e=>{
+    if(e.touches.length===2&&pinch){
+      e.preventDefault();
+      const a=e.touches[0], b=e.touches[1];
+      const d=Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY);
+      const ratio=d/pinch.lastD;
+      pinch.lastD=Math.max(d,1e-3);
+      const mx=(a.clientX+b.clientX)*.5, my=(a.clientY+b.clientY)*.5;
+      if(Math.abs(ratio-1)>.001) applyZoom(mx,my,ratio);
+      return;
+    }
+    if(e.touches.length===1&&cam.drag) onMove(e.touches[0]);
+  },{passive:false});
+  window.addEventListener('touchend',e=>{
+    if(e.touches.length<2) pinch=null;
+    if(e.touches.length===0) onUp();
+  });
+  window.addEventListener('touchcancel',()=>{ pinch=null; onUp(); });
   sky.addEventListener('wheel',e=>{e.preventDefault();applyZoom(e.clientX,e.clientY,e.deltaY<0?1.14:.87);},{passive:false});
   sky.addEventListener('click',e=>{
     if(e.target.closest('.constellation,.c-hitbox')||e.target.closest('#search-wrap,#proj-panel,#sky-tools'))return;
@@ -1074,45 +1123,60 @@ document.querySelectorAll('[data-reveal]').forEach(el=>ro.observe(el));
 
   // ── MAIN LOOP ──────────────────────────────────────
   function animate(now){
-    const t=now*.001; frame++;
+    try{
+      if(W<2||H<2){ return; }
 
-    // Camera lerp
-    if(!cam.drag){
-      const dx=sdelta(cam.tx-cam.x,WORLD.w), dy=sdelta(cam.ty-cam.y,WORLD.h);
-      const cl=cam.autoCentering?.17:.09, zl=cam.autoCentering?.16:.09;
-      cam.x=wrap(cam.x+dx*cl,WORLD.w); cam.y=wrap(cam.y+dy*cl,WORLD.h);
-      cam.zoom+=(cam.tzoom-cam.zoom)*zl;
-      cam.x=wrap(cam.x+cam.vx,WORLD.w); cam.y=wrap(cam.y+cam.vy,WORLD.h);
-      cam.vx*=.9; cam.vy*=.9;
-      if(Math.abs(cam.vx)<.001)cam.vx=0; if(Math.abs(cam.vy)<.001)cam.vy=0;
-      if(cam.autoCentering&&Math.abs(dx)+Math.abs(dy)<1.5&&Math.abs(cam.tzoom-cam.zoom)<.008)cam.autoCentering=false;
-    } else {
-      cam.zoom+=(cam.tzoom-cam.zoom)*.2;
+      const t=now*.001; frame++;
+
+      // Sanitize camera (bad zoom breaks transforms and can throw in edge cases)
+      if(!Number.isFinite(cam.zoom)||cam.zoom<=0){ cam.zoom=cam.tzoom=1; }
+      if(!Number.isFinite(cam.tzoom)||cam.tzoom<=0){ cam.tzoom=cam.zoom=1; }
+      if(!Number.isFinite(cam.x)) cam.x=WORLD.w/2;
+      if(!Number.isFinite(cam.y)) cam.y=WORLD.h/2;
+      if(!Number.isFinite(cam.tx)) cam.tx=cam.x;
+      if(!Number.isFinite(cam.ty)) cam.ty=cam.y;
+
+      // Camera lerp
+      if(!cam.drag){
+        const dx=sdelta(cam.tx-cam.x,WORLD.w), dy=sdelta(cam.ty-cam.y,WORLD.h);
+        const cl=cam.autoCentering?.17:.09, zl=cam.autoCentering?.16:.09;
+        cam.x=wrap(cam.x+dx*cl,WORLD.w); cam.y=wrap(cam.y+dy*cl,WORLD.h);
+        cam.zoom+=(cam.tzoom-cam.zoom)*zl;
+        cam.x=wrap(cam.x+cam.vx,WORLD.w); cam.y=wrap(cam.y+cam.vy,WORLD.h);
+        cam.vx*=.9; cam.vy*=.9;
+        if(Math.abs(cam.vx)<.001)cam.vx=0; if(Math.abs(cam.vy)<.001)cam.vy=0;
+        if(cam.autoCentering&&Math.abs(dx)+Math.abs(dy)<1.5&&Math.abs(cam.tzoom-cam.zoom)<.008)cam.autoCentering=false;
+      } else {
+        cam.zoom+=(cam.tzoom-cam.zoom)*.2;
+      }
+
+      const cs=Math.abs(sdelta(cam.x-lastCam.x,WORLD.w))+Math.abs(sdelta(cam.y-lastCam.y,WORLD.h));
+      const zs=Math.abs(cam.zoom-lastCam.zoom);
+
+      // Redraw galaxy when camera moves significantly
+      if(forceGal||(now-lastGalUpdate>80&&(cs>.3||zs>.003))){
+        drawGalaxy(); lastGalUpdate=now; forceGal=false;
+      }
+
+      // Star layers (every frame, cheap)
+      drawStarLayer(bkCtx, starLayers.bk, .30, t);
+      drawStarLayer(mdCtx, starLayers.md, .58, t*1.15);
+      drawStarLayer(ftCtx, starLayers.ft, .92, t*1.38);
+      drawDust(t);
+      drawFX();
+      drawComets();
+
+      // Constellation positions (throttled)
+      if(forceCon||(now-lastConUpdate>32&&(cs>.12||zs>.001))){
+        updateConPositions(); lastConUpdate=now; forceCon=false;
+      }
+
+      lastCam.x=cam.x; lastCam.y=cam.y; lastCam.zoom=cam.zoom;
+    } catch(err){
+      console.error('Galaxy frame error:', err);
+    } finally{
+      requestAnimationFrame(animate);
     }
-
-    const cs=Math.abs(sdelta(cam.x-lastCam.x,WORLD.w))+Math.abs(sdelta(cam.y-lastCam.y,WORLD.h));
-    const zs=Math.abs(cam.zoom-lastCam.zoom);
-
-    // Redraw galaxy when camera moves significantly
-    if(forceGal||(now-lastGalUpdate>80&&(cs>.3||zs>.003))){
-      drawGalaxy(); lastGalUpdate=now; forceGal=false;
-    }
-
-    // Star layers (every frame, cheap)
-    drawStarLayer(bkCtx, starLayers.bk, .30, t);
-    drawStarLayer(mdCtx, starLayers.md, .58, t*1.15);
-    drawStarLayer(ftCtx, starLayers.ft, .92, t*1.38);
-    drawDust(t);
-    drawFX();
-    drawComets();
-
-    // Constellation positions (throttled)
-    if(forceCon||(now-lastConUpdate>32&&(cs>.12||zs>.001))){
-      updateConPositions(); lastConUpdate=now; forceCon=false;
-    }
-
-    lastCam.x=cam.x; lastCam.y=cam.y; lastCam.zoom=cam.zoom;
-    requestAnimationFrame(animate);
   }
 
   // ── INIT ───────────────────────────────────────────
