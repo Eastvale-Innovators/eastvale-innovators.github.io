@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap');
 
-/* ─ SHARED PAGE BASE ─────────────────────────── */
+/* ─ SHARED PAGE BASE — ERHS Broncos color scheme ── */
 :root {
-  --navy: #020b18;
-  --navy-mid: #071428;
-  --blue: #1a6bff;
-  --cyan: #00d4ff;
-  --white: #f0f6ff;
-  --muted: rgba(200,220,255,.55);
-  --accent-rgb: 26,107,255;
+  --navy:       #060f1e;
+  --navy-mid:   #0b1a30;
+  --blue:       #c84b0a;   /* Broncos orange = primary accent */
+  --cyan:       #e8721a;   /* bright orange = secondary accent */
+  --white:      #f4f0eb;
+  --muted:      rgba(244,220,190,.5);
+  --accent-rgb: 200,75,10;
   --nav-h: 72px;
   --ease: cubic-bezier(.22,1,.36,1);
 }
@@ -31,14 +31,14 @@ body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(-
 .page-hero-bg {
   position: absolute; inset: 0; z-index: 0;
   background:
-    radial-gradient(ellipse 70% 60% at 50% -10%, rgba(26,107,255,.28) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 30% at 80% 60%, rgba(0,212,255,.1) 0%, transparent 60%),
-    linear-gradient(180deg, #020b18 0%, #040f22 100%);
+    radial-gradient(ellipse 70% 60% at 50% -10%, rgba(200,75,10,.22) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 30% at 80% 60%, rgba(232,114,26,.1) 0%, transparent 60%),
+    linear-gradient(180deg, #060f1e 0%, #0c1828 100%);
 }
 
 .page-hero-grid {
   position: absolute; inset: 0; z-index: 1;
-  background-image: radial-gradient(circle, rgba(255,255,255,0.055) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(255,255,255,0.045) 1px, transparent 1px);
   background-size: 38px 38px;
   mask-image: radial-gradient(ellipse 80% 80% at center, black 0%, transparent 100%);
 }
@@ -57,8 +57,8 @@ body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(-
   letter-spacing: .15em;
   text-transform: uppercase;
   color: var(--cyan);
-  background: rgba(0,212,255,.08);
-  border: 1px solid rgba(0,212,255,.2);
+  background: rgba(232,114,26,.1);
+  border: 1px solid rgba(232,114,26,.25);
   border-radius: 999px;
   padding: .4rem 1rem;
   margin-bottom: 1.5rem;
@@ -121,32 +121,32 @@ body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(-
 .section-desc { font-size: 1rem; color: var(--muted); max-width: 540px; line-height: 1.75; }
 
 /* ─ DIVIDER ─ */
-.divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.07), transparent); max-width: 1300px; margin: 0 auto; }
+.divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(200,75,10,.2), transparent); max-width: 1300px; margin: 0 auto; }
 
 /* ─ BTN ─ */
 .btn-primary {
   display: inline-flex; align-items: center; gap: .5rem;
   padding: .85rem 1.8rem;
-  background: linear-gradient(135deg, var(--blue), #0f4fd4);
+  background: linear-gradient(135deg, #c84b0a, #a33a06);
   color: #fff; text-decoration: none; border-radius: 12px;
   font-weight: 600; font-size: .9rem;
-  box-shadow: 0 8px 28px rgba(26,107,255,.4);
+  box-shadow: 0 8px 28px rgba(200,75,10,.4);
   transition: transform .2s var(--ease), box-shadow .2s var(--ease);
   border: none; cursor: pointer; font-family: inherit;
 }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(26,107,255,.55); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(200,75,10,.55); }
 
 .btn-ghost {
   display: inline-flex; align-items: center; gap: .5rem;
   padding: .85rem 1.8rem;
   background: rgba(255,255,255,.05);
-  border: 1px solid rgba(255,255,255,.11);
+  border: 1px solid rgba(255,255,255,.12);
   color: var(--white); text-decoration: none; border-radius: 12px;
   font-weight: 500; font-size: .9rem;
   transition: background .2s, border-color .2s, transform .2s var(--ease);
   cursor: pointer; font-family: inherit;
 }
-.btn-ghost:hover { background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.2); transform: translateY(-2px); }
+.btn-ghost:hover { background: rgba(200,75,10,.12); border-color: rgba(200,75,10,.4); transform: translateY(-2px); }
 
 /* ─ TILE TRANSITION ─ */
 #tile-transition {
@@ -154,7 +154,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(-
   pointer-events: none; display: grid;
 }
 .tile {
-  background: var(--navy-mid, #071428);
+  background: var(--navy-mid, #0b1a30);
   opacity: 0; transform: scale(0.95);
   transition: opacity .28s ease, transform .28s ease;
 }

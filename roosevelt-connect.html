@@ -18,7 +18,7 @@
     .feature-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:1.25rem; margin-top:2.5rem; }
     .feature-card { background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:1.75rem; transition:border-color .3s,transform .3s var(--ease),background .3s; position:relative; overflow:hidden; }
     .feature-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--blue),var(--cyan)); transform:scaleX(0); transform-origin:left; transition:transform .4s var(--ease); }
-    .feature-card:hover { border-color:rgba(26,107,255,.3); background:rgba(26,107,255,.05); transform:translateY(-4px); }
+    .feature-card:hover { border-color:rgba(200,75,10,.3); background:rgba(200,75,10,.05); transform:translateY(-4px); }
     .feature-card:hover::before { transform:scaleX(1); }
     .feature-icon { font-size:1.6rem; margin-bottom:.9rem; }
     .feature-card h3 { font-family:'Syne',sans-serif; font-weight:700; font-size:1.05rem; margin-bottom:.5rem; }
@@ -26,14 +26,14 @@
 
     .process-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:1rem; margin-top:2.5rem; }
     .process-step { background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07); border-radius:14px; padding:1.5rem; text-align:center; transition:border-color .25s,background .25s; }
-    .process-step:hover { border-color:rgba(0,212,255,.25); background:rgba(0,212,255,.04); }
+    .process-step:hover { border-color:rgba(232,114,26,.25); background:rgba(232,114,26,.04); }
     .process-num { font-family:'Syne',sans-serif; font-size:1.8rem; font-weight:800; color:var(--blue); opacity:.5; margin-bottom:.5rem; }
     .process-step h4 { font-family:'Syne',sans-serif; font-weight:700; font-size:.95rem; margin-bottom:.4rem; }
     .process-step p { font-size:.83rem; color:var(--muted); line-height:1.6; }
 
     .team-mini-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:1rem; margin-top:2.5rem; }
     .team-mini-card { background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07); border-radius:14px; overflow:hidden; transition:border-color .3s,transform .3s var(--ease); }
-    .team-mini-card:hover { border-color:rgba(26,107,255,.3); transform:translateY(-4px); }
+    .team-mini-card:hover { border-color:rgba(200,75,10,.3); transform:translateY(-4px); }
     .team-mini-img { width:100%; aspect-ratio:1; object-fit:cover; object-position:top; }
     .team-mini-info { padding:1rem 1.25rem; }
     .team-mini-name { font-family:'Syne',sans-serif; font-weight:700; font-size:.95rem; margin-bottom:.25rem; }
@@ -192,7 +192,7 @@
 
 <!-- CTA -->
 <section class="section" style="padding-top:2rem;text-align:center">
-  <div data-reveal style="background:rgba(26,107,255,.06);border:1px solid rgba(26,107,255,.2);border-radius:24px;padding:3rem 2rem">
+  <div data-reveal style="background:rgba(200,75,10,.06);border:1px solid rgba(200,75,10,.2);border-radius:24px;padding:3rem 2rem">
     <h2 class="section-title" style="margin-bottom:.75rem">Interested in collaborating?</h2>
     <p style="color:var(--muted);margin-bottom:2rem;max-width:480px;margin-left:auto;margin-right:auto">Want to support Roosevelt Connect, pilot additional workflows, or collaborate on future releases?</p>
     <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">

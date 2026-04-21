@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Explore Eastvale Innovators projects — from current builds to past initiatives across software, engineering, and community impact.">
+  <meta name="description" content="Explore Eastvale Innovators projects — from deployed apps to future ideas.">
   <title>Projects — Eastvale Innovators</title>
   <link rel="icon" type="image/png" href="assets/img/logo_favicon.png">
   <link rel="preload" as="image" href="assets/img/nebula1.jpg" fetchpriority="high">
@@ -12,235 +12,242 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/pages.css">
   <style>
-    /* ── SKY CONTAINER ── */
-    .sky-section { padding: 4rem 0 6rem; }
-
-    .sky-intro {
-      max-width: 1300px;
-      margin: 0 auto;
-      padding: 0 2rem 2rem;
-      text-align: center;
-    }
-
+    /* ══════════════════════════════════════════════
+       CONSTELLATION SKY
+    ══════════════════════════════════════════════ */
+    .sky-section { padding: 3rem 0 5rem; }
+    .sky-intro { max-width: 1300px; margin: 0 auto; padding: 0 2rem 2.5rem; text-align: center; }
     .sky-hint {
-      display: inline-flex;
-      align-items: center;
-      gap: .5rem;
-      font-size: .75rem;
-      color: rgba(200,220,255,.45);
-      letter-spacing: .06em;
-      margin-top: .75rem;
+      display: inline-flex; align-items: center; gap: .6rem; flex-wrap: wrap; justify-content: center;
+      font-size: .72rem; color: rgba(244,220,190,.35); letter-spacing: .06em; margin-top: .75rem;
     }
-    .sky-hint span { opacity: .5; }
+    .sky-hint span { opacity: .6; }
 
     #sky-container {
       position: relative;
       width: min(1400px, calc(100% - 2rem));
-      height: 78vh;
-      min-height: 620px;
+      height: 80vh; min-height: 640px;
       margin: 0 auto;
-      overflow: hidden;
-      border-radius: 24px;
+      overflow: hidden; border-radius: 24px;
       cursor: grab;
       background:
-        radial-gradient(circle at 20% 20%, rgba(26,107,255,.1), transparent 25%),
-        radial-gradient(circle at 80% 30%, rgba(0,212,255,.07), transparent 22%),
-        radial-gradient(circle at 50% 70%, rgba(26,107,255,.05), transparent 30%),
-        linear-gradient(180deg, rgba(6,14,28,.99), rgba(2,6,16,1));
-      border: 1px solid rgba(255,255,255,.07);
-      box-shadow: 0 30px 80px rgba(0,0,0,.4), inset 0 0 80px rgba(26,107,255,.04);
-      user-select: none;
-      touch-action: none;
-      transition: transform 0.3s ease, filter 0.35s ease;
+        radial-gradient(ellipse at 30% 40%, rgba(200,75,10,.09), transparent 45%),
+        radial-gradient(ellipse at 75% 60%, rgba(232,114,26,.06), transparent 40%),
+        radial-gradient(ellipse at 50% 90%, rgba(200,75,10,.05), transparent 35%),
+        linear-gradient(180deg, rgba(4,10,20,.99), rgba(2,6,12,1));
+      border: 1px solid rgba(255,255,255,.06);
+      box-shadow: 0 0 0 1px rgba(200,75,10,.08), 0 40px 100px rgba(0,0,0,.5);
+      user-select: none; touch-action: none;
+      transition: box-shadow .4s;
     }
     #sky-container.dragging { cursor: grabbing; }
-    #sky-container.warping { filter: brightness(1.06); transform: scale(1.006); }
+    #sky-container.warping { box-shadow: 0 0 0 1px rgba(200,75,10,.35), 0 40px 100px rgba(0,0,0,.5), inset 0 0 120px rgba(200,75,10,.08); }
     #sky-container::after {
-      content: '';
-      position: absolute; inset: 0;
-      pointer-events: none;
-      background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,.25) 100%);
-      z-index: 10;
+      content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 10;
+      background: radial-gradient(ellipse at center, transparent 55%, rgba(2,6,12,.6) 100%);
     }
 
-    #nebula, #stars-back, #stars-mid, #stars-front, #fx-layer, #shooting-stars, #constellations {
+    #nebula,#stars-back,#stars-mid,#stars-front,#fx-layer,#shooting-stars,#constellations {
       position: absolute; inset: 0; width: 100%; height: 100%;
     }
-    #nebula, #stars-back, #stars-mid, #stars-front, #fx-layer, #shooting-stars { pointer-events: none; }
-    #nebula { z-index: 0; }
-    #stars-back { z-index: 2; }
-    #stars-mid { z-index: 3; }
-    #stars-front { z-index: 4; }
-    #fx-layer { z-index: 5; }
-    #shooting-stars { z-index: 6; }
-    #constellations { z-index: 7; overflow: visible; }
+    #nebula,#stars-back,#stars-mid,#stars-front,#fx-layer,#shooting-stars { pointer-events: none; }
+    #nebula { z-index: 0; } #stars-back { z-index: 2; } #stars-mid { z-index: 3; }
+    #stars-front { z-index: 4; } #fx-layer { z-index: 5; }
+    #shooting-stars { z-index: 6; } #constellations { z-index: 7; overflow: visible; }
 
-    /* ── CONSTELLATION STYLES ── */
+    /* ── SKY TOOLS ── */
+    #sky-tools {
+      position: absolute; top: 1.25rem; left: 1.25rem; z-index: 40;
+      display: flex; gap: .4rem;
+      padding: .5rem; border: 1px solid rgba(255,255,255,.07);
+      border-radius: 14px; background: rgba(4,10,20,.9); backdrop-filter: blur(12px);
+    }
+    .sky-tool-btn {
+      border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04);
+      color: rgba(244,220,190,.8); border-radius: 10px;
+      padding: .45rem .7rem; font-size: .78rem; font-weight: 600; cursor: pointer;
+      font-family: 'DM Sans', sans-serif; transition: background .18s, border-color .18s, color .18s;
+    }
+    .sky-tool-btn:hover { border-color: rgba(200,75,10,.5); background: rgba(200,75,10,.12); color: #fff; }
+
+    /* ── SEARCH ── */
+    #project-picker-wrap { position: absolute; top: 1.25rem; right: 1.25rem; z-index: 40; }
+    #project-search {
+      width: min(260px, calc(100vw - 2rem));
+      padding: .65rem 1rem; border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.09);
+      background: rgba(4,10,20,.92); color: rgba(244,220,190,.95);
+      font-family: 'DM Sans', sans-serif; font-size: .85rem; outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    #project-search:focus { border-color: rgba(200,75,10,.6); box-shadow: 0 0 0 3px rgba(200,75,10,.15); }
+    #project-search::placeholder { color: rgba(244,220,190,.25); }
+
+    /* ── CONSTELLATION LINES & STARS ── */
     .constellation { cursor: pointer; }
-    .constellation.filtered { opacity: .15; pointer-events: none; }
+    .constellation.filtered { opacity: .12; pointer-events: none; transition: opacity .4s; }
 
     .constellation-line {
-      stroke: rgba(100,170,255,.3);
-      stroke-width: 1.4;
-      opacity: .7;
-      stroke-dasharray: 130;
-      stroke-dashoffset: 130;
-      animation: drawLine 1.2s forwards;
-      transition: opacity .35s, stroke .35s, stroke-width .35s, filter .35s;
+      stroke: rgba(200,100,40,.28); stroke-width: 1.4; opacity: .7;
+      stroke-dasharray: 200; stroke-dashoffset: 200;
+      animation: drawLine 1.4s ease forwards;
+      transition: stroke .35s, stroke-width .35s, filter .35s, opacity .35s;
     }
     @keyframes drawLine { to { stroke-dashoffset: 0; } }
 
     .constellation-star {
-      fill: rgba(255,255,255,.9);
-      transition: transform .35s, opacity .35s, filter .35s, fill .35s;
+      fill: rgba(255,248,235,.9);
+      transition: fill .35s, filter .35s, r .35s;
       transform-origin: center;
     }
     .constellation-core {
-      fill: rgba(160,210,255,.95);
-      filter: drop-shadow(0 0 10px rgba(26,107,255,.8));
+      fill: rgba(255,200,130,.95);
+      filter: drop-shadow(0 0 8px rgba(200,75,10,.7));
     }
+    .constellation-halo {
+      fill: none; stroke: rgba(200,100,40,.3); stroke-width: 1;
+      opacity: 0; transition: opacity .35s, r .35s;
+    }
+
     .constellation-label {
-      font-family: 'Syne', sans-serif;
-      font-size: 15px; fill: rgba(255,255,255,.9);
-      letter-spacing: .04em; opacity: 0; transform: translateY(8px);
+      font-family: 'Syne', sans-serif; font-size: 14px;
+      fill: rgba(244,220,190,.92); letter-spacing: .06em;
+      opacity: 0; transform: translateY(6px);
       transition: opacity .35s, transform .35s;
       pointer-events: none; text-transform: uppercase;
-      filter: drop-shadow(0 0 8px rgba(26,107,255,.3));
+      filter: drop-shadow(0 1px 8px rgba(200,75,10,.3));
     }
     .constellation-subtext {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 11px; fill: rgba(200,220,255,.6);
-      letter-spacing: .05em; opacity: 0; transform: translateY(8px);
-      transition: opacity .35s .04s, transform .35s .04s;
+      font-family: 'DM Sans', sans-serif; font-size: 10.5px;
+      fill: rgba(244,190,120,.55); letter-spacing: .07em;
+      opacity: 0; transform: translateY(6px);
+      transition: opacity .35s .05s, transform .35s .05s;
       pointer-events: none; text-transform: uppercase;
     }
+
     .constellation:hover .constellation-line,
     .constellation.active .constellation-line {
-      stroke: rgba(100,200,255,.9); stroke-width: 2; opacity: 1;
-      filter: drop-shadow(0 0 6px rgba(26,107,255,.6));
+      stroke: rgba(232,114,26,.9); stroke-width: 2.2; opacity: 1;
+      filter: drop-shadow(0 0 8px rgba(200,75,10,.65));
     }
     .constellation:hover .constellation-star,
     .constellation.active .constellation-star {
-      fill: rgba(200,235,255,1);
-      filter: drop-shadow(0 0 10px rgba(100,200,255,.9));
+      fill: rgba(255,220,160,1);
+      filter: drop-shadow(0 0 14px rgba(232,114,26,1));
     }
-    .constellation:hover .constellation-label,
-    .constellation:hover .constellation-subtext,
-    .constellation.active .constellation-label,
-    .constellation.active .constellation-subtext { opacity: 1; transform: translateY(0); }
+    .constellation:hover .constellation-halo,
+    .constellation.active .constellation-halo { opacity: 1; }
+    .constellation:hover .constellation-label, .constellation.active .constellation-label,
+    .constellation:hover .constellation-subtext, .constellation.active .constellation-subtext {
+      opacity: 1; transform: translateY(0);
+    }
 
     /* ── PROJECT PANEL ── */
     #project-panel {
-      position: absolute; right: 2rem; bottom: 2rem;
-      width: min(340px, calc(100% - 2rem));
-      background: rgba(5,12,26,.9);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: 18px;
-      padding: 1.5rem;
-      color: white;
-      box-shadow: 0 20px 50px rgba(0,0,0,.4);
+      position: absolute; right: 1.5rem; bottom: 1.5rem;
+      width: min(340px, calc(100% - 3rem));
+      background: rgba(4,10,22,.94); backdrop-filter: blur(20px);
+      border: 1px solid rgba(200,75,10,.2); border-radius: 20px;
+      padding: 1.5rem 1.5rem 1.4rem; color: white;
+      box-shadow: 0 24px 60px rgba(0,0,0,.5), 0 0 0 1px rgba(200,75,10,.08);
       display: none; z-index: 30;
     }
-    #project-panel.show { display: block; animation: panelFade .25s ease; }
-    @keyframes panelFade { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
-
-    #close-panel {
-      position: absolute; top: .8rem; right: .9rem;
-      background: none; border: none; color: rgba(255,255,255,.5); font-size: .9rem; cursor: pointer;
-    }
-    #close-panel:hover { color: white; }
-    #project-panel-content h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; margin-bottom: .75rem; }
-    #project-panel-content p { color: rgba(200,220,255,.75); font-size: .88rem; line-height: 1.65; }
-    .project-meta { margin-top: .75rem; font-size: .78rem; color: rgba(200,220,255,.45); }
-
+    #project-panel.show { display: block; animation: panelSlide .28s var(--ease, cubic-bezier(.22,1,.36,1)); }
+    @keyframes panelSlide { from { opacity:0; transform: translateY(14px) scale(.98); } to { opacity:1; transform: none; } }
+    #close-panel { position: absolute; top: .9rem; right: 1rem; background: none; border: none; color: rgba(244,220,190,.4); font-size: .9rem; cursor: pointer; transition: color .2s; }
+    #close-panel:hover { color: rgba(244,220,190,.9); }
+    #project-panel-content h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; margin-bottom: .85rem; }
+    #project-panel-content p { color: rgba(244,220,190,.72); font-size: .88rem; line-height: 1.68; }
+    .panel-links { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: .85rem; }
     .project-panel-tag {
       display: inline-flex; align-items: center; gap: .4rem;
-      margin-bottom: .6rem; padding: .5rem .9rem;
-      border-radius: 10px; border: 1px solid rgba(26,107,255,.5);
-      background: rgba(26,107,255,.15); color: rgba(180,220,255,.95);
-      font-size: .78rem; font-weight: 600; letter-spacing: .04em;
-      text-transform: uppercase; text-decoration: none;
-      transition: background .2s, border-color .2s; cursor: pointer;
-      margin-right: .5rem;
-    }
-    a.project-panel-tag:hover { background: rgba(26,107,255,.3); border-color: rgba(100,200,255,.8); }
-
-    /* ── SKY TOOLS ── */
-    #sky-tools {
-      position: absolute; top: 1rem; left: 1rem; z-index: 40;
-      display: flex; gap: .35rem; align-items: center;
-      padding: .4rem; border: 1px solid rgba(255,255,255,.08); border-radius: 12px;
-      background: rgba(4,10,22,.85); backdrop-filter: blur(10px);
-    }
-    .sky-tool-btn {
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      color: rgba(200,220,255,.85); border-radius: 9px;
-      padding: .4rem .65rem; font-size: .78rem; font-weight: 600; cursor: pointer;
-      font-family: 'DM Sans', sans-serif;
+      padding: .45rem .9rem; border-radius: 10px;
+      border: 1px solid rgba(200,75,10,.45); background: rgba(200,75,10,.12);
+      color: rgba(232,180,120,.95); font-size: .76rem; font-weight: 600;
+      letter-spacing: .04em; text-transform: uppercase; text-decoration: none;
       transition: background .2s, border-color .2s;
     }
-    .sky-tool-btn:hover { border-color: rgba(26,107,255,.5); background: rgba(26,107,255,.12); }
-
-    /* ── SEARCH ── */
-    #project-picker-wrap {
-      position: absolute; top: 1rem; right: 1rem; z-index: 40;
-    }
-    #project-search {
-      width: min(260px, calc(100vw - 2rem));
-      padding: .65rem .9rem;
-      border-radius: 11px; border: 1px solid rgba(255,255,255,.1);
-      background: rgba(4,10,22,.88); color: rgba(220,235,255,.95);
-      font-family: 'DM Sans', sans-serif; font-size: .85rem; outline: none;
-    }
-    #project-search:focus { border-color: rgba(26,107,255,.6); box-shadow: 0 0 0 3px rgba(26,107,255,.15); }
-    #project-search::placeholder { color: rgba(200,220,255,.3); }
+    a.project-panel-tag:hover { background: rgba(200,75,10,.25); border-color: rgba(232,114,26,.8); }
+    .project-meta { margin-top: .85rem; font-size: .76rem; color: rgba(244,220,190,.4); }
 
     /* ── DIRECTORY ── */
     .project-directory {
-      width: min(1400px, calc(100% - 2rem));
-      margin: 1.5rem auto 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: .85rem;
+      width: min(1400px, calc(100% - 2rem)); margin: 1.5rem auto 0;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: .9rem;
     }
     .project-item {
-      text-align: left; border: 1px solid rgba(255,255,255,.09);
-      background: rgba(255,255,255,.03); border-radius: 14px;
-      padding: 1rem 1.1rem; color: rgba(200,220,255,.9); cursor: pointer;
-      transition: border-color .2s, transform .2s, background .2s;
+      text-align: left; border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.025); border-radius: 14px;
+      padding: 1rem 1.15rem; color: rgba(244,220,190,.85); cursor: pointer;
+      transition: border-color .22s, transform .22s, background .22s;
     }
-    .project-item:hover { transform: translateY(-2px); border-color: rgba(26,107,255,.4); background: rgba(26,107,255,.07); }
-    .project-item.active { border-color: rgba(100,200,255,.9); background: rgba(26,107,255,.15); }
-    .project-item h4 { margin: 0 0 .3rem; font-size: .92rem; font-family: 'Syne', sans-serif; font-weight: 700; color: #fff; }
-    .project-item p { margin: 0; font-size: .78rem; color: rgba(200,220,255,.6); }
-    .project-item .status {
-      display: inline-block; margin-top: .4rem;
-      padding: .22rem .5rem; border-radius: 999px;
-      font-size: .68rem; border: 1px solid rgba(26,107,255,.35);
-      color: rgba(160,210,255,.9); background: rgba(26,107,255,.12);
-      text-transform: uppercase; letter-spacing: .06em;
+    .project-item:hover { transform: translateY(-2px); border-color: rgba(200,75,10,.4); background: rgba(200,75,10,.07); }
+    .project-item.active { border-color: rgba(232,114,26,.85); background: rgba(200,75,10,.14); }
+    .project-item h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .9rem; color: #fff; margin-bottom: .3rem; }
+    .project-item p { font-size: .76rem; color: rgba(244,220,190,.55); margin: 0; }
+    .project-item .status { display: inline-block; margin-top: .45rem; padding: .22rem .55rem; border-radius: 999px; font-size: .68rem; border: 1px solid rgba(200,75,10,.35); color: rgba(232,160,80,.9); background: rgba(200,75,10,.1); text-transform: uppercase; letter-spacing: .06em; }
+    .project-empty { grid-column: 1/-1; text-align: center; color: rgba(244,220,190,.4); padding: 1.5rem; border: 1px dashed rgba(255,255,255,.1); border-radius: 14px; }
+
+    .sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0; }
+
+    /* ══════════════════════════════════════════════
+       PROJECT ARCHIVE SECTIONS BELOW SKY
+    ══════════════════════════════════════════════ */
+
+    /* Status badge */
+    .status-badge { display:inline-flex;align-items:center;gap:.35rem;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:.28rem .75rem; }
+    .sb-live { color:#4ade80;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.2); }
+    .sb-active { color:#fbbf24;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.2); }
+    .sb-past { color:#93c5fd;background:rgba(147,197,253,.1);border:1px solid rgba(147,197,253,.2); }
+    .sb-concept { color:rgba(244,220,190,.6);background:rgba(244,220,190,.05);border:1px solid rgba(244,220,190,.12); }
+
+    /* Archive cards */
+    .archive-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;margin-top:3rem; }
+    .archive-card {
+      background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
+      border-radius:20px;overflow:hidden;
+      transition:border-color .3s,transform .3s var(--ease, cubic-bezier(.22,1,.36,1)),box-shadow .3s;
+      text-decoration:none;color:var(--white,#f4f0eb);
+      display:flex;flex-direction:column;
     }
-    .project-empty {
-      grid-column: 1 / -1; text-align: center;
-      color: rgba(200,220,255,.5); padding: 1.5rem;
-      border: 1px dashed rgba(255,255,255,.12); border-radius: 14px;
+    .archive-card:hover { border-color:rgba(200,75,10,.35);transform:translateY(-5px);box-shadow:0 20px 56px rgba(0,0,0,.4); }
+    .archive-card-top {
+      padding:1.75rem 1.75rem 0;
+      display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;
     }
+    .archive-card-icon { font-size:2rem;line-height:1; }
+    .archive-card-body { padding:1rem 1.75rem 1.75rem; flex:1; display:flex; flex-direction:column; }
+    .archive-card h3 { font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;margin:.5rem 0 .5rem; }
+    .archive-card p { font-size:.86rem;color:var(--muted,rgba(244,220,190,.5));line-height:1.65;flex:1; }
+    .archive-card-footer { padding:.85rem 1.75rem; border-top:1px solid rgba(255,255,255,.05); display:flex;align-items:center;justify-content:space-between; }
+    .archive-card-year { font-size:.72rem;color:rgba(244,220,190,.3);font-weight:500; }
+    .archive-card-arrow { font-size:.82rem;font-weight:600;color:var(--orange-hot,#e8721a);transition:transform .2s; }
+    .archive-card:hover .archive-card-arrow { transform:translateX(4px); }
 
-    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    /* Idea cards (concepts) */
+    .ideas-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin-top:2.5rem; }
+    .idea-card {
+      background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);
+      border-radius:16px;padding:1.5rem;
+      transition:border-color .3s,background .3s,transform .3s;
+    }
+    .idea-card:hover { border-color:rgba(200,75,10,.25);background:rgba(200,75,10,.04);transform:translateY(-3px); }
+    .idea-card-icon { font-size:1.5rem;margin-bottom:.85rem; }
+    .idea-card h4 { font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:.4rem; }
+    .idea-card p { font-size:.82rem;color:rgba(244,220,190,.5);line-height:1.6; }
+    .idea-card-stage { font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(244,220,190,.35);margin-top:.85rem; }
 
-    /* ── TILE TRANSITION ── */
-    #tile-transition { position: fixed; inset: 0; z-index: 20000; pointer-events: none; display: grid; background: transparent; }
-    .tile { background: #071428; opacity: 0; transform: scale(0.95); transition: opacity .28s ease, transform .28s ease; }
-    .tile.active { opacity: 1; transform: scale(1); }
+    /* TILE */
+    #tile-transition { position:fixed;inset:0;z-index:20000;pointer-events:none;display:grid; }
+    .tile { background:var(--navy-mid,#0b1a30);opacity:0;transform:scale(.95);transition:opacity .28s ease,transform .28s ease; }
+    .tile.active { opacity:1;transform:scale(1); }
 
-    @media (max-width: 768px) {
-      #project-picker-wrap { top: .75rem; right: .75rem; left: .75rem; }
-      #sky-tools { top: auto; bottom: .75rem; left: .75rem; right: .75rem; justify-content: center; flex-wrap: wrap; }
-      #project-search { width: 100%; max-width: none; }
-      #project-panel { right: .5rem; left: .5rem; width: auto; bottom: .75rem; }
-      #sky-container { width: calc(100% - 1rem); height: 72vh; min-height: 500px; border-radius: 18px; }
+    @media(max-width:768px){
+      #project-picker-wrap{top:.75rem;right:.75rem;left:.75rem;}
+      #sky-tools{top:auto;bottom:.75rem;left:.75rem;right:.75rem;justify-content:center;flex-wrap:wrap;}
+      #project-search{width:100%;max-width:none;}
+      #project-panel{right:.5rem;left:.5rem;width:auto;bottom:.75rem;}
+      #sky-container{width:calc(100% - 1rem);height:72vh;min-height:500px;border-radius:18px;}
     }
   </style>
 </head>
@@ -252,36 +259,36 @@
 <script src="assets/js/site-common.js"></script>
 <script>loadSharedHeader('#site-header'); loadSharedFooter('#site-footer');</script>
 
-<!-- ── HERO ── -->
+<!-- HERO -->
 <section class="page-hero">
   <div class="page-hero-bg"></div>
   <div class="page-hero-grid"></div>
   <div class="page-hero-content">
     <div class="page-hero-eyebrow">What We Ship</div>
     <h1>Our Projects</h1>
-    <p class="page-hero-sub">Innovation in action across multiple disciplines — explore a live map of our builds.</p>
+    <p class="page-hero-sub">From deployed school apps to AI tools — explore everything we've built, shipped, and dreamed up.</p>
   </div>
 </section>
 
-<!-- ── CONSTELLATION SKY ── -->
+<!-- ══ CONSTELLATION SKY ═══════════════════════════════════════ -->
 <section class="sky-section">
   <div class="sky-intro">
-    <span class="section-eyebrow">Interactive Sky Map</span>
-    <h2 class="section-title" style="margin-top:.5rem">Explore Our Projects</h2>
+    <span class="section-eyebrow">Interactive Star Map</span>
+    <h2 class="section-title" style="margin-top:.5rem">Navigate Our Universe</h2>
     <div class="sky-hint">
-      <span>Drag to explore</span>•<span>Scroll to zoom</span>•<span>Click a constellation to focus</span>•<span>Click empty space for a comet</span>
+      <span>Drag to pan</span>·<span>Scroll to zoom</span>·<span>Click a constellation to open</span>·<span>Click empty space for a comet</span>
     </div>
   </div>
 
   <div id="sky-container">
-    <div id="sky-tools" role="toolbar" aria-label="Sky controls">
-      <button class="sky-tool-btn" id="zoom-in-btn" type="button">+ Zoom</button>
-      <button class="sky-tool-btn" id="zoom-out-btn" type="button">− Zoom</button>
-      <button class="sky-tool-btn" id="fit-view-btn" type="button">Reset</button>
+    <div id="sky-tools" role="toolbar">
+      <button class="sky-tool-btn" id="zoom-in-btn">+</button>
+      <button class="sky-tool-btn" id="zoom-out-btn">−</button>
+      <button class="sky-tool-btn" id="fit-view-btn">Reset</button>
     </div>
     <div id="project-picker-wrap">
       <label class="sr-only" for="project-search">Search projects</label>
-      <input id="project-search" type="search" placeholder="Search projects or teams…">
+      <input id="project-search" type="search" placeholder="Search projects…">
     </div>
     <canvas id="nebula"></canvas>
     <canvas id="stars-back"></canvas>
@@ -299,230 +306,518 @@
   <div class="project-directory" id="project-directory" aria-label="Project list"></div>
 </section>
 
+<div class="divider" style="max-width:1400px"></div>
+
+<!-- ══ DEPLOYED PROJECTS ARCHIVE ════════════════════════════════ -->
+<section class="section">
+  <span class="section-eyebrow" data-reveal>Shipped Work</span>
+  <h2 class="section-title" data-reveal data-reveal-delay="1">Deployed & Active Projects</h2>
+  <p class="section-desc" data-reveal data-reveal-delay="2">These are real products in active use — not prototypes, not demos.</p>
+  <div class="archive-grid">
+    <a href="roosevelt-connect.html" class="archive-card" data-reveal data-reveal-delay="1">
+      <div class="archive-card-top">
+        <div class="archive-card-icon">🪪</div>
+        <div class="status-badge sb-live"><span style="width:5px;height:5px;border-radius:50%;background:#4ade80;display:inline-block"></span>Live</div>
+      </div>
+      <div class="archive-card-body">
+        <h3>Roosevelt Connect</h3>
+        <p>School office hours platform at ERHS. Students scan their ID to check in; teachers request specific students to attend. Full scheduling system, deployed and in active use.</p>
+      </div>
+      <div class="archive-card-footer">
+        <span class="archive-card-year">2024 – Present</span>
+        <span class="archive-card-arrow">→</span>
+      </div>
+    </a>
+    <a href="intelligrader.html" class="archive-card" data-reveal data-reveal-delay="2">
+      <div class="archive-card-top">
+        <div class="archive-card-icon">🧠</div>
+        <div class="status-badge sb-live"><span style="width:5px;height:5px;border-radius:50%;background:#4ade80;display:inline-block"></span>Live</div>
+      </div>
+      <div class="archive-card-body">
+        <h3>Intelligrader</h3>
+        <p>AI-powered FRQ grader. Paste any free-response answer, get rubric-aligned feedback in seconds. Powered by Qwen + Gemini. Free and surprisingly accurate.</p>
+      </div>
+      <div class="archive-card-footer">
+        <span class="archive-card-year">2024 – Present</span>
+        <span class="archive-card-arrow">→</span>
+      </div>
+    </a>
+    <a href="virtual-medical-missions.html" class="archive-card" data-reveal data-reveal-delay="3">
+      <div class="archive-card-top">
+        <div class="archive-card-icon">🏥</div>
+        <div class="status-badge sb-past">Past</div>
+      </div>
+      <div class="archive-card-body">
+        <h3>Virtual Medical Missions EMR</h3>
+        <p>Secure electronic medical recordkeeping portal for virtual outreach. Handled patient records, volunteer coordination, partnerships, and fundraising.</p>
+      </div>
+      <div class="archive-card-footer">
+        <span class="archive-card-year">2023 – 2024</span>
+        <span class="archive-card-arrow">→</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ IN-PROGRESS ══════════════════════════════════════════════ -->
+<section class="section">
+  <span class="section-eyebrow" data-reveal>In Development</span>
+  <h2 class="section-title" data-reveal data-reveal-delay="1">What's Being Built Now</h2>
+  <p class="section-desc" data-reveal data-reveal-delay="2">Active projects currently in design, development, or testing.</p>
+  <div class="archive-grid">
+    <div class="archive-card" data-reveal data-reveal-delay="1" style="cursor:default">
+      <div class="archive-card-top">
+        <div class="archive-card-icon">🔬</div>
+        <div class="status-badge sb-active">Active</div>
+      </div>
+      <div class="archive-card-body">
+        <h3>Intelligrader Expansion</h3>
+        <p>Extending grading capabilities beyond AP History to SAT, ACT, and AP Science FRQs with subject-specific rubric models and improved accuracy.</p>
+      </div>
+      <div class="archive-card-footer">
+        <span class="archive-card-year">2025</span>
+        <span class="archive-card-arrow" style="color:rgba(244,220,190,.3)">•</span>
+      </div>
+    </div>
+    <div class="archive-card" data-reveal data-reveal-delay="2" style="cursor:default">
+      <div class="archive-card-top">
+        <div class="archive-card-icon">🛠️</div>
+        <div class="status-badge sb-active">Planning</div>
+      </div>
+      <div class="archive-card-body">
+        <h3>Innovators Operations Hub</h3>
+        <p>An internal dashboard for club operations — event planning, cross-team coordination, task tracking, and announcements. One place for everything.</p>
+      </div>
+      <div class="archive-card-footer">
+        <span class="archive-card-year">2025 – 2026</span>
+        <span class="archive-card-arrow" style="color:rgba(244,220,190,.3)">•</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ IDEAS & CONCEPTS ══════════════════════════════════════════ -->
+<section class="section">
+  <span class="section-eyebrow" data-reveal>On The Horizon</span>
+  <h2 class="section-title" data-reveal data-reveal-delay="1">Ideas & Future Concepts</h2>
+  <p class="section-desc" data-reveal data-reveal-delay="2">Not every idea ships immediately — but every idea starts somewhere. These are what we're thinking about.</p>
+  <div class="ideas-grid">
+    <div class="idea-card" data-reveal data-reveal-delay="1">
+      <div class="idea-card-icon">📱</div>
+      <h4>Roosevelt Connect Mobile</h4>
+      <p>Native app companion with push notifications for teacher requests and real-time session availability.</p>
+      <div class="idea-card-stage">In Planning</div>
+    </div>
+    <div class="idea-card" data-reveal data-reveal-delay="2">
+      <div class="idea-card-icon">🌐</div>
+      <h4>STEM Mentorship Platform</h4>
+      <p>Connecting Eastvale students with college mentors across engineering, medicine, and CS fields.</p>
+      <div class="idea-card-stage">Concept Stage</div>
+    </div>
+    <div class="idea-card" data-reveal data-reveal-delay="2">
+      <div class="idea-card-icon">📊</div>
+      <h4>Student Analytics Dashboard</h4>
+      <p>Insights for teachers — which students attend office hours most, flagging students who might need extra support.</p>
+      <div class="idea-card-stage">Concept Stage</div>
+    </div>
+    <div class="idea-card" data-reveal data-reveal-delay="3">
+      <div class="idea-card-icon">🤝</div>
+      <h4>Community Outreach Toolkit</h4>
+      <p>Open-source toolkit for other schools to run their own Innovators-style clubs with shared infrastructure.</p>
+      <div class="idea-card-stage">Idea Stage</div>
+    </div>
+    <div class="idea-card" data-reveal data-reveal-delay="3">
+      <div class="idea-card-icon">✍️</div>
+      <h4>Writing Coach AI</h4>
+      <p>Beyond FRQs — an AI writing coach for essays, lab reports, and other high-stakes academic writing.</p>
+      <div class="idea-card-stage">Idea Stage</div>
+    </div>
+    <div class="idea-card" data-reveal data-reveal-delay="4">
+      <div class="idea-card-icon">🏆</div>
+      <h4>STEM Challenge Platform</h4>
+      <p>A platform for hosting and judging STEM competitions, hackathons, and project showcases within the school.</p>
+      <div class="idea-card-stage">Idea Stage</div>
+    </div>
+  </div>
+</section>
+
 <div id="site-footer"></div>
 <div id="tile-transition"></div>
 
 <script>
-  /* ── TILE TRANSITION ── */
-  const tileContainer = document.getElementById('tile-transition');
-  const TILE_ROWS = 12, TILE_COLS = 20;
-  let tiles = [];
-  function createTiles() {
-    if (!tileContainer) return;
-    tileContainer.innerHTML = '';
-    tileContainer.style.gridTemplateRows = `repeat(${TILE_ROWS},1fr)`;
-    tileContainer.style.gridTemplateColumns = `repeat(${TILE_COLS},1fr)`;
-    tiles = [];
-    for (let r = 0; r < TILE_ROWS; r++) for (let c = 0; c < TILE_COLS; c++) {
-      const t = document.createElement('div'); t.className = 'tile';
-      t.dataset.row = r; t.dataset.col = c;
-      tileContainer.appendChild(t); tiles.push(t);
+/* ══ TILE TRANSITION ════════════════════════════════ */
+const tc=document.getElementById('tile-transition');const R=10,C=18;let tiles=[];
+function mkTiles(){tc.innerHTML='';tc.style.gridTemplateRows=`repeat(${R},1fr)`;tc.style.gridTemplateColumns=`repeat(${C},1fr)`;tiles=[];for(let r=0;r<R;r++)for(let c=0;c<C;c++){const t=document.createElement('div');t.className='tile';t.dataset.d=r+c;tc.appendChild(t);tiles.push(t);}}
+const sortedT=()=>tiles.slice().sort((a,b)=>a.dataset.d-b.dataset.d);
+const coverT=cb=>{sortedT().forEach((t,i)=>setTimeout(()=>t.classList.add('active'),i*2));setTimeout(cb,tiles.length*2+180);};
+const revealT=()=>sortedT().reverse().forEach((t,i)=>setTimeout(()=>t.classList.remove('active'),i*2));
+document.addEventListener('click',e=>{const a=e.target.closest('a[href]');if(!a)return;const h=a.getAttribute('href');if(!h||h.includes('#')||h.startsWith('mailto:')||h.startsWith('tel:')||a.target==='_blank')return;e.preventDefault();coverT(()=>window.location.href=h);});
+mkTiles();tiles.forEach(t=>t.classList.add('active'));setTimeout(revealT,80);
+
+/* ══ SCROLL REVEAL ════════════════════════════════ */
+const ro=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed');ro.unobserve(e.target);}});},{threshold:.1});
+document.querySelectorAll('[data-reveal]').forEach(el=>ro.observe(el));
+
+/* ══ CONSTELLATION SYSTEM ═════════════════════════ */
+(function(){
+  const EASE = 'cubic-bezier(.22,1,.36,1)';
+  const sky=document.getElementById('sky-container');
+  const svg=document.getElementById('constellations');
+  const nebulaCanvas=document.getElementById('nebula');
+  const backCanvas=document.getElementById('stars-back');
+  const midCanvas=document.getElementById('stars-mid');
+  const frontCanvas=document.getElementById('stars-front');
+  const fxCanvas=document.getElementById('fx-layer');
+  const shootingCanvas=document.getElementById('shooting-stars');
+  const nebulaCtx=nebulaCanvas.getContext('2d');
+  const backCtx=backCanvas.getContext('2d');
+  const midCtx=midCanvas.getContext('2d');
+  const frontCtx=frontCanvas.getContext('2d');
+  const fxCtx=fxCanvas.getContext('2d');
+  const shootingCtx=shootingCanvas.getContext('2d');
+  const panel=document.getElementById('project-panel');
+  const projectSearch=document.getElementById('project-search');
+  const projectDirectory=document.getElementById('project-directory');
+  const panelContent=document.getElementById('project-panel-content');
+  const closePanelBtn=document.getElementById('close-panel');
+  const zoomInBtn=document.getElementById('zoom-in-btn');
+  const zoomOutBtn=document.getElementById('zoom-out-btn');
+  const fitViewBtn=document.getElementById('fit-view-btn');
+  const SVG_NS="http://www.w3.org/2000/svg";
+  const world={width:2400,height:1800};
+  const camera={x:world.width/2,y:world.height/2,zoom:1,targetX:world.width/2,targetY:world.height/2,targetZoom:1,vx:0,vy:0,isDragging:false,isAutoCentering:false,lastPointerX:0,lastPointerY:0};
+  const ZOOM_MIN=0.68,ZOOM_MAX=2.0;
+  let viewWidth=0,viewHeight=0,activeProjectIndex=null,pointerMoved=false,searchQuery='';
+  let lastNebulaUpdate=0,lastConstellationUpdate=0,forceSkyRefresh=true,forceConstellationRefresh=true;
+  let lastRenderCamera={x:camera.x,y:camera.y,zoom:camera.zoom};
+  const starLayers={back:[],mid:[],front:[]};
+  const particles=[],shootingStars=[],cursorTrail=[];
+  const isLowPower=window.matchMedia('(prefers-reduced-motion:reduce)').matches||(navigator.hardwareConcurrency||8)<=4;
+  const qualityScale=isLowPower?0.55:1;
+  let frameCount=0;
+
+  const projects=[
+    {
+      name:"Roosevelt Connect",team:"Roosevelt Connect Team",
+      project_link:"roosevelt-connect.html",team_link:"teams.html#roosevelt-connect-team",
+      description:"School ID scanning + office hours scheduling platform deployed at ERHS. Students check in by scanning their ID; teachers request specific students.",
+      status:"Live at Eleanor Roosevelt High School",
+      color:"rgba(200,75,10,.9)",
+      stars:[{x:1540,y:710,r:4.8},{x:1630,y:635,r:3.9},{x:1720,y:708,r:5.8},{x:1642,y:822,r:4.5},{x:1775,y:810,r:3.6},{x:1700,y:760,r:3.0}],
+      connections:[[0,1],[1,2],[2,3],[3,0],[2,4],[0,2],[4,5]]
+    },
+    {
+      name:"Intelligrader",team:"Intelligrader Team",
+      project_link:"intelligrader.html",team_link:"teams.html#intelligrader-team",
+      description:"AI-powered FRQ grader. Paste any response, get rubric-aligned scores and specific feedback instantly. Free, fast, and accurate.",
+      status:"Live & Deployed",
+      color:"rgba(232,160,40,.9)",
+      stars:[{x:980,y:1210,r:4.6},{x:1075,y:1122,r:3.8},{x:1185,y:1210,r:5.5},{x:1092,y:1328,r:4.6},{x:1250,y:1288,r:3.4},{x:1130,y:1170,r:2.8}],
+      connections:[[0,1],[1,2],[2,3],[3,0],[2,4],[1,5],[5,0]]
+    },
+    {
+      name:"Virtual Medical Missions",team:"VMM Team",
+      project_link:"virtual-medical-missions.html",team_link:"teams.html#virtual-medical-missions-team",
+      description:"Secure EMR portal for virtual medical outreach — patient records, volunteer coordination, and fundraising in one platform.",
+      status:"Past Project",
+      color:"rgba(147,197,253,.9)",
+      stars:[{x:1910,y:1180,r:4.2},{x:2005,y:1105,r:3.6},{x:2092,y:1186,r:5.3},{x:2012,y:1290,r:4.1},{x:2148,y:1258,r:3.2},{x:1980,y:1240,r:2.6}],
+      connections:[[0,1],[1,2],[2,3],[3,0],[2,4],[0,5],[5,3]]
+    }
+  ];
+
+  function rand(a,b){return Math.random()*(b-a)+a;}
+  function wrapValue(v,m){return((v%m)+m)%m;}
+  function shortestDelta(d,s){return((d+s/2)%s+s)%s-s/2;}
+  function normalizeText(v){return String(v||'').toLowerCase();}
+  function projectMatchesFilter(p,q){if(!q)return true;return`${p.name} ${p.team} ${p.status}`.toLowerCase().includes(q);}
+  function projectIsVisible(i){return projects[i]?projectMatchesFilter(projects[i],searchQuery):false;}
+
+  const nebula1=new Image(),nebula2=new Image();
+  nebula1.src="assets/img/nebula1.jpg";nebula2.src="assets/img/nebula2.avif";
+
+  function waitForImg(img){return new Promise(res=>{const fin=()=>{if(typeof img.decode==='function')img.decode().catch(()=>{}).finally(res);else res();};if(img.complete&&img.naturalWidth>0){fin();return;}img.addEventListener('load',fin,{once:true});img.addEventListener('error',()=>res(),{once:true});});}
+
+  function resizeCanvases(){
+    const dpr=Math.min(window.devicePixelRatio||1,2);
+    viewWidth=sky.clientWidth;viewHeight=sky.clientHeight;
+    [nebulaCanvas,backCanvas,midCanvas,frontCanvas,fxCanvas,shootingCanvas].forEach(c=>{c.width=Math.floor(viewWidth*dpr);c.height=Math.floor(viewHeight*dpr);c.style.width=viewWidth+'px';c.style.height=viewHeight+'px';c.getContext('2d').setTransform(dpr,0,0,dpr,0,0);});
+    svg.setAttribute('viewBox',`0 0 ${viewWidth} ${viewHeight}`);
+    drawNebula();updateConstellationPositions();forceSkyRefresh=true;forceConstellationRefresh=true;
+  }
+
+  function generateStarLayer(count,sMin,sMax,aMin,aMax){
+    const s=[];
+    for(let i=0;i<count;i++) s.push({x:rand(0,world.width),y:rand(0,world.height),r:rand(sMin,sMax),alpha:rand(aMin,aMax),twinkleSpeed:rand(.15,1.0),twinkleOffset:rand(0,Math.PI*2),warm:Math.random()<.4});
+    return s;
+  }
+  function initStars(){
+    const area=window.innerWidth*window.innerHeight;
+    const ds=Math.max(.5,Math.min(1,area/(1440*900)));
+    const ms=window.innerWidth<768?.68:.88;
+    const sc=ds*ms*qualityScale;
+    starLayers.back=generateStarLayer(Math.floor(260*sc),.6,1.4,.12,.42);
+    starLayers.mid=generateStarLayer(Math.floor(200*sc),.9,2.1,.16,.64);
+    starLayers.front=generateStarLayer(Math.floor(140*sc),1.2,2.8,.26,.92);
+  }
+
+  function getWrappedPos(wx,wy,par=1){
+    const dx=shortestDelta(wx-camera.x*par,world.width);
+    const dy=shortestDelta(wy-camera.y*par,world.height);
+    return{x:dx*camera.zoom+viewWidth/2,y:dy*camera.zoom+viewHeight/2};
+  }
+  function screenToWorld(sx,sy){return{x:wrapValue(camera.x+(sx-viewWidth/2)/camera.zoom,world.width),y:wrapValue(camera.y+(sy-viewHeight/2)/camera.zoom,world.height)};}
+
+  function drawNebula(){
+    nebulaCtx.clearRect(0,0,viewWidth,viewHeight);
+    const sx=wrapValue(camera.x*.05,world.width)/world.width;
+    const sy=wrapValue(camera.y*.04,world.height)/world.height;
+    const sc=1.5,iW=viewWidth*sc,iH=viewHeight*sc;
+    const ox=-(sx*(iW-viewWidth)),oy=-(sy*(iH-viewHeight));
+    if(nebula1.complete){nebulaCtx.globalAlpha=.18;nebulaCtx.drawImage(nebula1,ox,oy,iW,iH);}
+    if(nebula2.complete){nebulaCtx.globalAlpha=.12;nebulaCtx.drawImage(nebula2,ox-100,oy-60,iW*1.12,iH*1.12);}
+    // Warm galaxy core overlay
+    const cx=viewWidth/2,cy=viewHeight/2;
+    const core=nebulaCtx.createRadialGradient(cx,cy,20,cx,cy,Math.max(viewWidth,viewHeight)*.4);
+    core.addColorStop(0,'rgba(200,90,20,.08)');core.addColorStop(1,'transparent');
+    nebulaCtx.globalAlpha=1;nebulaCtx.fillStyle=core;nebulaCtx.fillRect(0,0,viewWidth,viewHeight);
+  }
+
+  function drawStarAt(ctx,p,radius,alpha,warm){
+    if(p.x<-30||p.y<-30||p.x>viewWidth+30||p.y>viewHeight+30) return;
+    ctx.beginPath();
+    // Warm stars are orange-tinted, cool stars are white
+    ctx.fillStyle=warm?`rgba(255,200,140,${alpha})`:`rgba(255,252,240,${alpha})`;
+    ctx.arc(p.x,p.y,radius,0,Math.PI*2);ctx.fill();
+    if(radius>1.8){
+      // Star diffraction spikes
+      ctx.beginPath();
+      const sc=warm?`rgba(230,150,60,${alpha*.28})`:`rgba(255,240,200,${alpha*.25})`;
+      ctx.strokeStyle=sc;ctx.lineWidth=.8;
+      ctx.moveTo(p.x-radius*2.4,p.y);ctx.lineTo(p.x+radius*2.4,p.y);
+      ctx.moveTo(p.x,p.y-radius*2.4);ctx.lineTo(p.x,p.y+radius*2.4);
+      ctx.stroke();
     }
   }
-  function getTileOrder() { return tiles.slice().sort((a,b)=>(+a.dataset.row + +a.dataset.col)-(+b.dataset.row + +b.dataset.col)); }
-  function coverTiles() { getTileOrder().forEach((t,i)=>setTimeout(()=>t.classList.add('active'),i*2)); }
-  function revealTiles() { getTileOrder().reverse().forEach((t,i)=>setTimeout(()=>t.classList.remove('active'),i*2)); }
-  function startTileNavigation(href) { coverTiles(); setTimeout(()=>window.location.href=href,tiles.length*2+200); }
-  document.addEventListener('click', e => {
-    const link = e.target.closest('a');
-    if (!link) return;
-    const href = link.getAttribute('href');
-    if (!href || href.includes('#') || href.startsWith('mailto:') || href.startsWith('tel:') || link.target === '_blank') return;
-    e.preventDefault(); startTileNavigation(href);
-  });
-  createTiles(); tiles.forEach(t=>t.classList.add('active')); setTimeout(revealTiles, 120);
 
-  /* ── CONSTELLATION LOGIC (preserved from original) ── */
-  const heroSection = document.querySelector('.page-hero');
-  let targetStarX = 50, targetStarY = 50, currentStarX = 50, currentStarY = 50;
-
-  document.addEventListener('mousemove', (e) => {
-    if (!heroSection) return;
-    const heroRect = heroSection.getBoundingClientRect();
-    if (e.clientY < heroRect.bottom) {
-      targetStarX = ((e.clientX - heroRect.left) / heroRect.width) * 100;
-      targetStarY = ((e.clientY - heroRect.top) / heroRect.height) * 100;
+  function drawStarLayer(ctx,stars,par,t){
+    ctx.clearRect(0,0,viewWidth,viewHeight);
+    for(const s of stars){
+      const tw=.6+.4*Math.sin(t*s.twinkleSpeed+s.twinkleOffset);
+      const a=s.alpha*tw,r=s.r*(.75+.35*tw)*Math.max(.7,camera.zoom*.9);
+      const bcx=camera.x*par,bcy=camera.y*par;
+      const dx=shortestDelta(s.x-bcx,world.width),dy=shortestDelta(s.y-bcy,world.height);
+      const xO=[0],yO=[0];
+      if(dx>world.width/2-220/camera.zoom)xO.push(-world.width);
+      if(dx<-world.width/2+220/camera.zoom)xO.push(world.width);
+      if(dy>world.height/2-220/camera.zoom)yO.push(-world.height);
+      if(dy<-world.height/2+220/camera.zoom)yO.push(world.height);
+      for(const ox of xO)for(const oy of yO)drawStarAt(ctx,{x:(dx+ox)*camera.zoom+viewWidth/2,y:(dy+oy)*camera.zoom+viewHeight/2},r,a,s.warm);
     }
-  });
+  }
 
-  (function () {
-    const sky = document.getElementById('sky-container');
-    const svg = document.getElementById('constellations');
-    const nebulaCanvas = document.getElementById('nebula');
-    const backCanvas = document.getElementById('stars-back');
-    const midCanvas = document.getElementById('stars-mid');
-    const frontCanvas = document.getElementById('stars-front');
-    const fxCanvas = document.getElementById('fx-layer');
-    const shootingCanvas = document.getElementById('shooting-stars');
-    const nebulaCtx = nebulaCanvas.getContext('2d');
-    const backCtx = backCanvas.getContext('2d');
-    const midCtx = midCanvas.getContext('2d');
-    const frontCtx = frontCanvas.getContext('2d');
-    const fxCtx = fxCanvas.getContext('2d');
-    const shootingCtx = shootingCanvas.getContext('2d');
-    const panel = document.getElementById('project-panel');
-    const projectSearch = document.getElementById('project-search');
-    const projectDirectory = document.getElementById('project-directory');
-    const panelContent = document.getElementById('project-panel-content');
-    const closePanelBtn = document.getElementById('close-panel');
-    const zoomInBtn = document.getElementById('zoom-in-btn');
-    const zoomOutBtn = document.getElementById('zoom-out-btn');
-    const fitViewBtn = document.getElementById('fit-view-btn');
-    const SVG_NS = "http://www.w3.org/2000/svg";
-    const world = { width: 2400, height: 1800 };
-    const camera = { x: world.width/2, y: world.height/2, zoom: 1, targetX: world.width/2, targetY: world.height/2, targetZoom: 1, vx: 0, vy: 0, isDragging: false, isAutoCentering: false, lastPointerX: 0, lastPointerY: 0 };
-    const ZOOM_MIN = 0.72, ZOOM_MAX = 1.85;
-    let viewWidth = 0, viewHeight = 0, activeProjectIndex = null, pointerMoved = false, searchQuery = '';
-    let lastNebulaUpdate = 0, lastConstellationUpdate = 0, forceSkyRefresh = true, forceConstellationRefresh = true;
-    let lastRenderCamera = { x: camera.x, y: camera.y, zoom: camera.zoom };
-    const starLayers = { back: [], mid: [], front: [] };
-    const particles = [], shootingStars = [], cursorTrail = [];
-    const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const isLowPowerDevice = reduceMotionQuery.matches || (navigator.hardwareConcurrency || 8) <= 4;
-    const qualityScale = isLowPowerDevice ? 0.62 : 1;
-    let frameCount = 0;
+  function spawnBurst(x,y,count=22,color='rgba(230,140,60,'){
+    if(isLowPower)count=Math.max(6,Math.floor(count*.35));
+    for(let i=0;i<count;i++) particles.push({x,y,vx:rand(-2,2),vy:rand(-2,2),life:rand(20,40),maxLife:rand(20,40),size:rand(1,2.8),color});
+  }
 
-    const projects = [
-      { name: "Eleanor Roosevelt School App", team: "Roosevelt Connect Team", project_link: "roosevelt-connect.html", team_link: "teams.html#roosevelt-connect-team", description: "A school app for Eleanor Roosevelt High School. Students scan their ID to log into office hours; teachers can request specific students to come in. Like Flextime, built from scratch for Roosevelt.", status: "Deployed at Eleanor Roosevelt High School", stars: [{x:1540,y:710,r:4.4},{x:1630,y:640,r:3.8},{x:1715,y:715,r:5.2},{x:1638,y:818,r:4.3},{x:1765,y:805,r:3.4}], connections: [[0,1],[1,2],[2,3],[3,0],[2,4]] },
-      { name: "Intelligrader AP FRQ Assistant", team: "Intelligrader Team", project_link: "intelligrader.html", team_link: "teams.html#intelligrader-team", description: "AI-powered grading for any FRQ. Paste in a response, get back a rubric-aligned score and specific feedback in seconds. Free, fast, and surprisingly accurate.", status: "Done and Deployed", stars: [{x:980,y:1210,r:4.4},{x:1070,y:1128,r:3.7},{x:1178,y:1214,r:5.0},{x:1088,y:1320,r:4.4},{x:1242,y:1280,r:3.2}], connections: [[0,1],[1,2],[2,3],[3,0],[2,4]] },
-      { name: "Electronic Medical Recordkeeping System", team: "Virtual Medical Missions Team", project_link: "virtual-medical-missions.html", team_link: "teams.html#virtual-medical-missions-team", description: "A secure, scalable portal supporting virtual medical outreach, partnerships, fundraising, and care operations.", status: "Active", stars: [{x:1910,y:1180,r:4.1},{x:2000,y:1110,r:3.5},{x:2085,y:1186,r:5.1},{x:2010,y:1280,r:4.0},{x:2142,y:1252,r:3.0}], connections: [[0,1],[1,2],[2,3],[3,0],[2,4]] }
-    ];
-
-    function normalizeText(v) { return String(v||'').toLowerCase(); }
-    function projectMatchesFilter(p, q) { if (!q) return true; return `${p.name} ${p.team} ${p.status}`.toLowerCase().includes(q); }
-    function projectIsVisible(i) { return projects[i] ? projectMatchesFilter(projects[i], searchQuery) : false; }
-
-    const nebula1 = new Image(), nebula2 = new Image();
-    nebula1.src = "assets/img/nebula1.jpg"; nebula2.src = "assets/img/nebula2.avif";
-
-    function waitForImageReady(img) { return new Promise(res => { const fin = () => { if (typeof img.decode==='function') img.decode().catch(()=>{}).finally(res); else res(); }; if (img.complete && img.naturalWidth>0) { fin(); return; } img.addEventListener('load',fin,{once:true}); img.addEventListener('error',()=>res(),{once:true}); }); }
-    function rand(a,b) { return Math.random()*(b-a)+a; }
-    function wrapValue(v,m) { return ((v%m)+m)%m; }
-    function shortestWrappedDelta(d,s) { return ((d+s/2)%s+s)%s-s/2; }
-
-    function resizeCanvases() {
-      const dpr = Math.min(window.devicePixelRatio||1,2);
-      viewWidth = sky.clientWidth; viewHeight = sky.clientHeight;
-      [nebulaCanvas,backCanvas,midCanvas,frontCanvas,fxCanvas,shootingCanvas].forEach(c => { c.width=Math.floor(viewWidth*dpr); c.height=Math.floor(viewHeight*dpr); c.style.width=viewWidth+'px'; c.style.height=viewHeight+'px'; c.getContext('2d').setTransform(dpr,0,0,dpr,0,0); });
-      svg.setAttribute('viewBox',`0 0 ${viewWidth} ${viewHeight}`);
-      drawNebula(); updateConstellationPositions(); forceSkyRefresh=true; forceConstellationRefresh=true;
+  function drawCursorTrail(){
+    fxCtx.globalCompositeOperation="lighter";
+    for(let i=cursorTrail.length-1;i>=0;i--){
+      const p=cursorTrail[i];p.life-=1;
+      if(p.life<=0){cursorTrail.splice(i,1);continue;}
+      if(i>0){const prev=cursorTrail[i-1],a=p.life/p.maxLife;fxCtx.beginPath();fxCtx.strokeStyle=`rgba(230,140,60,${a*.85})`;fxCtx.lineWidth=a*3.5;fxCtx.lineCap="round";fxCtx.moveTo(p.x,p.y);fxCtx.lineTo(prev.x,prev.y);fxCtx.stroke();}
+      fxCtx.beginPath();fxCtx.fillStyle=`rgba(255,200,120,${(p.life/p.maxLife)*.65})`;fxCtx.arc(p.x,p.y,1.4+(p.life/p.maxLife)*2,0,Math.PI*2);fxCtx.fill();
     }
+    fxCtx.globalCompositeOperation="source-over";
+  }
 
-    function generateStarLayer(count,sMin,sMax,aMin,aMax) { const s=[]; for(let i=0;i<count;i++) s.push({x:rand(0,world.width),y:rand(0,world.height),r:rand(sMin,sMax),alpha:rand(aMin,aMax),twinkleSpeed:rand(.2,1.1),twinkleOffset:rand(0,Math.PI*2)}); return s; }
-    function initStars() { const va=window.innerWidth*window.innerHeight; const ds=Math.max(.55,Math.min(1,va/(1440*900))); const ms=window.innerWidth<768?.72:.9; const sc=ds*ms*qualityScale; starLayers.back=generateStarLayer(Math.floor(280*sc),.7,1.5,.14,.44); starLayers.mid=generateStarLayer(Math.floor(220*sc),1,2.2,.18,.66); starLayers.front=generateStarLayer(Math.floor(150*sc),1.3,3,.28,.96); }
-    function getWrappedScreenPosition(wx,wy,par=1) { const bcx=camera.x*par,bcy=camera.y*par; const dx=shortestWrappedDelta(wx-bcx,world.width),dy=shortestWrappedDelta(wy-bcy,world.height); return {x:dx*camera.zoom+viewWidth/2,y:dy*camera.zoom+viewHeight/2}; }
-    function screenToWorld(sx,sy) { return {x:wrapValue(camera.x+(sx-viewWidth/2)/camera.zoom,world.width),y:wrapValue(camera.y+(sy-viewHeight/2)/camera.zoom,world.height)}; }
+  function drawParticles(){
+    if(isLowPower&&frameCount%2!==0)return;
+    fxCtx.clearRect(0,0,viewWidth,viewHeight);
+    for(let i=particles.length-1;i>=0;i--){
+      const p=particles[i];p.x+=p.vx;p.y+=p.vy;p.vx*=.97;p.vy*=.97;p.life--;
+      const a=p.life/p.maxLife;
+      fxCtx.beginPath();fxCtx.fillStyle=`rgba(230,150,70,${a})`;fxCtx.arc(p.x,p.y,p.size,0,Math.PI*2);fxCtx.fill();
+      if(p.life<=0)particles.splice(i,1);
+    }
+    drawCursorTrail();
+  }
 
-    function drawNebula() { nebulaCtx.clearRect(0,0,viewWidth,viewHeight); const sx=wrapValue(camera.x*.05,world.width)/world.width,sy=wrapValue(camera.y*.04,world.height)/world.height; const sc=1.45,iW=viewWidth*sc,iH=viewHeight*sc,ox=-(sx*(iW-viewWidth)),oy=-(sy*(iH-viewHeight)); if(nebula1.complete){nebulaCtx.globalAlpha=.22;nebulaCtx.drawImage(nebula1,ox,oy,iW,iH);} if(nebula2.complete){nebulaCtx.globalAlpha=.16;nebulaCtx.drawImage(nebula2,ox-120,oy-80,iW*1.1,iH*1.1);} nebulaCtx.globalAlpha=1; }
+  function maybeSpawnStar(){
+    const ch=isLowPower?.003:.01,mx=isLowPower?1:3;
+    if(Math.random()>ch||shootingStars.length>mx)return;
+    shootingStars.push({x:rand(viewWidth*.1,viewWidth*.85),y:rand(10,viewHeight*.3),vx:rand(8,13),vy:rand(3.5,6.5),life:0,maxLife:rand(28,44),length:rand(90,170)});
+  }
+  function spawnClickComet(x,y){shootingStars.push({x,y,vx:rand(6,11),vy:rand(2,5),life:0,maxLife:44,length:rand(80,140)});}
+  function drawShootingStars(){
+    shootingCtx.clearRect(0,0,viewWidth,viewHeight);
+    maybeSpawnStar();
+    for(let i=shootingStars.length-1;i>=0;i--){
+      const s=shootingStars[i];s.x+=s.vx;s.y+=s.vy;s.life++;
+      const a=1-(s.life/s.maxLife);
+      const g=shootingCtx.createLinearGradient(s.x,s.y,s.x-s.length,s.y-s.length*.38);
+      g.addColorStop(0,`rgba(255,230,180,${a})`);g.addColorStop(.3,`rgba(230,140,60,${a*.7})`);g.addColorStop(1,'rgba(200,75,10,0)');
+      shootingCtx.beginPath();shootingCtx.strokeStyle=g;shootingCtx.lineWidth=2.2;
+      shootingCtx.moveTo(s.x,s.y);shootingCtx.lineTo(s.x-s.length,s.y-s.length*.38);shootingCtx.stroke();
+      if(s.life>=s.maxLife||s.x>viewWidth+200||s.y>viewHeight+200)shootingStars.splice(i,1);
+    }
+  }
 
-    function drawStarAt(ctx,p,r,a) { if(p.x<-30||p.y<-30||p.x>viewWidth+30||p.y>viewHeight+30)return; ctx.beginPath(); ctx.fillStyle=`rgba(255,255,255,${a})`; ctx.arc(p.x,p.y,r,0,Math.PI*2); ctx.fill(); if(r>1.6){ctx.beginPath();ctx.strokeStyle=`rgba(140,200,255,${a*.35})`;ctx.lineWidth=1;ctx.moveTo(p.x-r*2.2,p.y);ctx.lineTo(p.x+r*2.2,p.y);ctx.moveTo(p.x,p.y-r*2.2);ctx.lineTo(p.x,p.y+r*2.2);ctx.stroke();} }
-    function drawStarLayer(ctx,stars,par,t) { ctx.clearRect(0,0,viewWidth,viewHeight); for(const s of stars){const tw=.65+.35*Math.sin(t*s.twinkleSpeed+s.twinkleOffset),a=s.alpha*tw,r=s.r*(.8+.3*tw)*Math.max(.75,camera.zoom*.92),bcx=camera.x*par,bcy=camera.y*par,dx=shortestWrappedDelta(s.x-bcx,world.width),dy=shortestWrappedDelta(s.y-bcy,world.height),xO=[0],yO=[0];if(dx>world.width/2-220/camera.zoom)xO.push(-world.width);if(dx<-world.width/2+220/camera.zoom)xO.push(world.width);if(dy>world.height/2-220/camera.zoom)yO.push(-world.height);if(dy<-world.height/2+220/camera.zoom)yO.push(world.height);for(const ox of xO)for(const oy of yO)drawStarAt(ctx,{x:(dx+ox)*camera.zoom+viewWidth/2,y:(dy+oy)*camera.zoom+viewHeight/2},r,a);} }
+  function projectCenter(p){return{x:p.stars.reduce((a,s)=>a+s.x,0)/p.stars.length,y:p.stars.reduce((a,s)=>a+s.y,0)/p.stars.length};}
 
-    function spawnParticleBurst(x,y,count=20) { if(isLowPowerDevice)count=Math.max(6,Math.floor(count*.4)); for(let i=0;i<count;i++) particles.push({x,y,vx:rand(-1.8,1.8),vy:rand(-1.8,1.8),life:rand(18,36),maxLife:rand(18,36),size:rand(1.2,2.6)}); }
-    function drawCursorTrail() { fxCtx.globalCompositeOperation="lighter"; for(let i=cursorTrail.length-1;i>=0;i--){const p=cursorTrail[i];p.life-=1;if(p.life<=0){cursorTrail.splice(i,1);continue;} if(i>0){const prev=cursorTrail[i-1],a=p.life/p.maxLife;fxCtx.beginPath();fxCtx.strokeStyle=`rgba(120,200,255,${a*.9})`;fxCtx.lineWidth=a*4;fxCtx.lineCap="round";fxCtx.moveTo(p.x,p.y);fxCtx.lineTo(prev.x,prev.y);fxCtx.stroke();} fxCtx.beginPath();fxCtx.fillStyle=`rgba(180,235,255,${(p.life/p.maxLife)*.7})`;fxCtx.arc(p.x,p.y,1.5+(p.life/p.maxLife)*2,0,Math.PI*2);fxCtx.fill();} fxCtx.globalCompositeOperation="source-over"; }
-    function drawParticles() { if(isLowPowerDevice&&frameCount%2!==0)return; fxCtx.clearRect(0,0,viewWidth,viewHeight); for(let i=particles.length-1;i>=0;i--){const p=particles[i];p.x+=p.vx;p.y+=p.vy;p.vx*=.98;p.vy*=.98;p.life--;const a=p.life/p.maxLife;fxCtx.beginPath();fxCtx.fillStyle=`rgba(180,225,255,${a})`;fxCtx.arc(p.x,p.y,p.size,0,Math.PI*2);fxCtx.fill();if(p.life<=0)particles.splice(i,1);} drawCursorTrail(); }
-    function maybeSpawnShootingStar() { const ch=isLowPowerDevice?.004:.012,mx=isLowPowerDevice?1:3; if(Math.random()>ch||shootingStars.length>mx)return; shootingStars.push({x:rand(viewWidth*.15,viewWidth*.85),y:rand(20,viewHeight*.35),vx:rand(9,14),vy:rand(4,7),life:0,maxLife:rand(28,42),length:rand(100,180)}); }
-    function spawnClickComet(x,y) { shootingStars.push({x,y,vx:rand(7,12),vy:rand(2.4,5.2),life:0,maxLife:42,length:rand(90,150)}); }
-    function drawShootingStars() { shootingCtx.clearRect(0,0,viewWidth,viewHeight); maybeSpawnShootingStar(); for(let i=shootingStars.length-1;i>=0;i--){const s=shootingStars[i];s.x+=s.vx;s.y+=s.vy;s.life++;const a=1-(s.life/s.maxLife);const g=shootingCtx.createLinearGradient(s.x,s.y,s.x-s.length,s.y-s.length*.4);g.addColorStop(0,`rgba(255,255,255,${a})`);g.addColorStop(.25,`rgba(160,210,255,${a*.75})`);g.addColorStop(1,'rgba(160,210,255,0)');shootingCtx.beginPath();shootingCtx.strokeStyle=g;shootingCtx.lineWidth=2;shootingCtx.moveTo(s.x,s.y);shootingCtx.lineTo(s.x-s.length,s.y-s.length*.4);shootingCtx.stroke();if(s.life>=s.maxLife||s.x>viewWidth+220||s.y>viewHeight+220)shootingStars.splice(i,1);} }
-    function projectCenter(p) { return {x:p.stars.reduce((a,s)=>a+s.x,0)/p.stars.length,y:p.stars.reduce((a,s)=>a+s.y,0)/p.stars.length}; }
+  function renderConstellations(){
+    svg.innerHTML='';
+    projects.forEach((project,index)=>{
+      const g=document.createElementNS(SVG_NS,'g');
+      g.classList.add('constellation');g.dataset.index=index;
+      if(!projectIsVisible(index))g.classList.add('filtered');
+      if(activeProjectIndex===index)g.classList.add('active');
 
-    function renderConstellations() {
-      svg.innerHTML='';
-      projects.forEach((project,index)=>{
-        const g=document.createElementNS(SVG_NS,'g'); g.classList.add('constellation'); g.dataset.index=index;
-        if(!projectIsVisible(index))g.classList.add('filtered');
-        if(activeProjectIndex===index)g.classList.add('active');
-        const hb=document.createElementNS(SVG_NS,'circle'); hb.classList.add('constellation-hitbox'); hb.setAttribute('fill','transparent'); hb.setAttribute('pointer-events',projectIsVisible(index)?'all':'none'); g.appendChild(hb);
-        project.connections.forEach(()=>{const l=document.createElementNS(SVG_NS,'line');l.classList.add('constellation-line');g.appendChild(l);});
-        project.stars.forEach((s,si)=>{const c=document.createElementNS(SVG_NS,'circle');c.classList.add('constellation-star');if(si===2||s.r>=5)c.classList.add('constellation-core');g.appendChild(c);});
-        const lbl=document.createElementNS(SVG_NS,'text'); lbl.classList.add('constellation-label'); lbl.textContent=project.name; g.appendChild(lbl);
-        const sub=document.createElementNS(SVG_NS,'text'); sub.classList.add('constellation-subtext'); sub.textContent=project.team; g.appendChild(sub);
-        g.addEventListener('click',e=>{e.stopPropagation();warpJump();focusProject(index);openProject(index);});
-        g.addEventListener('mouseenter',()=>{const c=projectCenter(project),sc=getWrappedScreenPosition(c.x,c.y,1);spawnParticleBurst(sc.x,sc.y,18);if(activeProjectIndex===null)g.classList.add('active');});
-        g.addEventListener('mouseleave',()=>{if(activeProjectIndex===null)g.classList.remove('active');});
-        svg.appendChild(g);
+      // Hitbox
+      const hb=document.createElementNS(SVG_NS,'circle');
+      hb.classList.add('constellation-hitbox');hb.setAttribute('fill','transparent');
+      hb.setAttribute('pointer-events',projectIsVisible(index)?'all':'none');g.appendChild(hb);
+
+      // Lines
+      project.connections.forEach(()=>{const l=document.createElementNS(SVG_NS,'line');l.classList.add('constellation-line');g.appendChild(l);});
+
+      // Halos & Stars
+      project.stars.forEach((star,si)=>{
+        const halo=document.createElementNS(SVG_NS,'circle');halo.classList.add('constellation-halo');g.appendChild(halo);
+        const c=document.createElementNS(SVG_NS,'circle');c.classList.add('constellation-star');
+        if(si===2||star.r>=5)c.classList.add('constellation-core');g.appendChild(c);
       });
-      updateConstellationPositions();
-    }
 
-    function updateConstellationPositions() {
-      svg.querySelectorAll('.constellation').forEach((g,pi)=>{
-        const project=projects[pi],vis=projectIsVisible(pi);
-        g.classList.toggle('filtered',!vis);
-        const hb=g.querySelector('.constellation-hitbox');
-        if(hb){const c=projectCenter(project),p=getWrappedScreenPosition(c.x,c.y,1);hb.setAttribute('cx',p.x);hb.setAttribute('cy',p.y);hb.setAttribute('r',window.innerWidth<768?180:130);hb.setAttribute('pointer-events',vis?'all':'none');}
-        g.querySelectorAll('.constellation-line').forEach((line,i)=>{const[a,b]=project.connections[i],p1=getWrappedScreenPosition(project.stars[a].x,project.stars[a].y,1),p2=getWrappedScreenPosition(project.stars[b].x,project.stars[b].y,1);if(Math.abs(p1.x-p2.x)>viewWidth/2||Math.abs(p1.y-p2.y)>viewHeight/2){line.setAttribute('opacity','0');}else{line.setAttribute('opacity','1');line.setAttribute('x1',p1.x);line.setAttribute('y1',p1.y);line.setAttribute('x2',p2.x);line.setAttribute('y2',p2.y);}});
-        g.querySelectorAll('.constellation-star').forEach((c,i)=>{const s=project.stars[i],p=getWrappedScreenPosition(s.x,s.y,1);c.setAttribute('cx',p.x);c.setAttribute('cy',p.y);c.setAttribute('r',Math.max(2.3,s.r*camera.zoom*.9));});
-        const ctr=projectCenter(project),lp=getWrappedScreenPosition(ctr.x+24,ctr.y-26,1),sp=getWrappedScreenPosition(ctr.x+24,ctr.y-8,1);
-        const lbl=g.querySelector('.constellation-label'),sub=g.querySelector('.constellation-subtext');
-        lbl.setAttribute('x',lp.x);lbl.setAttribute('y',lp.y);sub.setAttribute('x',sp.x);sub.setAttribute('y',sp.y);
-        const near=lp.x>-260&&lp.x<viewWidth+260&&lp.y>-100&&lp.y<viewHeight+100;
-        lbl.style.opacity=near||activeProjectIndex===pi?'':'0';sub.style.opacity=near||activeProjectIndex===pi?'':'0';
+      // Labels
+      const lbl=document.createElementNS(SVG_NS,'text');lbl.classList.add('constellation-label');lbl.textContent=project.name;g.appendChild(lbl);
+      const sub=document.createElementNS(SVG_NS,'text');sub.classList.add('constellation-subtext');sub.textContent=project.team;g.appendChild(sub);
+
+      g.addEventListener('click',e=>{e.stopPropagation();warpJump();focusProject(index);openProject(index);});
+      g.addEventListener('mouseenter',()=>{
+        const c=projectCenter(project),sc=getWrappedPos(c.x,c.y,1);
+        spawnBurst(sc.x,sc.y,20,project.color||'rgba(230,140,60,');
+        if(activeProjectIndex===null)g.classList.add('active');
       });
-    }
+      g.addEventListener('mouseleave',()=>{if(activeProjectIndex===null)g.classList.remove('active');});
+      svg.appendChild(g);
+    });
+    updateConstellationPositions();
+  }
 
-    function openProject(index) {
-      if(!projectIsVisible(index))return;
-      activeProjectIndex=index;
-      const p=projects[index],tl=p.team||'Team';
-      panelContent.innerHTML=`<h3>${p.name}</h3>${p.project_link?`<a href="${p.project_link}" class="project-panel-tag">Project Page →</a>`:''}<a href="${p.team_link}" class="project-panel-tag">${tl} →</a><p>${p.description}</p><div class="project-meta">Status: ${p.status}</div>`;
-      panel.classList.add('show');
-      svg.querySelectorAll('.constellation').forEach((g,i)=>g.classList.toggle('active',i===index));
-      syncDirectoryActive(); forceConstellationRefresh=true;
-    }
-    function closeProject() { activeProjectIndex=null; panel.classList.remove('show'); svg.querySelectorAll('.constellation').forEach(g=>g.classList.remove('active')); syncDirectoryActive(); forceConstellationRefresh=true; }
-    function syncDirectoryActive() { projectDirectory?.querySelectorAll('[data-project-index]').forEach(it=>it.classList.toggle('active',activeProjectIndex===+it.getAttribute('data-project-index'))); }
-    function renderDirectory() {
-      if(!projectDirectory)return;
-      const vis=projects.map((p,i)=>({p,i})).filter(({i})=>projectIsVisible(i));
-      if(!vis.length){projectDirectory.innerHTML='<div class="project-empty">No matches. Try a different keyword.</div>';return;}
-      projectDirectory.innerHTML=vis.map(({p,i})=>`<button type="button" class="project-item${activeProjectIndex===i?' active':''}" data-project-index="${i}" aria-label="Open ${p.name}"><h4>${p.name}</h4><p>${p.team}</p><span class="status">${p.status}</span></button>`).join('');
-    }
-    function applyFilter(q) { searchQuery=normalizeText(q).trim(); if(activeProjectIndex!==null&&!projectIsVisible(activeProjectIndex))closeProject(); renderConstellations(); renderDirectory(); forceConstellationRefresh=true; }
-    function warpJump() { sky.classList.add('warping'); setTimeout(()=>sky.classList.remove('warping'),120); }
-    function focusProject(i) { const c=projectCenter(projects[i]); camera.targetX=wrapValue(c.x,world.width); camera.targetY=wrapValue(c.y,world.height); camera.targetZoom=1.28; camera.isAutoCentering=true; forceSkyRefresh=true; forceConstellationRefresh=true; }
-    function applyZoom(cx,cy,dz) { const r=sky.getBoundingClientRect(),px=cx-r.left,py=cy-r.top,bef=screenToWorld(px,py); camera.targetZoom=Math.max(ZOOM_MIN,Math.min(ZOOM_MAX,camera.targetZoom*dz)); camera.targetX=wrapValue(bef.x-(px-viewWidth/2)/camera.targetZoom,world.width); camera.targetY=wrapValue(bef.y-(py-viewHeight/2)/camera.targetZoom,world.height); forceSkyRefresh=true; forceConstellationRefresh=true; }
-    function onPointerDown(e) { camera.isDragging=true; pointerMoved=false; sky.classList.add('dragging'); camera.lastPointerX=e.clientX; camera.lastPointerY=e.clientY; camera.vx=0; camera.vy=0; }
-    function onPointerMove(e) { if(!camera.isDragging)return; const dx=e.clientX-camera.lastPointerX,dy=e.clientY-camera.lastPointerY; if(Math.abs(dx)>1||Math.abs(dy)>1)pointerMoved=true; camera.lastPointerX=e.clientX; camera.lastPointerY=e.clientY; const wx=-dx/camera.zoom,wy=-dy/camera.zoom; camera.x+=wx; camera.y+=wy; camera.x=wrapValue(camera.x,world.width); camera.y=wrapValue(camera.y,world.height); camera.targetX=camera.x; camera.targetY=camera.y; camera.vx=camera.vx*.4+wx*.6; camera.vy=camera.vy*.4+wy*.6; forceSkyRefresh=true; forceConstellationRefresh=true; const r=sky.getBoundingClientRect(); cursorTrail.push({x:e.clientX-r.left,y:e.clientY-r.top,life:24,maxLife:24}); if(cursorTrail.length>35)cursorTrail.shift(); }
-    function onPointerUp() { camera.isDragging=false; sky.classList.remove('dragging'); }
+  function updateConstellationPositions(){
+    svg.querySelectorAll('.constellation').forEach((g,pi)=>{
+      const project=projects[pi],vis=projectIsVisible(pi);
+      g.classList.toggle('filtered',!vis);
+      const hb=g.querySelector('.constellation-hitbox');
+      if(hb){const c=projectCenter(project),p=getWrappedPos(c.x,c.y,1);hb.setAttribute('cx',p.x);hb.setAttribute('cy',p.y);hb.setAttribute('r',window.innerWidth<768?175:125);hb.setAttribute('pointer-events',vis?'all':'none');}
+      const lines=g.querySelectorAll('.constellation-line');
+      lines.forEach((line,i)=>{
+        if(i>=project.connections.length)return;
+        const[a,b]=project.connections[i];
+        const p1=getWrappedPos(project.stars[a].x,project.stars[a].y,1);
+        const p2=getWrappedPos(project.stars[b].x,project.stars[b].y,1);
+        if(Math.abs(p1.x-p2.x)>viewWidth/2||Math.abs(p1.y-p2.y)>viewHeight/2){line.setAttribute('opacity','0');}
+        else{line.setAttribute('opacity','1');line.setAttribute('x1',p1.x);line.setAttribute('y1',p1.y);line.setAttribute('x2',p2.x);line.setAttribute('y2',p2.y);}
+      });
+      const halos=g.querySelectorAll('.constellation-halo');
+      const circles=g.querySelectorAll('.constellation-star');
+      project.stars.forEach((star,i)=>{
+        const p=getWrappedPos(star.x,star.y,1);
+        const r=Math.max(2.5,star.r*camera.zoom*.88);
+        if(circles[i]){circles[i].setAttribute('cx',p.x);circles[i].setAttribute('cy',p.y);circles[i].setAttribute('r',r);}
+        if(halos[i]){halos[i].setAttribute('cx',p.x);halos[i].setAttribute('cy',p.y);halos[i].setAttribute('r',r*2.4);}
+      });
+      const ctr=projectCenter(project);
+      const lp=getWrappedPos(ctr.x+28,ctr.y-30,1);
+      const sp=getWrappedPos(ctr.x+28,ctr.y-12,1);
+      const lbl=g.querySelector('.constellation-label'),sub=g.querySelector('.constellation-subtext');
+      if(lbl){lbl.setAttribute('x',lp.x);lbl.setAttribute('y',lp.y);}
+      if(sub){sub.setAttribute('x',sp.x);sub.setAttribute('y',sp.y);}
+      const near=lp.x>-280&&lp.x<viewWidth+280&&lp.y>-100&&lp.y<viewHeight+100;
+      if(lbl)lbl.style.opacity=near||activeProjectIndex===pi?'':'0';
+      if(sub)sub.style.opacity=near||activeProjectIndex===pi?'':'0';
+    });
+  }
 
-    function animate(now) {
-      const t=now*.001; frameCount++;
-      if(!camera.isDragging){
-        const dx=shortestWrappedDelta(camera.targetX-camera.x,world.width),dy=shortestWrappedDelta(camera.targetY-camera.y,world.height);
-        const cl=camera.isAutoCentering?.17:.085,zl=camera.isAutoCentering?.15:.08;
-        camera.x=wrapValue(camera.x+dx*cl,world.width); camera.y=wrapValue(camera.y+dy*cl,world.height); camera.zoom+=(camera.targetZoom-camera.zoom)*zl;
-        camera.x+=camera.vx; camera.y+=camera.vy; camera.x=wrapValue(camera.x,world.width); camera.y=wrapValue(camera.y,world.height); camera.vx*=.92; camera.vy*=.92;
-        if(Math.abs(camera.vx)<.001)camera.vx=0; if(Math.abs(camera.vy)<.001)camera.vy=0;
-        if(camera.isAutoCentering&&Math.abs(dx)+Math.abs(dy)<1.8&&Math.abs(camera.targetZoom-camera.zoom)<.01)camera.isAutoCentering=false;
-        currentStarX+=(targetStarX-currentStarX)*.05; currentStarY+=(targetStarY-currentStarY)*.05;
-        if(heroSection){heroSection.style.setProperty('--star-x',`${currentStarX}%`);heroSection.style.setProperty('--star-y',`${currentStarY}%`);}
-      } else { camera.zoom+=(camera.targetZoom-camera.zoom)*.16; }
-      const csx=Math.abs(shortestWrappedDelta(camera.x-lastRenderCamera.x,world.width)),csy=Math.abs(shortestWrappedDelta(camera.y-lastRenderCamera.y,world.height)),cs=csx+csy,zs=Math.abs(camera.zoom-lastRenderCamera.zoom);
-      if(forceSkyRefresh||(now-lastNebulaUpdate>66&&(cs>.25||zs>.002))){drawNebula();lastNebulaUpdate=now;forceSkyRefresh=false;}
-      if(!camera.isAutoCentering&&Math.abs(camera.vx)+Math.abs(camera.vy)>1)particles.push({x:rand(0,viewWidth),y:rand(0,viewHeight),vx:rand(-.5,.5),vy:rand(-.5,.5),life:rand(20,40),maxLife:40,size:rand(1,2)});
-      drawStarLayer(backCtx,starLayers.back,.35,t); drawStarLayer(midCtx,starLayers.mid,.6,t*1.2); drawStarLayer(frontCtx,starLayers.front,.95,t*1.45); drawParticles(); drawShootingStars();
-      if(forceConstellationRefresh||(now-lastConstellationUpdate>33&&(cs>.15||zs>.0015))){updateConstellationPositions();lastConstellationUpdate=now;forceConstellationRefresh=false;}
-      lastRenderCamera.x=camera.x; lastRenderCamera.y=camera.y; lastRenderCamera.zoom=camera.zoom;
-      requestAnimationFrame(animate);
-    }
+  function openProject(index){
+    if(!projectIsVisible(index))return;
+    activeProjectIndex=index;
+    const p=projects[index],tl=p.team||'Team';
+    panelContent.innerHTML=`
+      <h3>${p.name}</h3>
+      <div class="panel-links">
+        ${p.project_link?`<a href="${p.project_link}" class="project-panel-tag">Project Page →</a>`:''}
+        <a href="${p.team_link}" class="project-panel-tag">${tl} →</a>
+      </div>
+      <p>${p.description}</p>
+      <div class="project-meta">Status: ${p.status}</div>
+    `;
+    panel.classList.add('show');
+    svg.querySelectorAll('.constellation').forEach((g,i)=>g.classList.toggle('active',i===index));
+    syncDir();forceConstellationRefresh=true;
+  }
+  function closeProject(){activeProjectIndex=null;panel.classList.remove('show');svg.querySelectorAll('.constellation').forEach(g=>g.classList.remove('active'));syncDir();forceConstellationRefresh=true;}
+  function syncDir(){projectDirectory?.querySelectorAll('[data-project-index]').forEach(it=>it.classList.toggle('active',activeProjectIndex===+it.getAttribute('data-project-index')));}
+  function renderDir(){
+    if(!projectDirectory)return;
+    const vis=projects.map((p,i)=>({p,i})).filter(({i})=>projectIsVisible(i));
+    if(!vis.length){projectDirectory.innerHTML='<div class="project-empty">No matches. Try a different keyword.</div>';return;}
+    projectDirectory.innerHTML=vis.map(({p,i})=>`<button type="button" class="project-item${activeProjectIndex===i?' active':''}" data-project-index="${i}"><h4>${p.name}</h4><p>${p.team}</p><span class="status">${p.status}</span></button>`).join('');
+  }
+  function applyFilter(q){searchQuery=normalizeText(q).trim();if(activeProjectIndex!==null&&!projectIsVisible(activeProjectIndex))closeProject();renderConstellations();renderDir();forceConstellationRefresh=true;}
+  function warpJump(){sky.classList.add('warping');setTimeout(()=>sky.classList.remove('warping'),160);}
+  function focusProject(i){const c=projectCenter(projects[i]);camera.targetX=wrapValue(c.x,world.width);camera.targetY=wrapValue(c.y,world.height);camera.targetZoom=1.3;camera.isAutoCentering=true;forceSkyRefresh=true;forceConstellationRefresh=true;}
+  function applyZoom(cx,cy,dz){const rect=sky.getBoundingClientRect(),px=cx-rect.left,py=cy-rect.top,bef=screenToWorld(px,py);camera.targetZoom=Math.max(ZOOM_MIN,Math.min(ZOOM_MAX,camera.targetZoom*dz));camera.targetX=wrapValue(bef.x-(px-viewWidth/2)/camera.targetZoom,world.width);camera.targetY=wrapValue(bef.y-(py-viewHeight/2)/camera.targetZoom,world.height);forceSkyRefresh=true;forceConstellationRefresh=true;}
+  function onDown(e){camera.isDragging=true;pointerMoved=false;sky.classList.add('dragging');camera.lastPointerX=e.clientX;camera.lastPointerY=e.clientY;camera.vx=0;camera.vy=0;}
+  function onMove(e){if(!camera.isDragging)return;const dx=e.clientX-camera.lastPointerX,dy=e.clientY-camera.lastPointerY;if(Math.abs(dx)>1||Math.abs(dy)>1)pointerMoved=true;camera.lastPointerX=e.clientX;camera.lastPointerY=e.clientY;const wx=-dx/camera.zoom,wy=-dy/camera.zoom;camera.x+=wx;camera.y+=wy;camera.x=wrapValue(camera.x,world.width);camera.y=wrapValue(camera.y,world.height);camera.targetX=camera.x;camera.targetY=camera.y;camera.vx=camera.vx*.4+wx*.6;camera.vy=camera.vy*.4+wy*.6;forceSkyRefresh=true;forceConstellationRefresh=true;const rect=sky.getBoundingClientRect();cursorTrail.push({x:e.clientX-rect.left,y:e.clientY-rect.top,life:26,maxLife:26});if(cursorTrail.length>38)cursorTrail.shift();}
+  function onUp(){camera.isDragging=false;sky.classList.remove('dragging');}
 
-    sky.addEventListener('mousedown',onPointerDown); window.addEventListener('mousemove',onPointerMove); window.addEventListener('mouseup',onPointerUp); window.addEventListener('mouseleave',onPointerUp);
-    sky.addEventListener('touchstart',e=>{if(e.touches.length===1)onPointerDown(e.touches[0]);},{passive:false});
-    window.addEventListener('touchmove',e=>{if(e.touches.length===1&&camera.isDragging)onPointerMove(e.touches[0]);},{passive:false});
-    window.addEventListener('touchend',onPointerUp); window.addEventListener('touchcancel',onPointerUp);
-    sky.addEventListener('wheel',e=>{e.preventDefault();applyZoom(e.clientX,e.clientY,e.deltaY<0?1.12:.9);},{passive:false});
-    sky.addEventListener('click',e=>{if(e.target.closest('.constellation,.#project-picker-wrap,#project-panel,#sky-tools'))return;if(pointerMoved)return;const r=sky.getBoundingClientRect();spawnClickComet(e.clientX-r.left,e.clientY-r.top);closeProject();});
-    closePanelBtn.addEventListener('click',closeProject);
-    zoomInBtn?.addEventListener('click',()=>{const r=sky.getBoundingClientRect();applyZoom(r.left+r.width/2,r.top+r.height/2,1.18);});
-    zoomOutBtn?.addEventListener('click',()=>{const r=sky.getBoundingClientRect();applyZoom(r.left+r.width/2,r.top+r.height/2,.84);});
-    fitViewBtn?.addEventListener('click',()=>{camera.targetX=world.width/2;camera.targetY=world.height/2;camera.targetZoom=1;forceSkyRefresh=true;forceConstellationRefresh=true;closeProject();});
-    projectSearch?.addEventListener('input',()=>applyFilter(projectSearch.value));
-    projectDirectory?.addEventListener('click',e=>{const it=e.target.closest('[data-project-index]');if(!it)return;warpJump();focusProject(+it.getAttribute('data-project-index'));openProject(+it.getAttribute('data-project-index'));});
-    window.addEventListener('resize',resizeCanvases);
+  function animate(now){
+    const t=now*.001;frameCount++;
+    if(!camera.isDragging){
+      const dx=shortestDelta(camera.targetX-camera.x,world.width),dy=shortestDelta(camera.targetY-camera.y,world.height);
+      const cl=camera.isAutoCentering?.18:.09,zl=camera.isAutoCentering?.16:.09;
+      camera.x=wrapValue(camera.x+dx*cl,world.width);camera.y=wrapValue(camera.y+dy*cl,world.height);camera.zoom+=(camera.targetZoom-camera.zoom)*zl;
+      camera.x+=camera.vx;camera.y+=camera.vy;camera.x=wrapValue(camera.x,world.width);camera.y=wrapValue(camera.y,world.height);camera.vx*=.91;camera.vy*=.91;
+      if(Math.abs(camera.vx)<.001)camera.vx=0;if(Math.abs(camera.vy)<.001)camera.vy=0;
+      if(camera.isAutoCentering&&Math.abs(dx)+Math.abs(dy)<1.5&&Math.abs(camera.targetZoom-camera.zoom)<.01)camera.isAutoCentering=false;
+    }else{camera.zoom+=(camera.targetZoom-camera.zoom)*.18;}
+    const csx=Math.abs(shortestDelta(camera.x-lastRenderCamera.x,world.width)),csy=Math.abs(shortestDelta(camera.y-lastRenderCamera.y,world.height)),cs=csx+csy,zs=Math.abs(camera.zoom-lastRenderCamera.zoom);
+    if(forceSkyRefresh||(now-lastNebulaUpdate>66&&(cs>.2||zs>.002))){drawNebula();lastNebulaUpdate=now;forceSkyRefresh=false;}
+    drawStarLayer(backCtx,starLayers.back,.32,t);
+    drawStarLayer(midCtx,starLayers.mid,.6,t*1.18);
+    drawStarLayer(frontCtx,starLayers.front,.94,t*1.4);
+    drawParticles();drawShootingStars();
+    if(forceConstellationRefresh||(now-lastConstellationUpdate>30&&(cs>.12||zs>.001))){updateConstellationPositions();lastConstellationUpdate=now;forceConstellationRefresh=false;}
+    lastRenderCamera.x=camera.x;lastRenderCamera.y=camera.y;lastRenderCamera.zoom=camera.zoom;
+    requestAnimationFrame(animate);
+  }
 
-    Promise.race([Promise.all([waitForImageReady(nebula1),waitForImageReady(nebula2)]),new Promise(r=>setTimeout(r,900))]).finally(()=>{initStars();resizeCanvases();applyFilter('');requestAnimationFrame(animate);});
-  })();
+  sky.addEventListener('mousedown',onDown);window.addEventListener('mousemove',onMove);window.addEventListener('mouseup',onUp);window.addEventListener('mouseleave',onUp);
+  sky.addEventListener('touchstart',e=>{if(e.touches.length===1)onDown(e.touches[0]);},{passive:false});
+  window.addEventListener('touchmove',e=>{if(e.touches.length===1&&camera.isDragging)onMove(e.touches[0]);},{passive:false});
+  window.addEventListener('touchend',onUp);window.addEventListener('touchcancel',onUp);
+  sky.addEventListener('wheel',e=>{e.preventDefault();applyZoom(e.clientX,e.clientY,e.deltaY<0?1.14:.88);},{passive:false});
+  sky.addEventListener('click',e=>{
+    if(e.target.closest('.constellation')||e.target.closest('#project-picker-wrap')||e.target.closest('#project-panel')||e.target.closest('#sky-tools'))return;
+    if(pointerMoved)return;
+    const rect=sky.getBoundingClientRect();spawnClickComet(e.clientX-rect.left,e.clientY-rect.top);closeProject();
+  });
+  closePanelBtn.addEventListener('click',closeProject);
+  zoomInBtn?.addEventListener('click',()=>{const r=sky.getBoundingClientRect();applyZoom(r.left+r.width/2,r.top+r.height/2,1.22);});
+  zoomOutBtn?.addEventListener('click',()=>{const r=sky.getBoundingClientRect();applyZoom(r.left+r.width/2,r.top+r.height/2,.82);});
+  fitViewBtn?.addEventListener('click',()=>{camera.targetX=world.width/2;camera.targetY=world.height/2;camera.targetZoom=1;forceSkyRefresh=true;forceConstellationRefresh=true;closeProject();});
+  projectSearch?.addEventListener('input',()=>applyFilter(projectSearch.value));
+  projectDirectory?.addEventListener('click',e=>{const it=e.target.closest('[data-project-index]');if(!it)return;warpJump();focusProject(+it.getAttribute('data-project-index'));openProject(+it.getAttribute('data-project-index'));});
+  window.addEventListener('resize',resizeCanvases);
+
+  Promise.race([Promise.all([waitForImg(nebula1),waitForImg(nebula2)]),new Promise(r=>setTimeout(r,900))]).finally(()=>{initStars();resizeCanvases();applyFilter('');requestAnimationFrame(animate);});
+})();
 </script>
 </body>
 </html>
