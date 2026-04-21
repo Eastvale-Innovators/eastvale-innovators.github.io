@@ -44,6 +44,16 @@
       position: relative; min-height: 100vh;
       display: flex; align-items: center; justify-content: center;
       overflow: hidden; padding-top: var(--nav-h); z-index: 1;
+      --hero-overlay-opacity: 0.18;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: rgba(6,15,30,var(--hero-overlay-opacity));
+      transition: background .18s linear;
     }
     .hero-particle-canvas { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
     .hero-grid {
@@ -638,6 +648,30 @@
   for(let i=0;i<80;i++) p.push(mk());
   function draw() { ctx.clearRect(0,0,W,H); p.forEach(q=>{ q.x+=q.vx; q.y+=q.vy; q.t+=q.ts; if(q.x<0)q.x=W; if(q.x>W)q.x=0; if(q.y<0)q.y=H; if(q.y>H)q.y=0; const a=q.a*(.7+.3*Math.sin(q.t)); ctx.beginPath(); ctx.arc(q.x,q.y,q.r,0,Math.PI*2); ctx.fillStyle=`rgba(220,120,50,${a})`; ctx.fill(); }); requestAnimationFrame(draw); }
   new ResizeObserver(resize).observe(canvas.parentElement); resize(); draw();
+})();
+
+/* ══ HERO OVERLAY ON SCROLL ═══════════════════════════════════ */
+(function() {
+  const hero = document.querySelector('.hero');
+  if (!hero) return;
+
+  const MIN_OPACITY = 0.14; // more transparent at top
+  const MAX_OPACITY = 0.78; // darker/opaque as user scrolls
+
+  function clamp(v, a, b) { return Math.min(b, Math.max(a, v)); }
+  function lerp(a, b, t) { return a + (b - a) * t; }
+
+  function updateHeroOverlay() {
+    const rect = hero.getBoundingClientRect();
+    const h = Math.max(1, rect.height);
+    const scrolled = clamp(-rect.top / (h * 0.9), 0, 1);
+    const opacity = lerp(MIN_OPACITY, MAX_OPACITY, scrolled);
+    hero.style.setProperty('--hero-overlay-opacity', opacity.toFixed(3));
+  }
+
+  updateHeroOverlay();
+  window.addEventListener('scroll', updateHeroOverlay, { passive: true });
+  window.addEventListener('resize', updateHeroOverlay);
 })();
 
 /* ══ SCROLL REVEAL ════════════════════════════════════════════ */
