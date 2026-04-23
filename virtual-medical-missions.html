@@ -8,39 +8,218 @@
   <link rel="icon" type="image/png" href="assets/img/logo_favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/pages.css">
   <style>
-    .project-meta-bar { display:flex; flex-wrap:wrap; gap:.75rem; margin-top:1.5rem; justify-content:center; }
-    .meta-chip { display:inline-flex; flex-direction:column; align-items:center; gap:.2rem; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:12px; padding:.7rem 1.25rem; }
+    /* ── VMM MEDICAL BLUE THEME ── */
+    :root {
+      --navy:       #030d1a;
+      --navy-mid:   #071628;
+      --blue:       #0ea5e9;   /* medical cyan-blue */
+      --blue-dark:  #0284c7;
+      --cyan:       #38bdf8;
+      --green:      #10b981;   /* pulse green */
+      --white:      #f0f8ff;
+      --muted:      rgba(186,230,253,.5);
+      --nav-h:      72px;
+      --ease:       cubic-bezier(.22,1,.36,1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--blue) var(--navy); }
+    body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--white); overflow-x: hidden; line-height: 1.65; }
+
+    /* ── HERO ── */
+    .page-hero {
+      position: relative; min-height: 65vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; overflow: hidden;
+      padding: calc(var(--nav-h) + 4rem) 2rem 5rem;
+    }
+    .page-hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% -10%, rgba(14,165,233,.28) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 80% 60%, rgba(56,189,248,.1) 0%, transparent 60%),
+        linear-gradient(180deg, #030d1a 0%, #071628 100%);
+    }
+    .page-hero-grid {
+      position: absolute; inset: 0; z-index: 1;
+      background-image: radial-gradient(circle, rgba(14,165,233,0.07) 1px, transparent 1px);
+      background-size: 36px 36px;
+      mask-image: radial-gradient(ellipse 80% 80% at center, black 0%, transparent 100%);
+    }
+
+    /* ECG line behind hero content */
+    .ecg-bg-canvas {
+      position: absolute; inset: 0; z-index: 2; pointer-events: none;
+    }
+
+    .page-hero-content { position: relative; z-index: 5; max-width: 800px; }
+
+    .page-hero-eyebrow {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-size: .72rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--cyan); background: rgba(56,189,248,.1); border: 1px solid rgba(56,189,248,.25);
+      border-radius: 999px; padding: .4rem 1rem; margin-bottom: 1.5rem;
+      animation: fadeUp .7s .1s var(--ease) both;
+    }
+    .page-hero h1 {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(2.4rem, 6vw, 5rem); line-height: 1.05;
+      letter-spacing: -.02em; margin-bottom: 1.25rem;
+      background: linear-gradient(135deg, var(--white) 30%, var(--cyan));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      animation: fadeUp .8s .2s var(--ease) both;
+    }
+    .page-hero-sub {
+      font-size: clamp(.95rem, 1.8vw, 1.15rem); color: var(--muted);
+      font-weight: 300; max-width: 540px; margin: 0 auto;
+      animation: fadeUp .8s .35s var(--ease) both;
+    }
+    .project-meta-bar { display:flex; flex-wrap:wrap; gap:.75rem; margin-top:1.5rem; justify-content:center; animation: fadeUp .8s .5s var(--ease) both; }
+    .meta-chip { display:inline-flex; flex-direction:column; align-items:center; gap:.2rem; background:rgba(14,165,233,.07); border:1px solid rgba(14,165,233,.18); border-radius:12px; padding:.7rem 1.25rem; }
     .meta-chip-label { font-size:.65rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); font-weight:600; }
     .meta-chip-value { font-size:.9rem; font-weight:600; color:var(--white); }
 
+    @keyframes fadeUp { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+    /* ── ECG MONITOR SECTION ── */
+    .ecg-section {
+      max-width: 900px; margin: 0 auto; padding: 4rem 2rem;
+    }
+    .ecg-monitor {
+      background: #020c14;
+      border: 1px solid rgba(14,165,233,.2);
+      border-radius: 20px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(14,165,233,.08), inset 0 0 60px rgba(14,165,233,.04), 0 20px 60px rgba(0,0,0,.5);
+    }
+    .ecg-monitor::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(rgba(14,165,233,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(14,165,233,.03) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+    .ecg-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .ecg-label {
+      font-family: 'Syne', sans-serif; font-size: .72rem; font-weight: 700;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: rgba(14,165,233,.7);
+    }
+    .ecg-vitals {
+      display: flex; gap: 1.5rem;
+    }
+    .ecg-vital {
+      text-align: right;
+    }
+    .ecg-vital-val {
+      font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800;
+      color: var(--green); line-height: 1;
+    }
+    .ecg-vital-val.bpm { color: var(--cyan); }
+    .ecg-vital-label {
+      font-size: .6rem; letter-spacing: .12em; text-transform: uppercase;
+      color: rgba(14,165,233,.5); margin-top: .2rem;
+    }
+    .ecg-canvas-wrap {
+      position: relative; height: 140px;
+    }
+    #ecg-canvas {
+      width: 100%; height: 100%;
+      display: block;
+    }
+    /* Scan line effect */
+    .ecg-scanline {
+      position: absolute; top: 0; bottom: 0; width: 2px;
+      background: rgba(14,165,233,.15);
+      pointer-events: none;
+      animation: none;
+    }
+    .ecg-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 1rem;
+      font-size: .68rem; letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(14,165,233,.4);
+    }
+    .ecg-pulse-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+      animation: pulseDot 1s ease-in-out infinite;
+    }
+    @keyframes pulseDot { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.4; transform:scale(.6); } }
+
+    /* ── SHARED SECTION STYLES ── */
+    .section { max-width: 1300px; margin: 0 auto; padding: 6rem 2rem; }
+    .section-eyebrow { display:inline-block; font-size:.7rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; color:var(--cyan); margin-bottom:.75rem; }
+    .section-title { font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(1.8rem,3.5vw,2.8rem); line-height:1.1; letter-spacing:-.02em; margin-bottom:1rem; }
+    .section-desc { font-size:1rem; color:var(--muted); max-width:540px; line-height:1.75; }
+    .divider { height:1px; background:linear-gradient(90deg,transparent,rgba(14,165,233,.18),transparent); max-width:1300px; margin:0 auto; }
+
+    [data-reveal] { opacity:0; transform:translateY(24px); transition:opacity .7s var(--ease),transform .7s var(--ease); }
+    [data-reveal].revealed { opacity:1; transform:translateY(0); }
+    [data-reveal-delay="1"] { transition-delay:.1s; } [data-reveal-delay="2"] { transition-delay:.2s; } [data-reveal-delay="3"] { transition-delay:.3s; }
+
+    /* ── BUTTONS ── */
+    .btn-primary {
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:.85rem 1.8rem; background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+      color:#fff; text-decoration:none; border-radius:12px; font-weight:600; font-size:.9rem;
+      box-shadow:0 8px 28px rgba(14,165,233,.35); transition:transform .2s var(--ease),box-shadow .2s var(--ease);
+      border:none; cursor:pointer; font-family:inherit;
+    }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 36px rgba(14,165,233,.5); }
+    .btn-ghost {
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:.85rem 1.8rem; background:rgba(14,165,233,.06);
+      border:1px solid rgba(14,165,233,.2); color:var(--white); text-decoration:none;
+      border-radius:12px; font-weight:500; font-size:.9rem;
+      transition:background .2s,border-color .2s,transform .2s var(--ease);
+      cursor:pointer; font-family:inherit;
+    }
+    .btn-ghost:hover { background:rgba(14,165,233,.12); border-color:rgba(14,165,233,.4); transform:translateY(-2px); }
+
+    /* ── FEATURE CARDS ── */
     .feature-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:1.25rem; margin-top:2.5rem; }
-    .feature-card { background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:1.75rem; transition:border-color .3s,transform .3s var(--ease),background .3s; position:relative; overflow:hidden; }
+    .feature-card { background:rgba(14,165,233,.04); border:1px solid rgba(14,165,233,.1); border-radius:18px; padding:1.75rem; transition:border-color .3s,transform .3s var(--ease),background .3s; position:relative; overflow:hidden; }
     .feature-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--blue),var(--cyan)); transform:scaleX(0); transform-origin:left; transition:transform .4s var(--ease); }
-    .feature-card:hover { border-color:rgba(200,75,10,.3); background:rgba(200,75,10,.05); transform:translateY(-4px); }
+    .feature-card:hover { border-color:rgba(14,165,233,.3); background:rgba(14,165,233,.08); transform:translateY(-4px); }
     .feature-card:hover::before { transform:scaleX(1); }
     .feature-icon { font-size:1.6rem; margin-bottom:.9rem; }
     .feature-card h3 { font-family:'Syne',sans-serif; font-weight:700; font-size:1.05rem; margin-bottom:.5rem; }
     .feature-card p { font-size:.88rem; color:var(--muted); line-height:1.65; }
 
+    /* ── PROCESS ── */
     .process-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:1rem; margin-top:2.5rem; }
-    .process-step { background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07); border-radius:14px; padding:1.5rem; text-align:center; }
-    .process-step:hover { border-color:rgba(232,114,26,.25); background:rgba(232,114,26,.04); }
+    .process-step { background:rgba(14,165,233,.04); border:1px solid rgba(14,165,233,.09); border-radius:14px; padding:1.5rem; text-align:center; transition:border-color .25s,background .25s; }
+    .process-step:hover { border-color:rgba(14,165,233,.25); background:rgba(14,165,233,.08); }
     .process-num { font-family:'Syne',sans-serif; font-size:1.8rem; font-weight:800; color:var(--blue); opacity:.5; margin-bottom:.5rem; }
     .process-step h4 { font-family:'Syne',sans-serif; font-weight:700; font-size:.95rem; margin-bottom:.4rem; }
     .process-step p { font-size:.83rem; color:var(--muted); line-height:1.6; }
 
+    /* ── TEAM CARDS ── */
     .team-mini-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.5rem; margin-top:2.5rem; }
-    .team-mini-card { background:rgba(255,255,255,.03); border:1px solid rgba(200,75,10,.18); border-radius:20px; overflow:hidden; display:grid; grid-template-columns:160px 1fr; transition:border-color .3s,transform .3s var(--ease); }
-    .team-mini-card:hover { border-color:rgba(200,75,10,.4); transform:translateY(-4px); }
+    .team-mini-card { background:rgba(14,165,233,.04); border:1px solid rgba(14,165,233,.18); border-radius:20px; overflow:hidden; display:grid; grid-template-columns:160px 1fr; transition:border-color .3s,transform .3s var(--ease); }
+    .team-mini-card:hover { border-color:rgba(14,165,233,.4); transform:translateY(-4px); }
     .team-mini-img { width:160px; height:100%; object-fit:cover; object-position:top; }
     .team-mini-info { padding:1.25rem; }
     .team-mini-name { font-family:'Syne',sans-serif; font-weight:700; font-size:1rem; margin-bottom:.25rem; }
     .team-mini-role { font-size:.72rem; color:var(--cyan); font-weight:600; text-transform:uppercase; letter-spacing:.06em; margin-bottom:.5rem; }
     .team-mini-bio { font-size:.83rem; color:var(--muted); line-height:1.55; }
 
-    @media(max-width:600px){ .team-mini-card{ grid-template-columns:1fr; } .team-mini-img{ width:100%; height:180px; } }
+    /* TILE */
+    #tile-transition { position:fixed; inset:0; z-index:20000; pointer-events:none; display:grid; }
+    .tile { background:#071628; opacity:0; transform:scale(.95); transition:opacity .28s ease,transform .28s ease; }
+    .tile.active { opacity:1; transform:scale(1); }
+
+    @media(max-width:600px) { .team-mini-card { grid-template-columns:1fr; } .team-mini-img { width:100%; height:180px; } }
   </style>
 </head>
 <body>
@@ -49,28 +228,65 @@
 <script src="assets/js/shared-header.js"></script>
 <script src="assets/js/shared-footer.js?v=4-17-26"></script>
 <script src="assets/js/site-common.js"></script>
-<script>loadSharedHeader('#site-header'); loadSharedFooter('#site-footer');</script>
+<script src="assets/js/color-transition.js"></script>
+<script>
+  loadSharedHeader('#site-header');
+  loadSharedFooter('#site-footer');
+  // Register this page's color identity
+  registerPageColors({ accent:'#0ea5e9', accentHot:'#38bdf8', bg:'#030d1a' });
+</script>
 
 <!-- HERO -->
 <section class="page-hero">
   <div class="page-hero-bg"></div>
   <div class="page-hero-grid"></div>
+  <canvas class="ecg-bg-canvas" id="ecg-bg"></canvas>
   <div class="page-hero-content">
     <div class="page-hero-eyebrow">Virtual Medical Missions Team</div>
     <h1>Virtual Medical Missions</h1>
     <p class="page-hero-sub">A secure, scalable portal for virtual medical outreach, partnerships, fundraising, and care operations.</p>
     <div class="project-meta-bar">
       <div class="meta-chip"><span class="meta-chip-label">Type</span><span class="meta-chip-value">Medical EMR Platform</span></div>
-      <div class="meta-chip"><span class="meta-chip-label">Status</span><span class="meta-chip-value" style="color:#6d6961">⚙ Postponed</span></div>
+      <div class="meta-chip"><span class="meta-chip-label">Status</span><span class="meta-chip-value" style="color:#fbbf24">⚙ Past Project</span></div>
     </div>
   </div>
 </section>
+
+<!-- ECG MONITOR -->
+<div class="ecg-section" data-reveal>
+  <div class="ecg-monitor">
+    <div class="ecg-header">
+      <div class="ecg-label">ECG · Lead II · Sinus Rhythm</div>
+      <div class="ecg-vitals">
+        <div class="ecg-vital">
+          <div class="ecg-vital-val bpm" id="bpm-val">72</div>
+          <div class="ecg-vital-label">BPM</div>
+        </div>
+        <div class="ecg-vital">
+          <div class="ecg-vital-val" id="spo2-val">98%</div>
+          <div class="ecg-vital-label">SpO₂</div>
+        </div>
+        <div class="ecg-vital">
+          <div class="ecg-vital-val" style="color:#a78bfa" id="bp-val">120/80</div>
+          <div class="ecg-vital-label">mmHg</div>
+        </div>
+      </div>
+    </div>
+    <div class="ecg-canvas-wrap">
+      <canvas id="ecg-canvas"></canvas>
+    </div>
+    <div class="ecg-footer">
+      <div style="display:flex;align-items:center;gap:.6rem"><div class="ecg-pulse-dot"></div><span>Normal Sinus Rhythm</span></div>
+      <span>25 mm/s · 10 mm/mV</span>
+    </div>
+  </div>
+</div>
 
 <!-- OVERVIEW -->
 <section class="section">
   <span class="section-eyebrow" data-reveal>The Problem</span>
   <h2 class="section-title" data-reveal data-reveal-delay="1">What It Supports</h2>
-  <p class="section-desc" data-reveal data-reveal-delay="2" style="max-width:700px">Mission work depends on reliable systems for patient records, volunteer coordination, outreach campaigns, and fundraising operations. The platform brings those workflows together in a secure, scalable portal that grows alongside the organization.</p>
+  <p class="section-desc" data-reveal data-reveal-delay="2" style="max-width:700px">Mission work depends on reliable systems for patient records, volunteer coordination, outreach campaigns, and fundraising. The platform brings those workflows together in a secure, scalable portal that grows alongside the organization.</p>
   <ul style="list-style:none;display:flex;flex-direction:column;gap:.65rem;margin-top:1.5rem" data-reveal data-reveal-delay="3">
     <li style="display:flex;gap:.75rem;align-items:start"><span style="color:var(--cyan);flex-shrink:0">→</span><span style="color:var(--muted);font-size:.92rem">Electronic medical recordkeeping designed for outreach contexts.</span></li>
     <li style="display:flex;gap:.75rem;align-items:start"><span style="color:var(--cyan);flex-shrink:0">→</span><span style="color:var(--muted);font-size:.92rem">Partnerships, fundraising, and operations in one secure portal.</span></li>
@@ -85,26 +301,10 @@
   <span class="section-eyebrow" data-reveal>Platform Capabilities</span>
   <h2 class="section-title" data-reveal data-reveal-delay="1">Key Features</h2>
   <div class="feature-grid">
-    <div class="feature-card" data-reveal data-reveal-delay="1">
-      <div class="feature-icon">🔐</div>
-      <h3>Secure Records</h3>
-      <p>Patient and outreach data handled with privacy, access control, and auditability in mind.</p>
-    </div>
-    <div class="feature-card" data-reveal data-reveal-delay="2">
-      <div class="feature-icon">🏥</div>
-      <h3>Operations Portal</h3>
-      <p>Partnerships, volunteer coordination, and campaign workflows unified in a single interface.</p>
-    </div>
-    <div class="feature-card" data-reveal data-reveal-delay="2">
-      <div class="feature-icon">💰</div>
-      <h3>Fundraising Tools</h3>
-      <p>Tracking and reporting designed to keep mission fundraising sustainable and transparent.</p>
-    </div>
-    <div class="feature-card" data-reveal data-reveal-delay="3">
-      <div class="feature-icon">📈</div>
-      <h3>Scalable Platform</h3>
-      <p>Architecture that grows with outreach — from pilot deployments to long-term mission expansion.</p>
-    </div>
+    <div class="feature-card" data-reveal data-reveal-delay="1"><div class="feature-icon">🔐</div><h3>Secure Records</h3><p>Patient and outreach data handled with privacy, access control, and auditability in mind.</p></div>
+    <div class="feature-card" data-reveal data-reveal-delay="2"><div class="feature-icon">🏥</div><h3>Operations Portal</h3><p>Partnerships, volunteer coordination, and campaign workflows unified in a single interface.</p></div>
+    <div class="feature-card" data-reveal data-reveal-delay="2"><div class="feature-icon">💰</div><h3>Fundraising Tools</h3><p>Tracking and reporting designed to keep mission fundraising sustainable and transparent.</p></div>
+    <div class="feature-card" data-reveal data-reveal-delay="3"><div class="feature-icon">📈</div><h3>Scalable Platform</h3><p>Architecture that grows with outreach — from pilot deployments to long-term mission expansion.</p></div>
   </div>
 </section>
 
@@ -117,8 +317,8 @@
   <div class="process-grid">
     <div class="process-step" data-reveal data-reveal-delay="1"><div class="process-num">01</div><h4>Discovery</h4><p>Mission needs are translated into concrete user journeys and system requirements.</p></div>
     <div class="process-step" data-reveal data-reveal-delay="2"><div class="process-num">02</div><h4>Prototype</h4><p>Early builds validate workflows quickly before deeper integration work begins.</p></div>
-    <div class="process-step" data-reveal data-reveal-delay="2"><div class="process-num">03</div><h4>Validate</h4><p>Security, reliability, and usability are tested in realistic outreach scenarios.</p></div>
-    <div class="process-step" data-reveal data-reveal-delay="3"><div class="process-num">04</div><h4>Deliver</h4><p>The platform ships to mission operations and continues to iterate with feedback.</p></div>
+    <div class="process-step" data-reveal data-reveal-delay="2"><div class="process-num">03</div><h4>Validate</h4><p>Security, reliability, and usability tested in realistic outreach scenarios.</p></div>
+    <div class="process-step" data-reveal data-reveal-delay="3"><div class="process-num">04</div><h4>Deliver</h4><p>Ships to mission operations and continues to iterate with feedback.</p></div>
   </div>
 </section>
 
@@ -131,26 +331,18 @@
   <div class="team-mini-grid">
     <div class="team-mini-card" data-reveal data-reveal-delay="1">
       <img src="assets/img/devomb.jpg" alt="Devom Brahmbhatt" class="team-mini-img" loading="lazy">
-      <div class="team-mini-info">
-        <div class="team-mini-name">Devom Brahmbhatt</div>
-        <div class="team-mini-role">Youth President</div>
-        <p class="team-mini-bio">Sets the team vision, leads partnerships and outreach planning, and coordinates operations and fundraising.</p>
-      </div>
+      <div class="team-mini-info"><div class="team-mini-name">Devom Brahmbhatt</div><div class="team-mini-role">Youth President</div><p class="team-mini-bio">Sets the team vision, leads partnerships and outreach planning, and coordinates operations and fundraising.</p></div>
     </div>
     <div class="team-mini-card" data-reveal data-reveal-delay="2">
       <img src="assets/img/aryanw.png" alt="Aryan Wadhera" class="team-mini-img" loading="lazy">
-      <div class="team-mini-info">
-        <div class="team-mini-name">Aryan Wadhera</div>
-        <div class="team-mini-role">CTO</div>
-        <p class="team-mini-bio">Leads technical strategy, architecture, and implementation — ensuring the platform is secure, reliable, and scalable.</p>
-      </div>
+      <div class="team-mini-info"><div class="team-mini-name">Aryan Wadhera</div><div class="team-mini-role">CTO</div><p class="team-mini-bio">Leads technical strategy, architecture, and implementation — ensuring the platform is secure, reliable, and scalable.</p></div>
     </div>
   </div>
 </section>
 
 <!-- CTA -->
 <section class="section" style="padding-top:2rem;text-align:center">
-  <div data-reveal style="background:rgba(200,75,10,.06);border:1px solid rgba(200,75,10,.2);border-radius:24px;padding:3rem 2rem">
+  <div data-reveal style="background:rgba(14,165,233,.06);border:1px solid rgba(14,165,233,.2);border-radius:24px;padding:3rem 2rem">
     <h2 class="section-title" style="margin-bottom:.75rem">Support the mission</h2>
     <p style="color:var(--muted);margin-bottom:2rem;max-width:480px;margin-left:auto;margin-right:auto">Interested in partnering on outreach, contributing to the platform, or helping with fundraising?</p>
     <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
@@ -164,16 +356,224 @@
 <div id="tile-transition"></div>
 
 <script>
-const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); obs.unobserve(e.target); }}); }, { threshold: 0.1 });
+/* ── RUN COLOR TRANSITION ── */
+window.addEventListener('load', () => runColorTransition());
+
+/* ── SCROLL REVEAL ── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); obs.unobserve(e.target); }});
+}, { threshold: 0.1 });
 document.querySelectorAll('[data-reveal]').forEach(el => obs.observe(el));
+
+/* ── TILE TRANSITION ── */
 const tc = document.getElementById('tile-transition');
 const R=10,C=18; let tiles=[];
-function createTiles(){tc.innerHTML='';tc.style.gridTemplateRows=`repeat(${R},1fr)`;tc.style.gridTemplateColumns=`repeat(${C},1fr)`;tiles=[];for(let r=0;r<R;r++)for(let c=0;c<C;c++){const t=document.createElement('div');t.className='tile';t.dataset.d=r+c;tc.appendChild(t);tiles.push(t);}}
-function sorted(){return tiles.slice().sort((a,b)=>a.dataset.d-b.dataset.d);}
-function cover(cb){sorted().forEach((t,i)=>setTimeout(()=>t.classList.add('active'),i*2));setTimeout(cb,tiles.length*2+180);}
-function reveal(){sorted().reverse().forEach((t,i)=>setTimeout(()=>t.classList.remove('active'),i*2));}
-document.addEventListener('click',e=>{const a=e.target.closest('a[href]');if(!a)return;const h=a.getAttribute('href');if(!h||h.includes('#')||h.startsWith('mailto:')||h.startsWith('tel:')||a.target==='_blank')return;e.preventDefault();cover(()=>window.location.href=h);});
-createTiles();tiles.forEach(t=>t.classList.add('active'));setTimeout(reveal,80);
+function mkT(){tc.innerHTML='';tc.style.gridTemplateRows=`repeat(${R},1fr)`;tc.style.gridTemplateColumns=`repeat(${C},1fr)`;tiles=[];for(let r=0;r<R;r++)for(let c=0;c<C;c++){const t=document.createElement('div');t.className='tile';t.dataset.d=r+c;tc.appendChild(t);tiles.push(t);}}
+const sortT=()=>tiles.slice().sort((a,b)=>a.dataset.d-b.dataset.d);
+const coverT=cb=>{sortT().forEach((t,i)=>setTimeout(()=>t.classList.add('active'),i*2));setTimeout(cb,tiles.length*2+180);};
+const revealT=()=>sortT().reverse().forEach((t,i)=>setTimeout(()=>t.classList.remove('active'),i*2));
+document.addEventListener('click',e=>{const a=e.target.closest('a[href]');if(!a)return;const h=a.getAttribute('href');if(!h||h.includes('#')||h.startsWith('mailto:')||h.startsWith('tel:')||a.target==='_blank')return;e.preventDefault();coverT(()=>window.location.href=h);});
+mkT();tiles.forEach(t=>t.classList.add('active'));setTimeout(revealT,80);
+
+/* ══════════════════════════════════════════════
+   ECG — SINUS RHYTHM ANIMATION
+   Real medical ECG waveform: P wave, QRS complex, T wave
+══════════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('ecg-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  let W, H, animFrame = 0;
+  const SPEED = 1;       // pixels per frame
+  const BPM = 55;
+  const COLOR_MAIN = '#10b981';    // green pulse
+  const COLOR_GLOW = 'rgba(16,185,129,';
+  const COLOR_GRID = 'rgba(14,165,233,.08)';
+
+  // ── Sinus rhythm waveform generator ──────────────
+  // Returns y-offset (0-1) for a given x-position in the cardiac cycle
+  // Based on a realistic ECG: flat baseline → P wave → PR segment → QRS → ST → T wave
+  function ecgY(phase) {
+    // phase = 0..1 within one cardiac cycle
+    // P wave (0.08 - 0.22)
+    if (phase >= 0.08 && phase < 0.22) {
+      const t = (phase - 0.08) / 0.14;
+      return -0.12 * Math.sin(Math.PI * t);
+    }
+    // PR segment flat (0.22 - 0.32)
+    if (phase >= 0.22 && phase < 0.32) return 0;
+    // Q wave tiny dip (0.32 - 0.36)
+    if (phase >= 0.32 && phase < 0.36) {
+      const t = (phase - 0.32) / 0.04;
+      return 0.08 * Math.sin(Math.PI * t);
+    }
+    // R wave — sharp tall spike (0.36 - 0.48)
+    if (phase >= 0.36 && phase < 0.42) {
+      const t = (phase - 0.36) / 0.06;
+      return -1.0 * Math.sin(Math.PI * t);
+    }
+    // S wave — small dip below baseline (0.42 - 0.50)
+    if (phase >= 0.42 && phase < 0.50) {
+      const t = (phase - 0.42) / 0.08;
+      return 0.22 * Math.sin(Math.PI * t);
+    }
+    // ST segment (0.50 - 0.58)
+    if (phase >= 0.50 && phase < 0.58) return 0;
+    // T wave — broad positive hump (0.58 - 0.82)
+    if (phase >= 0.58 && phase < 0.82) {
+      const t = (phase - 0.58) / 0.24;
+      return -0.28 * Math.sin(Math.PI * t);
+    }
+    // TP segment back to baseline
+    return 0;
+  }
+
+  function resize() {
+    const wrap = canvas.parentElement;
+    W = canvas.width = wrap.offsetWidth;
+    H = canvas.height = wrap.offsetHeight;
+  }
+
+  // Buffer: store drawn y-values across the canvas width
+  const buffer = [];
+  let offset = 0;  // current draw position
+  let cyclePixels;  // pixels per cardiac cycle
+
+  function init() {
+    resize();
+    cyclePixels = (60 / BPM) * 250; // 250px/sec at 25mm/s scale
+    // Fill buffer with baseline
+    for (let i = 0; i < W + 100; i++) {
+      const phase = ((i / cyclePixels) % 1 + 1) % 1;
+      buffer[i] = ecgY(phase);
+    }
+  }
+
+  let writeHead = 0;
+
+  function draw() {
+    animFrame++;
+
+    // Advance write head
+    const steps = Math.ceil(SPEED);
+    for (let s = 0; s < steps; s++) {
+      writeHead = (writeHead + 1) % (W + Math.ceil(cyclePixels));
+      const phase = ((writeHead / cyclePixels) % 1 + 1) % 1;
+      buffer[writeHead % buffer.length] = ecgY(phase);
+    }
+    offset = (offset + SPEED) % cyclePixels;
+
+    ctx.clearRect(0, 0, W, H);
+
+    const mid = H / 2;
+    const amp = H * 0.38;
+
+    // Draw trace
+    ctx.beginPath();
+    ctx.lineWidth = 2.2;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    // Moving scan position
+    const scanX = W * 0.75;
+
+    for (let x = 0; x < W; x++) {
+      // Fade near the scan head (like a phosphor display)
+      const distFromScan = (scanX - x + W) % W;
+      let alpha;
+      if (distFromScan < 40) {
+        // Bright leading edge
+        alpha = distFromScan < 4 ? 1 : 0.9 - (distFromScan / 40) * 0.3;
+      } else if (distFromScan > W - 80) {
+        // Fade out the old tail
+        alpha = ((W - distFromScan) / 80) * 0.4;
+      } else {
+        alpha = 0.85;
+      }
+
+      const bufIdx = ((writeHead - Math.floor(scanX - x) + buffer.length * 10)) % buffer.length;
+      const yVal = buffer[Math.max(0, bufIdx)] || 0;
+      const y = mid + yVal * amp;
+
+      ctx.strokeStyle = COLOR_MAIN;
+      ctx.globalAlpha = Math.max(0, Math.min(1, alpha));
+
+      if (x === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+
+    // Bright glowing head dot
+    const headPhase = ((writeHead / cyclePixels) % 1 + 1) % 1;
+    const headY = mid + ecgY(headPhase) * amp;
+    const headGrad = ctx.createRadialGradient(scanX, headY, 0, scanX, headY, 20);
+    headGrad.addColorStop(0, 'rgba(16,185,129,.9)');
+    headGrad.addColorStop(.4, 'rgba(16,185,129,.4)');
+    headGrad.addColorStop(1, 'rgba(16,185,129,0)');
+    ctx.fillStyle = headGrad;
+    ctx.beginPath(); ctx.arc(scanX, headY, 20, 0, Math.PI * 2); ctx.fill();
+
+    // White hot center dot
+    ctx.fillStyle = '#fff';
+    ctx.beginPath(); ctx.arc(scanX, headY, 2.5, 0, Math.PI * 2); ctx.fill();
+
+    requestAnimationFrame(draw);
+  }
+
+  // BPM counter flicker (slight variation = realistic)
+  setInterval(() => {
+    const bpmEl = document.getElementById('bpm-val');
+    if (bpmEl) {
+      const variation = Math.random() < .15 ? (Math.random() < .5 ? 1 : -1) : 0;
+      bpmEl.textContent = 72 + variation;
+    }
+  }, 1200);
+
+  // SpO2 small variation
+  setInterval(() => {
+    const el = document.getElementById('spo2-val');
+    if (el) el.textContent = (97 + Math.floor(Math.random() * 2)) + '%';
+  }, 3000);
+
+  // Hero background subtle ECG
+  (function() {
+    const bgCanvas = document.getElementById('ecg-bg');
+    if (!bgCanvas) return;
+    const bCtx = bgCanvas.getContext('2d');
+    let bW, bH, bOffset = 0;
+
+    function bResize() {
+      bW = bgCanvas.width = bgCanvas.offsetWidth;
+      bH = bgCanvas.height = bgCanvas.offsetHeight;
+    }
+
+    function bDraw() {
+      bCtx.clearRect(0, 0, bW, bH);
+      const bCyclePixels = 320;
+      bCtx.beginPath();
+      bCtx.strokeStyle = 'rgba(14,165,233,.12)';
+      bCtx.lineWidth = 1.5;
+      const mid = bH * .65;
+      const amp = bH * .12;
+      for (let x = 0; x < bW; x++) {
+        const phase = (((x + bOffset) / bCyclePixels) % 1 + 1) % 1;
+        const y = mid + ecgY(phase) * amp;
+        if (x === 0) bCtx.moveTo(x, y); else bCtx.lineTo(x, y);
+      }
+      bCtx.stroke();
+      bOffset += 1.2;
+      requestAnimationFrame(bDraw);
+    }
+
+    new ResizeObserver(bResize).observe(bgCanvas.parentElement);
+    bResize(); bDraw();
+  })();
+
+  new ResizeObserver(init).observe(canvas.parentElement);
+  init(); draw();
+})();
 </script>
 </body>
 </html>

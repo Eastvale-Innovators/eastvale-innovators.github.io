@@ -10,6 +10,55 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/pages.css">
   <style>
+    /* ── ROOSEVELT CONNECT — LIGHTER STEEL BLUE THEME ── */
+    :root {
+      --navy:       #030e1e;
+      --navy-mid:   #071a30;
+      --blue:       #0369a1;
+      --cyan:       #38bdf8;
+      --white:      #f0f9ff;
+      --muted:      rgba(186,230,253,.55);
+    }
+    html { scrollbar-color: #0369a1 #030e1e; }
+    body { background: linear-gradient(180deg, #030e1e 0%, #061422 100%); }
+    .page-hero-bg {
+      background:
+        radial-gradient(ellipse 70% 60% at 50% -10%, rgba(3,105,161,.25) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 80% 60%, rgba(56,189,248,.1) 0%, transparent 60%),
+        linear-gradient(180deg, #030e1e 0%, #071a30 100%) !important;
+    }
+    .page-hero-grid {
+      background-image: radial-gradient(circle, rgba(56,189,248,0.07) 1px, transparent 1px) !important;
+    }
+    .page-hero h1 {
+      background: linear-gradient(135deg, var(--white) 30%, var(--cyan)) !important;
+      -webkit-background-clip: text !important; background-clip: text !important;
+    }
+    .page-hero-eyebrow {
+      color: var(--cyan) !important;
+      background: rgba(56,189,248,.08) !important;
+      border-color: rgba(56,189,248,.22) !important;
+    }
+    .divider { background: linear-gradient(90deg, transparent, rgba(3,105,161,.2), transparent) !important; }
+    .section-eyebrow { color: var(--cyan) !important; }
+    .feature-card { border-color: rgba(3,105,161,.12) !important; background: rgba(3,105,161,.04) !important; }
+    .feature-card:hover { border-color: rgba(56,189,248,.3) !important; background: rgba(3,105,161,.09) !important; }
+    .feature-card::before { background: linear-gradient(90deg, #0369a1, #38bdf8) !important; }
+    .process-step { border-color: rgba(56,189,248,.1) !important; background: rgba(3,105,161,.04) !important; }
+    .process-step:hover { border-color: rgba(56,189,248,.28) !important; background: rgba(3,105,161,.09) !important; }
+    .process-num { color: var(--cyan) !important; }
+    .team-mini-card { border-color: rgba(3,105,161,.18) !important; background: rgba(3,105,161,.04) !important; }
+    .team-mini-card:hover { border-color: rgba(56,189,248,.4) !important; }
+    .team-mini-role { color: var(--cyan) !important; }
+    .team-mini-img { filter: saturate(1.05); }
+    .btn-primary { background: linear-gradient(135deg, #0369a1, #075985) !important; box-shadow: 0 8px 28px rgba(3,105,161,.4) !important; }
+    .btn-primary:hover { box-shadow: 0 12px 36px rgba(3,105,161,.55) !important; }
+    .btn-ghost { background: rgba(3,105,161,.06) !important; border-color: rgba(3,105,161,.2) !important; }
+    .btn-ghost:hover { background: rgba(3,105,161,.12) !important; border-color: rgba(56,189,248,.4) !important; }
+    div[style*="background:rgba(200,75,10,.06)"] { background: rgba(3,105,161,.06) !important; border: 1px solid rgba(3,105,161,.2) !important; }
+    .tile { background: #071a30 !important; }
+  </style>
+  <style>
     .project-meta-bar { display:flex; flex-wrap:wrap; gap:.75rem; margin-top:1.5rem; justify-content:center; }
     .meta-chip { display:inline-flex; flex-direction:column; align-items:center; gap:.2rem; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:12px; padding:.7rem 1.25rem; }
     .meta-chip-label { font-size:.65rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); font-weight:600; }
@@ -50,7 +99,9 @@
 <script src="assets/js/shared-header.js"></script>
 <script src="assets/js/shared-footer.js?v=4-17-26"></script>
 <script src="assets/js/site-common.js"></script>
-<script>loadSharedHeader('#site-header'); loadSharedFooter('#site-footer');</script>
+<script src="assets/js/color-transition.js"></script>
+<script>loadSharedHeader('#site-header'); loadSharedFooter('#site-footer');
+  registerPageColors({ accent:'#0369a1', accentHot:'#38bdf8', bg:'#030e1e' });</script>
 
 <!-- HERO -->
 <section class="page-hero">
