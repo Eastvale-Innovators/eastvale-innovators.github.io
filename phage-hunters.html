@@ -195,6 +195,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            color: var(--text-main);
             line-height: 1;
             margin-bottom: 1rem;
         }
@@ -202,6 +203,11 @@
         .hero h1 .glitch {
             display: inline-block;
             position: relative;
+            background: var(--gradient-duo);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: var(--text-main);
             filter: drop-shadow(0 0 24px var(--phage-cyan-glow));
         }
 
@@ -280,17 +286,20 @@
             right: -60px;
             transform: rotate(28deg);
             padding: 0.7rem 5rem;
-            background: repeating-linear-gradient(
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                repeating-linear-gradient(
                 45deg,
                 #000 0 20px,
                 #ffcc00 20px 40px
             );
-            color: #000;
+            color: #fff;
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
             letter-spacing: 0.3em;
             font-size: 0.85rem;
             text-transform: uppercase;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85), 0 0 6px rgba(0, 0, 0, 0.65);
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
             z-index: 5;
             border-top: 2px solid rgba(255, 255, 255, 0.2);
