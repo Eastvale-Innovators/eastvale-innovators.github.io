@@ -10,54 +10,103 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/pages.css">
   <style>
-    /* ── INTELLIGRADER PURPLE THEME ── */
+    /* ── INTELLIGRADER — BOLD PURPLE THEME ── */
     :root {
-      --navy:       #0d0718;
-      --navy-mid:   #130a24;
-      --blue:       #7c3aed;
-      --cyan:       #a78bfa;
-      --white:      #f5f0ff;
-      --muted:      rgba(221,214,254,.5);
+      --navy:     #080412;
+      --navy-mid: #0f0620;
+      --blue:     #7c3aed;
+      --cyan:     #c4b5fd;
+      --white:    #faf5ff;
+      --muted:    rgba(196,181,253,.6);
+      --nav-h:    72px;
+      --ease:     cubic-bezier(.22,1,.36,1);
     }
-    html { scrollbar-color: #7c3aed #0d0718; }
-    .page-hero-bg {
+    html { scrollbar-color: #7c3aed #080412; }
+    body { background: #080412; }
+
+    /* Full-page purple radial atmosphere */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: -1; pointer-events: none;
       background:
-        radial-gradient(ellipse 70% 60% at 50% -10%, rgba(124,58,237,.32) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 30% at 80% 60%, rgba(167,139,250,.12) 0%, transparent 60%),
-        linear-gradient(180deg, #0d0718 0%, #130a24 100%) !important;
+        radial-gradient(ellipse 90% 60% at 50% 0%, rgba(124,58,237,.45) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 10% 60%, rgba(91,33,182,.25) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 40% at 90% 80%, rgba(139,92,246,.2) 0%, transparent 55%),
+        #080412;
+    }
+
+    .page-hero-bg {
+      background: transparent !important;
     }
     .page-hero-grid {
-      background-image: radial-gradient(circle, rgba(124,58,237,0.09) 1px, transparent 1px) !important;
+      background-image: radial-gradient(circle, rgba(167,139,250,0.12) 1px, transparent 1px) !important;
     }
     .page-hero h1 {
-      background: linear-gradient(135deg, var(--white) 30%, var(--cyan)) !important;
+      background: linear-gradient(135deg, #fff 0%, #c4b5fd 50%, #a78bfa 100%) !important;
       -webkit-background-clip: text !important; background-clip: text !important;
+      filter: drop-shadow(0 0 40px rgba(124,58,237,.6));
     }
     .page-hero-eyebrow {
-      color: var(--cyan) !important;
-      background: rgba(167,139,250,.1) !important;
-      border-color: rgba(167,139,250,.25) !important;
+      color: #c4b5fd !important;
+      background: rgba(124,58,237,.2) !important;
+      border-color: rgba(167,139,250,.4) !important;
     }
-    .divider { background: linear-gradient(90deg, transparent, rgba(124,58,237,.2), transparent) !important; }
-    .section-eyebrow { color: var(--cyan) !important; }
-    .feature-card { border-color: rgba(124,58,237,.1) !important; background: rgba(124,58,237,.04) !important; }
-    .feature-card:hover { border-color: rgba(124,58,237,.3) !important; background: rgba(124,58,237,.08) !important; }
-    .feature-card::before { background: linear-gradient(90deg, #7c3aed, #a78bfa) !important; }
-    .stack-card { border-color: rgba(124,58,237,.1) !important; background: rgba(124,58,237,.03) !important; }
-    .stack-card:hover { border-color: rgba(167,139,250,.25) !important; background: rgba(124,58,237,.07) !important; }
-    .stack-label { color: var(--cyan) !important; }
-    .timeline-strip::before { background: linear-gradient(to bottom, #7c3aed, #a78bfa, rgba(124,58,237,.1)) !important; }
-    .tl-dot { background: #7c3aed !important; box-shadow: 0 0 0 2px #7c3aed !important; }
-    .tl-year { color: #a78bfa !important; }
-    .tl-tag { background: rgba(124,58,237,.12) !important; border-color: rgba(124,58,237,.2) !important; color: #a78bfa !important; }
-    .btn-primary { background: linear-gradient(135deg, #7c3aed, #5b21b6) !important; box-shadow: 0 8px 28px rgba(124,58,237,.4) !important; }
-    .btn-primary:hover { box-shadow: 0 12px 36px rgba(124,58,237,.55) !important; }
-    .btn-ghost { background: rgba(124,58,237,.06) !important; border-color: rgba(124,58,237,.2) !important; }
-    .btn-ghost:hover { background: rgba(124,58,237,.12) !important; border-color: rgba(124,58,237,.4) !important; }
-    [data-reveal][style*="background:rgba(26"] { background: rgba(124,58,237,.06) !important; border-color: rgba(124,58,237,.2) !important; }
-    div[style*="background:rgba(200,75,10,.06)"] { background: rgba(124,58,237,.06) !important; border: 1px solid rgba(124,58,237,.2) !important; }
-    .overview-preview { background: linear-gradient(135deg, rgba(124,58,237,.15), rgba(167,139,250,.08)) !important; border-color: rgba(124,58,237,.2) !important; }
-    .tile { background: #130a24 !important; }
+    .page-hero-sub { color: rgba(196,181,253,.7) !important; }
+    .meta-chip { background: rgba(124,58,237,.15) !important; border-color: rgba(124,58,237,.3) !important; }
+    .divider { background: linear-gradient(90deg, transparent, rgba(124,58,237,.4), transparent) !important; }
+    .section-eyebrow { color: #c4b5fd !important; }
+    .section-title { color: #faf5ff !important; }
+
+    /* Cards — much more saturated */
+    .feature-card, .stack-card {
+      background: rgba(124,58,237,.12) !important;
+      border: 1px solid rgba(124,58,237,.35) !important;
+      box-shadow: 0 0 0 0 rgba(124,58,237,0);
+    }
+    .feature-card:hover, .stack-card:hover {
+      background: rgba(124,58,237,.22) !important;
+      border-color: rgba(167,139,250,.6) !important;
+      box-shadow: 0 12px 40px rgba(124,58,237,.25) !important;
+    }
+    .feature-card::before { background: linear-gradient(90deg, #7c3aed, #c4b5fd) !important; }
+    .stack-label { color: #c4b5fd !important; }
+    .feature-icon { filter: drop-shadow(0 0 8px rgba(124,58,237,.5)); }
+
+    /* Overview preview box */
+    .overview-preview {
+      background: linear-gradient(135deg, rgba(124,58,237,.3), rgba(91,33,182,.2)) !important;
+      border: 1px solid rgba(124,58,237,.4) !important;
+      box-shadow: 0 0 60px rgba(124,58,237,.2) inset !important;
+    }
+
+    /* Timeline */
+    .timeline-strip::before { background: linear-gradient(to bottom, #7c3aed, #c4b5fd, rgba(124,58,237,.2)) !important; }
+    .tl-dot { background: #7c3aed !important; box-shadow: 0 0 0 3px rgba(124,58,237,.4), 0 0 16px rgba(124,58,237,.6) !important; }
+    .tl-year { color: #c4b5fd !important; }
+    .tl-tag { background: rgba(124,58,237,.25) !important; border-color: rgba(124,58,237,.5) !important; color: #c4b5fd !important; font-weight:700; }
+
+    /* Buttons */
+    .btn-primary {
+      background: linear-gradient(135deg, #7c3aed, #5b21b6) !important;
+      box-shadow: 0 8px 32px rgba(124,58,237,.55), 0 0 0 1px rgba(167,139,250,.2) !important;
+    }
+    .btn-primary:hover { box-shadow: 0 14px 44px rgba(124,58,237,.7), 0 0 0 1px rgba(167,139,250,.4) !important; }
+    .btn-ghost {
+      background: rgba(124,58,237,.15) !important;
+      border-color: rgba(124,58,237,.4) !important;
+    }
+    .btn-ghost:hover { background: rgba(124,58,237,.28) !important; border-color: rgba(167,139,250,.7) !important; }
+
+    /* CTA box */
+    div[style*="background:rgba(200,75,10,.06)"],
+    div[style*="background:rgba(124,58,237,.06)"] {
+      background: rgba(124,58,237,.18) !important;
+      border: 1px solid rgba(124,58,237,.45) !important;
+      box-shadow: 0 0 80px rgba(124,58,237,.15) !important;
+    }
+
+    /* Tile color */
+    .tile { background: #0f0620 !important; }
   </style>
   <style>
     /* ── PROJECT PAGE STYLES ── */

@@ -10,53 +10,106 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/pages.css">
   <style>
-    /* ── ROOSEVELT CONNECT — LIGHTER STEEL BLUE THEME ── */
+    /* ── ROOSEVELT CONNECT — BOLD STEEL BLUE / SKY THEME ── */
     :root {
-      --navy:       #030e1e;
-      --navy-mid:   #071a30;
-      --blue:       #0369a1;
-      --cyan:       #38bdf8;
-      --white:      #f0f9ff;
-      --muted:      rgba(186,230,253,.55);
+      --navy:     #010d1f;
+      --navy-mid: #041628;
+      --blue:     #0284c7;
+      --cyan:     #7dd3fc;
+      --white:    #f0f9ff;
+      --muted:    rgba(186,230,253,.65);
+      --nav-h:    72px;
+      --ease:     cubic-bezier(.22,1,.36,1);
     }
-    html { scrollbar-color: #0369a1 #030e1e; }
-    body { background: linear-gradient(180deg, #030e1e 0%, #061422 100%); }
-    .page-hero-bg {
+    html { scrollbar-color: #0284c7 #010d1f; }
+    body { background: #010d1f; }
+
+    /* Full-page sky blue atmosphere */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: -1; pointer-events: none;
       background:
-        radial-gradient(ellipse 70% 60% at 50% -10%, rgba(3,105,161,.25) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 30% at 80% 60%, rgba(56,189,248,.1) 0%, transparent 60%),
-        linear-gradient(180deg, #030e1e 0%, #071a30 100%) !important;
+        radial-gradient(ellipse 85% 55% at 50% 0%, rgba(2,132,199,.5) 0%, transparent 60%),
+        radial-gradient(ellipse 55% 45% at 5% 50%, rgba(3,105,161,.3) 0%, transparent 55%),
+        radial-gradient(ellipse 45% 40% at 95% 75%, rgba(56,189,248,.22) 0%, transparent 55%),
+        #010d1f;
     }
+
+    .page-hero-bg { background: transparent !important; }
     .page-hero-grid {
-      background-image: radial-gradient(circle, rgba(56,189,248,0.07) 1px, transparent 1px) !important;
+      background-image: radial-gradient(circle, rgba(125,211,252,0.12) 1px, transparent 1px) !important;
     }
     .page-hero h1 {
-      background: linear-gradient(135deg, var(--white) 30%, var(--cyan)) !important;
+      background: linear-gradient(135deg, #fff 0%, #7dd3fc 50%, #38bdf8 100%) !important;
       -webkit-background-clip: text !important; background-clip: text !important;
+      filter: drop-shadow(0 0 40px rgba(2,132,199,.6));
     }
     .page-hero-eyebrow {
-      color: var(--cyan) !important;
-      background: rgba(56,189,248,.08) !important;
-      border-color: rgba(56,189,248,.22) !important;
+      color: #7dd3fc !important;
+      background: rgba(2,132,199,.2) !important;
+      border-color: rgba(125,211,252,.4) !important;
     }
-    .divider { background: linear-gradient(90deg, transparent, rgba(3,105,161,.2), transparent) !important; }
-    .section-eyebrow { color: var(--cyan) !important; }
-    .feature-card { border-color: rgba(3,105,161,.12) !important; background: rgba(3,105,161,.04) !important; }
-    .feature-card:hover { border-color: rgba(56,189,248,.3) !important; background: rgba(3,105,161,.09) !important; }
-    .feature-card::before { background: linear-gradient(90deg, #0369a1, #38bdf8) !important; }
-    .process-step { border-color: rgba(56,189,248,.1) !important; background: rgba(3,105,161,.04) !important; }
-    .process-step:hover { border-color: rgba(56,189,248,.28) !important; background: rgba(3,105,161,.09) !important; }
-    .process-num { color: var(--cyan) !important; }
-    .team-mini-card { border-color: rgba(3,105,161,.18) !important; background: rgba(3,105,161,.04) !important; }
-    .team-mini-card:hover { border-color: rgba(56,189,248,.4) !important; }
-    .team-mini-role { color: var(--cyan) !important; }
-    .team-mini-img { filter: saturate(1.05); }
-    .btn-primary { background: linear-gradient(135deg, #0369a1, #075985) !important; box-shadow: 0 8px 28px rgba(3,105,161,.4) !important; }
-    .btn-primary:hover { box-shadow: 0 12px 36px rgba(3,105,161,.55) !important; }
-    .btn-ghost { background: rgba(3,105,161,.06) !important; border-color: rgba(3,105,161,.2) !important; }
-    .btn-ghost:hover { background: rgba(3,105,161,.12) !important; border-color: rgba(56,189,248,.4) !important; }
-    div[style*="background:rgba(200,75,10,.06)"] { background: rgba(3,105,161,.06) !important; border: 1px solid rgba(3,105,161,.2) !important; }
-    .tile { background: #071a30 !important; }
+    .page-hero-sub { color: rgba(186,230,253,.75) !important; }
+    .meta-chip { background: rgba(2,132,199,.15) !important; border-color: rgba(2,132,199,.3) !important; }
+    .divider { background: linear-gradient(90deg, transparent, rgba(2,132,199,.45), transparent) !important; }
+    .section-eyebrow { color: #7dd3fc !important; }
+    .section-title { color: #f0f9ff !important; }
+    .section-desc { color: rgba(186,230,253,.65) !important; }
+
+    /* Cards — bright saturated blue */
+    .feature-card {
+      background: rgba(2,132,199,.14) !important;
+      border: 1px solid rgba(2,132,199,.38) !important;
+    }
+    .feature-card:hover {
+      background: rgba(2,132,199,.24) !important;
+      border-color: rgba(125,211,252,.6) !important;
+      box-shadow: 0 12px 40px rgba(2,132,199,.28) !important;
+    }
+    .feature-card::before { background: linear-gradient(90deg, #0284c7, #7dd3fc) !important; }
+    .feature-icon { filter: drop-shadow(0 0 8px rgba(2,132,199,.5)); }
+
+    .process-step {
+      background: rgba(2,132,199,.12) !important;
+      border: 1px solid rgba(2,132,199,.32) !important;
+    }
+    .process-step:hover {
+      background: rgba(2,132,199,.22) !important;
+      border-color: rgba(125,211,252,.55) !important;
+    }
+    .process-num { color: #7dd3fc !important; opacity: .9 !important; }
+
+    .team-mini-card {
+      background: rgba(2,132,199,.1) !important;
+      border: 1px solid rgba(2,132,199,.35) !important;
+    }
+    .team-mini-card:hover {
+      border-color: rgba(125,211,252,.6) !important;
+      box-shadow: 0 12px 40px rgba(2,132,199,.25) !important;
+    }
+    .team-mini-role { color: #7dd3fc !important; }
+
+    /* Buttons */
+    .btn-primary {
+      background: linear-gradient(135deg, #0284c7, #0369a1) !important;
+      box-shadow: 0 8px 32px rgba(2,132,199,.55), 0 0 0 1px rgba(125,211,252,.2) !important;
+    }
+    .btn-primary:hover { box-shadow: 0 14px 44px rgba(2,132,199,.7), 0 0 0 1px rgba(125,211,252,.4) !important; }
+    .btn-ghost {
+      background: rgba(2,132,199,.15) !important;
+      border-color: rgba(2,132,199,.4) !important;
+    }
+    .btn-ghost:hover { background: rgba(2,132,199,.28) !important; border-color: rgba(125,211,252,.7) !important; }
+
+    /* CTA box */
+    div[style*="background:rgba(200,75,10,.06)"],
+    div[style*="background:rgba(3,105,161,.06)"] {
+      background: rgba(2,132,199,.18) !important;
+      border: 1px solid rgba(2,132,199,.45) !important;
+      box-shadow: 0 0 80px rgba(2,132,199,.14) !important;
+    }
+
+    .tile { background: #041628 !important; }
   </style>
   <style>
     .project-meta-bar { display:flex; flex-wrap:wrap; gap:.75rem; margin-top:1.5rem; justify-content:center; }
