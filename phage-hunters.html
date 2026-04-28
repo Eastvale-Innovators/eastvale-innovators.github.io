@@ -56,6 +56,31 @@
             background: var(--bg-void);
             line-height: 1.65;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Grid background with flowing vein network. */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            background-image:
+                linear-gradient(90deg, rgba(0, 240, 255, 0.06) 1px, transparent 1px),
+                linear-gradient(0deg, rgba(0, 240, 255, 0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(176, 38, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(0deg, rgba(176, 38, 255, 0.03) 1px, transparent 1px);
+            background-size:
+                120px 120px,
+                120px 120px,
+                240px 240px,
+                240px 240px;
+            background-position:
+                0 0,
+                0 0,
+                0 0,
+                0 0;
         }
 
         /* Global scanline overlay — subtle CRT feel */
@@ -121,6 +146,48 @@
             border-bottom: 1px solid var(--border-subtle);
         }
 
+        .techno-pulse {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        /* Horizontal vein pulses */
+        .techno-pulse::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent 0,
+                transparent 119px,
+                rgba(0, 240, 255, 0.14) 119px,
+                rgba(0, 240, 255, 0.14) 121px
+            );
+            background-size: 240px 100%;
+            animation: gridPulseH 6s linear infinite;
+            opacity: 0.6;
+        }
+
+        /* Vertical vein pulses */
+        .techno-pulse::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent 0,
+                transparent 119px,
+                rgba(176, 38, 255, 0.12) 119px,
+                rgba(176, 38, 255, 0.12) 121px
+            );
+            background-size: 100% 240px;
+            animation: gridPulseV 7.2s linear infinite;
+            opacity: 0.5;
+        }
+
         /* Petri-dish plaque pattern */
         .hero::before {
             content: '';
@@ -160,6 +227,22 @@
             align-items: center;
         }
 
+        .hero-content::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(110deg, transparent 15%, rgba(0, 240, 255, 0.09) 50%, transparent 85%);
+            transform: translateX(-120%);
+            animation: sweep 6s linear infinite;
+            mix-blend-mode: screen;
+        }
+
+        @keyframes sweep {
+            from { transform: translateX(-120%); }
+            to { transform: translateX(120%); }
+        }
+
         .hero-text { text-align: left; }
 
         .mission-tag {
@@ -176,6 +259,8 @@
             background: rgba(0, 240, 255, 0.06);
             text-transform: uppercase;
             margin-bottom: 1.5rem;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.14);
+            animation: tagPulse 2.4s ease-in-out infinite;
         }
 
         .mission-tag::before {
@@ -190,6 +275,16 @@
 
         @keyframes blink { 50% { opacity: 0.3; } }
 
+        @keyframes gridPulseH {
+            0% { background-position: 0 0; }
+            100% { background-position: 240px 0; }
+        }
+
+        @keyframes gridPulseV {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 240px; }
+        }
+
         .hero h1 {
             background: var(--gradient-duo);
             -webkit-background-clip: text;
@@ -198,6 +293,7 @@
             color: var(--text-main);
             line-height: 1;
             margin-bottom: 1rem;
+            animation: titleFlicker 4s ease-in-out infinite;
         }
 
         .hero h1 .glitch {
@@ -216,6 +312,22 @@
             color: var(--text-muted);
             max-width: 520px;
             margin-bottom: 2rem;
+            animation: subtitleBreath 5s ease-in-out infinite;
+        }
+
+        @keyframes tagPulse {
+            0%, 100% { box-shadow: 0 0 12px rgba(0, 240, 255, 0.14); }
+            50% { box-shadow: 0 0 26px rgba(0, 240, 255, 0.34); }
+        }
+
+        @keyframes subtitleBreath {
+            0%, 100% { opacity: 0.9; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes titleFlicker {
+            0%, 18%, 22%, 66%, 100% { filter: brightness(1); }
+            20%, 64% { filter: brightness(1.15); }
         }
 
         .hero-meta {
@@ -423,6 +535,20 @@
             background: var(--bg-panel);
             transition: var(--transition);
             counter-increment: step;
+            overflow: hidden;
+        }
+
+        .method-step::after {
+            content: '';
+            position: absolute;
+            left: -30%;
+            top: 0;
+            width: 55%;
+            height: 100%;
+            background: linear-gradient(115deg, transparent 10%, rgba(0, 240, 255, 0.12) 50%, transparent 90%);
+            transform: skewX(-18deg);
+            animation: cardSweep 7s linear infinite;
+            pointer-events: none;
         }
 
         .method-step::before {
@@ -458,6 +584,11 @@
         }
 
         .method-step:nth-child(even) h4 { color: var(--phage-purple); }
+
+        .method-step:nth-child(even)::after {
+            background: linear-gradient(115deg, transparent 10%, rgba(176, 38, 255, 0.14) 50%, transparent 90%);
+            animation-duration: 8.5s;
+        }
 
         .method-step p {
             font-size: 0.92rem;
@@ -521,6 +652,61 @@
             font-family: 'Inter', sans-serif;
             font-size: 0.95rem;
             margin: 0;
+        }
+
+        /* Archived image gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .gallery-item {
+            margin: 0;
+            background: var(--bg-panel);
+            border: 1px solid var(--border-subtle);
+            border-radius: 4px;
+            overflow: hidden;
+            transition: var(--transition);
+            animation: frameHum 4.8s ease-in-out infinite;
+        }
+
+        .gallery-item:hover {
+            border-color: var(--phage-cyan);
+            transform: translateY(-3px);
+            box-shadow: 0 0 0 1px var(--phage-cyan-glow), 0 16px 30px rgba(0, 240, 255, 0.1);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+            transform: scale(1.01);
+            transition: transform 0.6s ease, filter 0.6s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.07);
+            filter: saturate(1.12) contrast(1.08);
+        }
+
+        .gallery-item figcaption {
+            padding: 0.8rem 0.9rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            color: var(--text-dim);
+        }
+
+        @keyframes frameHum {
+            0%, 100% { box-shadow: 0 0 0 rgba(0, 240, 255, 0); }
+            50% { box-shadow: 0 0 18px rgba(0, 240, 255, 0.12); }
+        }
+
+        @keyframes cardSweep {
+            from { transform: translateX(-180%) skewX(-18deg); }
+            to { transform: translateX(410%) skewX(-18deg); }
         }
 
         /* Findings / Legacy */
@@ -691,6 +877,7 @@
 
     <!-- HERO -->
     <section class="hero">
+        <div class="techno-pulse" aria-hidden="true"></div>
         <div class="hero-content">
             <div class="hero-text">
                 <div class="mission-tag">STATUS · INACTIVE PROJECT</div>
@@ -892,6 +1079,33 @@
         </div>
     </section>
 
+    <!-- ARCHIVED IMAGE GALLERY -->
+    <section class="section">
+        <h2>Archived <span class="accent">Photo Log</span></h2>
+        <p class="section-intro">
+            Selected lab and cohort photos from the original run.
+        </p>
+
+        <div class="gallery-grid">
+            <figure class="gallery-item reveal">
+                <img src="assets/img/PS_Phage_H/%21%20IMG_7006.jpeg" alt="Phage Hunters archived photo IMG 7006" loading="lazy" decoding="async">
+                <figcaption>PS PHAGE H // IMG 7006</figcaption>
+            </figure>
+            <figure class="gallery-item reveal">
+                <img src="assets/img/PS_Phage_H/%21%20IMG_7057.jpeg" alt="Phage Hunters archived photo IMG 7057" loading="lazy" decoding="async">
+                <figcaption>PS PHAGE H // IMG 7057</figcaption>
+            </figure>
+            <figure class="gallery-item reveal">
+                <img src="assets/img/PS_Phage_H/%21%20IMG_7073.jpeg" alt="Phage Hunters archived photo IMG 7073" loading="lazy" decoding="async">
+                <figcaption>PS PHAGE H // IMG 7073</figcaption>
+            </figure>
+            <figure class="gallery-item reveal">
+                <img src="assets/img/W1_Phage_h/%21%20IMG_5795.jpg" alt="Phage Hunters archived photo IMG 5795" loading="lazy" decoding="async">
+                <figcaption>W1 PHAGE H // IMG 5795</figcaption>
+            </figure>
+        </div>
+    </section>
+
     <!-- FINDINGS / LEGACY -->
     <section class="section section-alt">
         <div class="section-inner">
@@ -928,7 +1142,7 @@
 
     <!-- CTA -->
     <section class="cta-section">
-        <h2>Want to <span class="accent">Revive</span> the Hunt?</h2>
+        <h2><span class="accent">Begin the Hunt?</span></h2>
         <p style="max-width: 620px; margin: 0 auto;">
             The notebooks are still here. The protocols still work. If you're ready to push a paused
             mission back into motion, we'd love to hand you the lab coat.
@@ -957,7 +1171,11 @@
             });
         }, { threshold: 0.12 });
 
-        document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+        document.querySelectorAll('.reveal').forEach((el, index) => {
+            // Stagger reveal timing for a more rhythmic, techno cadence.
+            el.style.transitionDelay = `${(index % 8) * 65}ms`;
+            observer.observe(el);
+        });
     </script>
 </body>
 </html>
