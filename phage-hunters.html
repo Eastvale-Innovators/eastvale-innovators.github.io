@@ -506,6 +506,17 @@
             background: var(--bg-panel);
             position: relative;
             overflow: hidden;
+            animation: fadeInUp 0.8s ease-out backwards;
+            transition: all 0.4s ease;
+        }
+
+        .narrative-card:nth-child(1) { animation-delay: 0.15s; }
+        .narrative-card:nth-child(2) { animation-delay: 0.3s; }
+
+        .narrative-card:hover {
+            border-color: var(--phage-cyan);
+            transform: translateY(-4px);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2), 0 15px 30px rgba(0, 240, 255, 0.08);
         }
 
         .narrative-card::before {
@@ -535,8 +546,15 @@
             background: var(--bg-panel);
             transition: var(--transition);
             counter-increment: step;
-            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out backwards;
         }
+
+        .method-step:nth-child(1) { animation-delay: 0.05s; }
+        .method-step:nth-child(2) { animation-delay: 0.15s; }
+        .method-step:nth-child(3) { animation-delay: 0.25s; }
+        .method-step:nth-child(4) { animation-delay: 0.35s; }
+        .method-step:nth-child(5) { animation-delay: 0.45s; }
+        .method-step:nth-child(6) { animation-delay: 0.55s; }
 
         .method-step::after {
             content: '';
@@ -568,13 +586,13 @@
 
         .method-step:hover {
             border-color: var(--phage-cyan);
-            box-shadow: 0 0 0 1px var(--phage-cyan-glow), 0 20px 40px rgba(0, 240, 255, 0.1);
-            transform: translateY(-3px);
+            box-shadow: 0 0 0 1px var(--phage-cyan-glow), 0 0 20px rgba(0, 240, 255, 0.3), 0 20px 40px rgba(0, 240, 255, 0.15);
+            transform: translateY(-6px) scale(1.02);
         }
 
         .method-step:nth-child(even):hover {
             border-color: var(--phage-purple);
-            box-shadow: 0 0 0 1px var(--phage-purple-glow), 0 20px 40px rgba(176, 38, 255, 0.12);
+            box-shadow: 0 0 0 1px var(--phage-purple-glow), 0 0 20px rgba(176, 38, 255, 0.3), 0 20px 40px rgba(176, 38, 255, 0.18);
         }
 
         .method-step h4 {
@@ -613,7 +631,15 @@
             border: 1px solid var(--border-subtle);
             border-radius: 4px;
             font-family: 'JetBrains Mono', monospace;
+            animation: timelineArrival 0.7s ease-out backwards;
         }
+
+        .log-entry:nth-child(1) { animation-delay: 0.1s; }
+        .log-entry:nth-child(2) { animation-delay: 0.2s; }
+        .log-entry:nth-child(3) { animation-delay: 0.3s; }
+        .log-entry:nth-child(4) { animation-delay: 0.4s; }
+        .log-entry:nth-child(5) { animation-delay: 0.5s; }
+        .log-entry:nth-child(n+6) { animation-delay: 0.6s; }
 
         .log-entry::before {
             content: '';
@@ -625,6 +651,7 @@
             border-radius: 50%;
             background: var(--phage-cyan);
             box-shadow: 0 0 0 4px rgba(0, 240, 255, 0.2), 0 0 18px var(--phage-cyan-glow);
+            animation: glowPulseEnhanced 3s ease-in-out infinite;
         }
 
         .log-entry:nth-child(even)::before {
@@ -668,13 +695,20 @@
             border-radius: 4px;
             overflow: hidden;
             transition: var(--transition);
-            animation: frameHum 4.8s ease-in-out infinite;
+            animation: frameHum 4.8s ease-in-out infinite, fadeInUp 0.9s ease-out backwards;
         }
+
+        .gallery-item:nth-child(1) { animation-delay: 0s, 0.1s; }
+        .gallery-item:nth-child(2) { animation-delay: 0s, 0.2s; }
+        .gallery-item:nth-child(3) { animation-delay: 0s, 0.3s; }
+        .gallery-item:nth-child(4) { animation-delay: 0s, 0.4s; }
+        .gallery-item:nth-child(5) { animation-delay: 0s, 0.5s; }
+        .gallery-item:nth-child(n+6) { animation-delay: 0s, 0.6s; }
 
         .gallery-item:hover {
             border-color: var(--phage-cyan);
-            transform: translateY(-3px);
-            box-shadow: 0 0 0 1px var(--phage-cyan-glow), 0 16px 30px rgba(0, 240, 255, 0.1);
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 0 0 1px var(--phage-cyan-glow), 0 0 25px rgba(0, 240, 255, 0.25), 0 20px 40px rgba(0, 240, 255, 0.15);
         }
 
         .gallery-item img {
@@ -709,6 +743,72 @@
             to { transform: translateX(410%) skewX(-18deg); }
         }
 
+        /* New: Staggered entrance animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUpDelay {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes glowPulseEnhanced {
+            0%, 100% {
+                filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.4));
+            }
+            50% {
+                filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.8)) drop-shadow(0 0 30px rgba(176, 38, 255, 0.4));
+            }
+        }
+
+        @keyframes ambientGlowFloat {
+            0%, 100% {
+                opacity: 0.3;
+                transform: translateY(0);
+            }
+            50% {
+                opacity: 0.6;
+                transform: translateY(-8px);
+            }
+        }
+
+        @keyframes shimmerLeft {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        @keyframes subtle3DRotate {
+            0%, 100% {
+                transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+            }
+            50% {
+                transform: perspective(1000px) rotateX(2deg) rotateY(2deg);
+            }
+        }
+
+        @keyframes timelineArrival {
+            0% {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
         /* Findings / Legacy */
         .findings-grid {
             display: grid;
@@ -723,11 +823,18 @@
             border: 1px solid var(--border-subtle);
             text-align: center;
             transition: var(--transition);
+            animation: fadeInUp 0.8s ease-out backwards;
         }
+
+        .finding:nth-child(1) { animation-delay: 0.1s; }
+        .finding:nth-child(2) { animation-delay: 0.2s; }
+        .finding:nth-child(3) { animation-delay: 0.3s; }
+        .finding:nth-child(4) { animation-delay: 0.4s; }
 
         .finding:hover {
             border-color: var(--phage-purple);
-            transform: translateY(-4px);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 0 20px rgba(176, 38, 255, 0.2), 0 20px 40px rgba(176, 38, 255, 0.1);
         }
 
         .finding .stat {
@@ -761,6 +868,13 @@
             border: 1px solid var(--border-subtle);
             border-radius: 4px;
             position: relative;
+            animation: fadeInUp 1s ease-out;
+            box-shadow: 0 0 0 1px rgba(176, 38, 255, 0.1);
+            transition: box-shadow 0.6s ease;
+        }
+
+        .reflection:hover {
+            box-shadow: 0 0 0 1px rgba(176, 38, 255, 0.3), 0 0 30px rgba(176, 38, 255, 0.15);
         }
 
         .reflection::before {
@@ -827,11 +941,26 @@
             background: var(--gradient-duo);
             color: var(--bg-void);
             box-shadow: 0 0 30px var(--phage-cyan-glow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .btn-primary:hover::before {
+            transform: translateX(100%);
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 40px var(--phage-cyan-glow), 0 0 60px var(--phage-purple-glow);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 0 40px var(--phage-cyan-glow), 0 0 60px var(--phage-purple-glow), 0 10px 30px rgba(0, 240, 255, 0.2);
             color: var(--bg-void);
         }
 
@@ -839,12 +968,15 @@
             background: transparent;
             color: var(--phage-cyan);
             border: 1px solid var(--phage-cyan);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .btn-ghost:hover {
             background: var(--phage-cyan-soft);
             color: var(--phage-cyan);
-            text-shadow: 0 0 8px var(--phage-cyan-glow);
+            text-shadow: 0 0 12px var(--phage-cyan-glow);
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2), 0 8px 20px rgba(0, 240, 255, 0.1);
         }
 
         /* Animations on scroll */
@@ -1089,19 +1221,19 @@
         <div class="gallery-grid">
             <figure class="gallery-item reveal">
                 <img src="assets/img/PS_Phage_H/%21%20IMG_7006.jpeg" alt="Phage Hunters archived photo IMG 7006" loading="lazy" decoding="async">
-                <figcaption>PS PHAGE H // IMG 7006</figcaption>
+                <figcaption>Phage Hunters</figcaption>
             </figure>
             <figure class="gallery-item reveal">
                 <img src="assets/img/PS_Phage_H/%21%20IMG_7057.jpeg" alt="Phage Hunters archived photo IMG 7057" loading="lazy" decoding="async">
-                <figcaption>PS PHAGE H // IMG 7057</figcaption>
+                <figcaption>Phage Hunters</figcaption>
             </figure>
             <figure class="gallery-item reveal">
                 <img src="assets/img/PS_Phage_H/%21%20IMG_7073.jpeg" alt="Phage Hunters archived photo IMG 7073" loading="lazy" decoding="async">
-                <figcaption>PS PHAGE H // IMG 7073</figcaption>
+                <figcaption>Phage Hunters</figcaption>
             </figure>
             <figure class="gallery-item reveal">
                 <img src="assets/img/W1_Phage_h/%21%20IMG_5795.jpg" alt="Phage Hunters archived photo IMG 5795" loading="lazy" decoding="async">
-                <figcaption>W1 PHAGE H // IMG 5795</figcaption>
+                <figcaption>Phage Hunters</figcaption>
             </figure>
         </div>
     </section>
