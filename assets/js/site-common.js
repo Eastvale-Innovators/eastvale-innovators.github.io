@@ -3,10 +3,13 @@
         mobileMenu.classList.toggle('active', isOpen);
         mobileBtn.setAttribute('aria-expanded', String(isOpen));
         if (isOpen) {
+            document.body.style.overflow = 'hidden';
             const firstLink = mobileMenu.querySelector('a, button');
             if (firstLink) {
                 firstLink.focus();
             }
+        } else {
+            document.body.style.overflow = '';
         }
     }
 
