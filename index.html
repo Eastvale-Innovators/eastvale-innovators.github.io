@@ -70,6 +70,7 @@
             scroll-behavior: smooth;
             scrollbar-width: none;
             -ms-overflow-style: none;
+            overflow-x: hidden;
         }
 
         html::-webkit-scrollbar {
@@ -79,6 +80,7 @@
         /* Hero Section */
         .hero {
             height: 100vh;
+            height: 100dvh;
             width: 100vw;
             max-width: none;
             margin: 0;
@@ -88,7 +90,6 @@
             position: relative;
             overflow: hidden;
             background: var(--gradient-2);
-            padding-top: 6rem;
         }
 
         .hero::before {
@@ -102,7 +103,7 @@
             background-size: 200% 200%;
             background-position: var(--star-x, 50%) var(--star-y, 50%);
             background-repeat: no-repeat;
-            background-attachment: fixed;
+            background-attachment: scroll;
             pointer-events: none;
             transition: background-position 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             z-index: 1;
@@ -126,24 +127,6 @@
             height: 100% !important;
         }
 
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('assets/img/P1010915%20(1).jpg') center/cover;
-            opacity: 0.12;
-            z-index: 1;
-            transform: translateZ(0);
-            animation: heroZoom 30s ease-in-out infinite alternate;
-        }
-
-        @keyframes heroZoom {
-            from { transform: scale(1); }
-            to { transform: scale(1.08); }
-        }
-
         .hero-grid {
             position: absolute;
             top: 0;
@@ -156,6 +139,11 @@
             background-size: 50px 50px;
             z-index: 1;
             animation: gridDrift 40s linear infinite;
+        }
+
+        @keyframes gridDrift {
+            from { background-position: 0px 0px; }
+            to { background-position: 50px 50px; }
         }
 
         .hero-content {
@@ -198,60 +186,55 @@
             transform-style: preserve-3d;
         }
 
-        .hero-subtitle {
-            font-size: clamp(1.2rem, 2vw, 1.5rem);
-            color: rgba(255, 255, 255, 0.85);
-            font-weight: 300;
-            margin-bottom: 2.5rem;
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 1rem 3rem;
+        .hero-divider {
+            width: 48px;
+            height: 2px;
             background: var(--accent);
-            color: white;
-            text-decoration: none;
+            margin: 1.75rem auto 1.5rem;
+            opacity: 0.7;
+            border-radius: 2px;
+        }
+
+        .under-construction-badge {
+            display: inline-block;
+            padding: 0.45rem 1.4rem;
+            border: 1px solid rgba(74, 158, 255, 0.45);
             border-radius: 50px;
+            color: var(--accent);
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(0.7rem, 2.5vw, 0.85rem);
             font-weight: 600;
-            font-size: 1.1rem;
-            transition: var(--transition);
-            box-shadow: 0 10px 30px var(--accent-glow);
-            position: relative;
-            overflow: hidden;
-            animation: pulse 2.5s infinite;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            background: rgba(74, 158, 255, 0.07);
+            margin-bottom: 1.1rem;
+            animation: badgePulse 3s ease-in-out infinite;
         }
 
-        @keyframes pulse {
-            0%,100% { box-shadow: 0 10px 30px var(--accent-glow); }
-            50% { box-shadow: 0 15px 45px var(--accent-glow); transform: translateY(-2px); }
+        @keyframes badgePulse {
+            0%, 100% { border-color: rgba(74, 158, 255, 0.45); box-shadow: none; }
+            50% { border-color: rgba(74, 158, 255, 0.8); box-shadow: 0 0 18px rgba(74, 158, 255, 0.2); }
         }
 
-        .cta-button::before {
-            content: '';
+        .hero-tagline {
+            display: block;
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
+            color: rgba(255, 255, 255, 0.45);
+            font-weight: 300;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .hero-footer {
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .cta-button:hover::before {
-            left: 100%;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 15px 40px var(--accent-glow);
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: bounce 2.5s infinite;
+            bottom: 1.75rem;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.25);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
             z-index: 3;
         }
 
@@ -506,6 +489,16 @@
                 margin: 0;
                 width: 100vw;
             }
+
+            .hero-content {
+                padding: 0 1.25rem;
+                width: 100%;
+            }
+
+            .hero::before {
+                background-attachment: scroll;
+                background-size: cover;
+            }
         }
 
         @media (max-width: 480px) {
@@ -533,9 +526,6 @@
     </style>
 </head>
 <body>
-    <!-- <div id="cursor-3d">
-        <img src="assets/img/cursor.png" id="cursor-img">
-    </div> -->
     <div id="page-content">
         <!-- <canvas id="cursor-trail"></canvas> -->
         <div id="site-header"></div>
@@ -551,18 +541,14 @@
         <!-- Hero Section -->
         <section class="hero">
             <div id="canvas-container"></div>
-            <div class="hero-bg"></div>
             <div class="hero-grid"></div>
             <div class="hero-content">
                 <h1>Eastvale Innovators</h1>
-                <p class="hero-subtitle">Building the Future One Project at a Time</p>
-                <a href="#about" class="cta-button">Discover Our Mission</a>
+                <div class="hero-divider"></div>
+                <span class="under-construction-badge">Under Construction</span>
+                <span class="hero-tagline">Please check back later</span>
             </div>
-            <div class="scroll-indicator">
-                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
-            </div>
+            <p class="hero-footer">&copy; 2026 Eastvale Innovators</p>
         </section>
 
         <!-- About Section -->
@@ -617,7 +603,6 @@
 
         document.addEventListener('mousemove', (e) => {
             if (!heroSection) return;
-
             const hero = heroSection.getBoundingClientRect();
             if (e.clientY < hero.bottom) {
 
