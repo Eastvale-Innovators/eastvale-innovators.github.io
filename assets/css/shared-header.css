@@ -275,6 +275,16 @@ nav.scrolled {
     color: var(--accent, #4a9eff);
 }
 
+.dropdown-item.inactive-project-link,
+.mobile-sub-link.inactive-project-link {
+    opacity: 0.75;
+}
+
+.dropdown-item.inactive-project-link:hover,
+.mobile-sub-link.inactive-project-link:hover {
+    opacity: 0.95;
+}
+
 .mobile-sub-links {
     display: flex;
     flex-direction: column;
