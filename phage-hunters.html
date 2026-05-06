@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Phage Hunters — an archived Eastvale Innovators project that set out to isolate and characterize a novel bacteriophage from the local environment.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.eastvaleinnovators.org/phage-hunters.html">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Eastvale Innovators">
+    <meta property="og:title" content="Phage Hunters - Eastvale Innovators">
+    <meta property="og:description" content="An archived mission to discover a new bacteriophage. Explore the hunt, the methodology, and the lessons left behind.">
+    <meta property="og:url" content="https://www.eastvaleinnovators.org/phage-hunters.html">
+    <meta property="og:image" content="https://www.eastvaleinnovators.org/assets/img/PhageHunterBGPic.jpeg">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Phage Hunters - Eastvale Innovators">
+    <meta name="twitter:description" content="An archived mission to discover a new bacteriophage.">
+    <meta name="twitter:image" content="https://www.eastvaleinnovators.org/assets/img/PhageHunterBGPic.jpeg">
+
+    <title>Phage Hunters — Eastvale Innovators</title>
+    <link rel="icon" type="image/png" href="assets/img/logo_favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=Orbitron:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --phage-cyan: #00F0FF;
+            --phage-cyan-soft: rgba(0, 240, 255, 0.14);
+            --phage-cyan-glow: rgba(0, 240, 255, 0.55);
+            --phage-purple: #B026FF;
+            --phage-purple-soft: rgba(176, 38, 255, 0.16);
+            --phage-purple-glow: rgba(176, 38, 255, 0.55);
+
+            --bg-void: #05030d;
+            --bg-panel: rgba(12, 8, 28, 0.82);
+            --bg-soft: #0a0618;
+            --border-subtle: rgba(176, 38, 255, 0.18);
+            --border-cyan: rgba(0, 240, 255, 0.28);
+
+            --text-main: #ecf7ff;
+            --text-muted: rgba(220, 230, 255, 0.72);
+            --text-dim: rgba(220, 230, 255, 0.5);
+
+            --gradient-duo: linear-gradient(135deg, var(--phage-cyan) 0%, var(--phage-purple) 100%);
+            --gradient-duo-rev: linear-gradient(135deg, var(--phage-purple) 0%, var(--phage-cyan) 100%);
+            --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            background: var(--bg-void);
+            line-height: 1.65;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Grid background with flowing vein network. */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            background-image:
+                linear-gradient(90deg, rgba(0, 240, 255, 0.06) 1px, transparent 1px),
+                linear-gradient(0deg, rgba(0, 240, 255, 0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(176, 38, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(0deg, rgba(176, 38, 255, 0.03) 1px, transparent 1px);
+            background-size:
+                120px 120px,
+                120px 120px,
+                240px 240px,
+                240px 240px;
+            background-position:
+                0 0,
+                0 0,
+                0 0,
+                0 0;
+        }
+
+        /* Global scanline overlay — subtle CRT feel */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 240, 255, 0.025) 0px,
+                rgba(0, 240, 255, 0.025) 1px,
+                transparent 1px,
+                transparent 3px
+            );
+            mix-blend-mode: screen;
+            opacity: 0.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Orbitron', 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin: 1rem 0;
+        }
+
+        h1 { font-size: clamp(2.4rem, 6vw, 4.5rem); }
+        h2 { font-size: clamp(1.8rem, 3.2vw, 2.6rem); margin-bottom: 2rem; text-align: center; }
+        h3 { font-size: 1.6rem; margin-bottom: 1rem; }
+        h4 { font-size: 1.15rem; margin-bottom: 0.75rem; }
+
+        p { color: var(--text-muted); margin-bottom: 1rem; }
+        a { color: var(--phage-cyan); text-decoration: none; transition: var(--transition); }
+        a:hover { color: var(--phage-purple); text-shadow: 0 0 12px var(--phage-purple-glow); }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        html { scroll-behavior: smooth; }
+        html::-webkit-scrollbar { width: 8px; }
+        html::-webkit-scrollbar-track { background: var(--bg-soft); }
+        html::-webkit-scrollbar-thumb {
+            background: var(--gradient-duo);
+            border-radius: 4px;
+        }
+
+        /* ==========================================================
+           HERO — Archived-mission console
+           ========================================================== */
+        .hero {
+            position: relative;
+            min-height: 100svh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 2rem 4rem;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 15% 20%, var(--phage-purple-soft), transparent 45%),
+                radial-gradient(circle at 85% 80%, var(--phage-cyan-soft), transparent 45%),
+                linear-gradient(180deg, #05030d 0%, #0a0620 60%, #05030d 100%);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .techno-pulse {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        /* Horizontal vein pulses */
+        .techno-pulse::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent 0,
+                transparent 119px,
+                rgba(0, 240, 255, 0.14) 119px,
+                rgba(0, 240, 255, 0.14) 121px
+            );
+            background-size: 240px 100%;
+            animation: gridPulseH 6s linear infinite;
+            opacity: 0.6;
+        }
+
+        /* Vertical vein pulses */
+        .techno-pulse::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent 0,
+                transparent 119px,
+                rgba(176, 38, 255, 0.12) 119px,
+                rgba(176, 38, 255, 0.12) 121px
+            );
+            background-size: 100% 240px;
+            animation: gridPulseV 7.2s linear infinite;
+            opacity: 0.5;
+        }
+
+        /* Petri-dish plaque pattern */
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 12% 30%, rgba(0, 240, 255, 0.12) 0 8px, transparent 9px),
+                radial-gradient(circle at 22% 70%, rgba(176, 38, 255, 0.1) 0 5px, transparent 6px),
+                radial-gradient(circle at 78% 25%, rgba(0, 240, 255, 0.09) 0 6px, transparent 7px),
+                radial-gradient(circle at 88% 60%, rgba(176, 38, 255, 0.1) 0 10px, transparent 11px),
+                radial-gradient(circle at 40% 90%, rgba(0, 240, 255, 0.08) 0 7px, transparent 8px),
+                radial-gradient(circle at 65% 12%, rgba(176, 38, 255, 0.09) 0 4px, transparent 5px);
+            opacity: 0.75;
+            pointer-events: none;
+        }
+
+        /* Grid overlay */
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0, 240, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(176, 38, 255, 0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1100px;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .hero-content::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(110deg, transparent 15%, rgba(0, 240, 255, 0.09) 50%, transparent 85%);
+            transform: translateX(-120%);
+            mix-blend-mode: screen;
+        }
+
+        .hero-text { text-align: left; }
+
+        .mission-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.4rem 0.9rem;
+            border: 1px solid var(--border-cyan);
+            border-radius: 2px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.25em;
+            color: var(--phage-cyan);
+            background: rgba(0, 240, 255, 0.06);
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.14);
+            animation: tagPulse 2.4s ease-in-out infinite;
+        }
+
+        .mission-tag::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ff5e5e;
+            box-shadow: 0 0 10px #ff5e5e;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink { 50% { opacity: 0.3; } }
+
+        @keyframes gridPulseH {
+            0% { background-position: 0 0; }
+            100% { background-position: 240px 0; }
+        }
+
+        @keyframes gridPulseV {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 240px; }
+        }
+
+        .hero h1 {
+            background: var(--gradient-duo);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: var(--text-main);
+            line-height: 1;
+            margin-bottom: 1rem;
+            animation: titleFlicker 4s ease-in-out infinite;
+        }
+
+        .hero h1 .glitch {
+            display: inline-block;
+            position: relative;
+            background: var(--gradient-duo);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: var(--text-main);
+            filter: drop-shadow(0 0 24px var(--phage-cyan-glow));
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 520px;
+            margin-bottom: 2rem;
+            animation: subtitleBreath 5s ease-in-out infinite;
+        }
+
+        @keyframes tagPulse {
+            0%, 100% { box-shadow: 0 0 12px rgba(0, 240, 255, 0.14); }
+            50% { box-shadow: 0 0 26px rgba(0, 240, 255, 0.34); }
+        }
+
+        @keyframes subtitleBreath {
+            0%, 100% { opacity: 0.9; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes titleFlicker {
+            0%, 18%, 22%, 66%, 100% { filter: brightness(1); }
+            20%, 64% { filter: brightness(1.15); }
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            color: var(--text-dim);
+            border-top: 1px solid var(--border-subtle);
+            padding-top: 1.2rem;
+        }
+
+        .hero-meta span strong {
+            color: var(--phage-cyan);
+            display: block;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            margin-bottom: 0.25rem;
+        }
+
+        /* The phage itself */
+        .phage-viz {
+            position: relative;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            isolation: isolate;
+        }
+
+        .phage-viz svg {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 420px;
+            height: auto;
+            filter: drop-shadow(0 0 30px var(--phage-cyan-glow)) drop-shadow(0 0 60px var(--phage-purple-glow));
+            animation: phageFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes phageFloat {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-12px) rotate(2deg); }
+        }
+
+        .phage-viz::before {
+            content: '';
+            position: absolute;
+            inset: 5%;
+            z-index: 1;
+            border-radius: 50%;
+            border: 1px dashed rgba(0, 240, 255, 0.3);
+            animation: spin 40s linear infinite;
+        }
+
+        .phage-viz::after {
+            content: '';
+            position: absolute;
+            inset: 15%;
+            z-index: 1;
+            border-radius: 50%;
+            border: 1px dashed rgba(176, 38, 255, 0.25);
+            animation: spin 25s linear infinite reverse;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Archived diagonal tape */
+        .archived-tape {
+            position: absolute;
+            top: 30%;
+            right: -60px;
+            transform: rotate(28deg);
+            padding: 0.7rem 5rem;
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                repeating-linear-gradient(
+                45deg,
+                #000 0 20px,
+                #ffcc00 20px 40px
+            );
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            letter-spacing: 0.3em;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85), 0 0 6px rgba(0, 0, 0, 0.65);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+            z-index: 5;
+            border-top: 2px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 2px solid rgba(0, 0, 0, 0.4);
+        }
+
+        /* ==========================================================
+           SECTIONS
+           ========================================================== */
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-alt {
+            background: linear-gradient(180deg, transparent, rgba(0, 240, 255, 0.03), transparent);
+            border-top: 1px solid var(--border-subtle);
+            border-bottom: 1px solid var(--border-subtle);
+            max-width: none;
+        }
+
+        .section-alt .section-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section h2 .accent { color: var(--phage-cyan); }
+        .section h2 .accent-p { color: var(--phage-purple); }
+
+        .section-intro {
+            max-width: 740px;
+            margin: 0 auto 3rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        /* Cohort panorama — full width, natural aspect (no cover-crop) */
+        .phage-cohort-banner {
+            position: relative;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border-subtle);
+            background: var(--bg-void);
+        }
+
+        .phage-cohort-banner img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .phage-cohort-banner::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+            background:
+                linear-gradient(180deg, rgba(5, 3, 13, 0.35) 0%, transparent 14%, transparent 86%, rgba(5, 3, 13, 0.45) 100%),
+                linear-gradient(90deg, rgba(5, 3, 13, 0.22) 0%, transparent 12%, transparent 88%, rgba(5, 3, 13, 0.22) 100%);
+        }
+
+        .phage-cohort-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            box-shadow: inset 0 0 80px rgba(0, 240, 255, 0.06), inset 0 0 120px rgba(176, 38, 255, 0.05);
+        }
+
+        /* Two-column narrative */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .narrative-card {
+            padding: 2rem;
+            border: 1px solid var(--border-subtle);
+            border-radius: 4px;
+            background: var(--bg-panel);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out backwards;
+            transition: all 0.4s ease;
+        }
+
+        .narrative-card:nth-child(1) { animation-delay: 0.15s; }
+        .narrative-card:nth-child(2) { animation-delay: 0.3s; }
+
+        .narrative-card:hover {
+            border-color: var(--phage-cyan);
+            transform: translateY(-4px);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2), 0 15px 30px rgba(0, 240, 255, 0.08);
+        }
+
+        .narrative-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            height: 2px;
+            width: 100%;
+            background: var(--gradient-duo);
+        }
+
+        .narrative-card h3 { color: var(--phage-cyan); }
+
+        /* Methodology — real phage-hunting workflow */
+        .method-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.25rem;
+            counter-reset: step;
+        }
+
+        .method-step {
+            position: relative;
+            padding: 1.75rem 1.5rem 1.5rem;
+            border: 1px solid var(--border-subtle);
+            border-radius: 4px;
+            background: var(--bg-panel);
+            transition: var(--transition);
+            counter-increment: step;
+            animation: fadeInUp 0.8s ease-out backwards;
+        }
+
+        .method-step:nth-child(1) { animation-delay: 0.05s; }
+        .method-step:nth-child(2) { animation-delay: 0.15s; }
+        .method-step:nth-child(3) { animation-delay: 0.25s; }
+        .method-step:nth-child(4) { animation-delay: 0.35s; }
+        .method-step:nth-child(5) { animation-delay: 0.45s; }
+        .method-step:nth-child(6) { animation-delay: 0.55s; }
+
+        .method-step::after {
+            content: '';
+            position: absolute;
+            left: -30%;
+            top: 0;
+            width: 55%;
+            height: 100%;
+            background: linear-gradient(115deg, transparent 10%, rgba(0, 240, 255, 0.12) 50%, transparent 90%);
+            transform: skewX(-18deg);
+            animation: cardSweep 7s linear infinite;
+            pointer-events: none;
+        }
+
+        .method-step::before {
+            content: counter(step, decimal-leading-zero);
+            position: absolute;
+            top: -0.9rem;
+            left: 1.2rem;
+            padding: 0.15rem 0.6rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: var(--bg-void);
+            background: var(--gradient-duo);
+            border-radius: 2px;
+        }
+
+        .method-step:hover {
+            border-color: var(--phage-cyan);
+            box-shadow: 0 0 0 1px var(--phage-cyan-glow), 0 0 20px rgba(0, 240, 255, 0.3), 0 20px 40px rgba(0, 240, 255, 0.15);
+            transform: translateY(-6px) scale(1.02);
+        }
+
+        .method-step:nth-child(even):hover {
+            border-color: var(--phage-purple);
+            box-shadow: 0 0 0 1px var(--phage-purple-glow), 0 0 20px rgba(176, 38, 255, 0.3), 0 20px 40px rgba(176, 38, 255, 0.18);
+        }
+
+        .method-step h4 {
+            color: var(--phage-cyan);
+            font-size: 1.05rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .method-step:nth-child(even) h4 { color: var(--phage-purple); }
+
+        .method-step:nth-child(even)::after {
+            background: linear-gradient(115deg, transparent 10%, rgba(176, 38, 255, 0.14) 50%, transparent 90%);
+            animation-duration: 8.5s;
+        }
+
+        .method-step p {
+            font-size: 0.92rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Field-log timeline */
+        .field-log {
+            max-width: 860px;
+            margin: 0 auto;
+            padding-left: 2rem;
+            border-left: 2px dashed var(--border-subtle);
+            position: relative;
+        }
+
+        .log-entry {
+            position: relative;
+            padding: 1.5rem 1.75rem;
+            margin-bottom: 1.5rem;
+            background: var(--bg-panel);
+            border: 1px solid var(--border-subtle);
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            animation: timelineArrival 0.7s ease-out backwards;
+        }
+
+        .log-entry:nth-child(1) { animation-delay: 0.1s; }
+        .log-entry:nth-child(2) { animation-delay: 0.2s; }
+        .log-entry:nth-child(3) { animation-delay: 0.3s; }
+        .log-entry:nth-child(4) { animation-delay: 0.4s; }
+        .log-entry:nth-child(5) { animation-delay: 0.5s; }
+        .log-entry:nth-child(n+6) { animation-delay: 0.6s; }
+
+        .log-entry::before {
+            content: '';
+            position: absolute;
+            left: -2.7rem;
+            top: 1.5rem;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--phage-cyan);
+            box-shadow: 0 0 0 4px rgba(0, 240, 255, 0.2), 0 0 18px var(--phage-cyan-glow);
+            animation: glowPulseEnhanced 3s ease-in-out infinite;
+        }
+
+        .log-entry:nth-child(even)::before {
+            background: var(--phage-purple);
+            box-shadow: 0 0 0 4px rgba(176, 38, 255, 0.2), 0 0 18px var(--phage-purple-glow);
+        }
+
+        .log-date {
+            color: var(--phage-cyan);
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            margin-bottom: 0.4rem;
+        }
+
+        .log-entry:nth-child(even) .log-date { color: var(--phage-purple); }
+
+        .log-entry h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .log-entry p {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        /* Archived image gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .gallery-item {
+            margin: 0;
+            background: var(--bg-panel);
+            border: 1px solid var(--border-subtle);
+            border-radius: 4px;
+            overflow: hidden;
+            transition: var(--transition);
+            animation: frameHum 4.8s ease-in-out infinite, fadeInUp 0.9s ease-out backwards;
+        }
+
+        .gallery-item:nth-child(1) { animation-delay: 0s, 0.1s; }
+        .gallery-item:nth-child(2) { animation-delay: 0s, 0.2s; }
+        .gallery-item:nth-child(3) { animation-delay: 0s, 0.3s; }
+        .gallery-item:nth-child(4) { animation-delay: 0s, 0.4s; }
+        .gallery-item:nth-child(5) { animation-delay: 0s, 0.5s; }
+        .gallery-item:nth-child(n+6) { animation-delay: 0s, 0.6s; }
+
+        .gallery-item:hover {
+            border-color: var(--phage-cyan);
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 0 0 1px var(--phage-cyan-glow), 0 0 25px rgba(0, 240, 255, 0.25), 0 20px 40px rgba(0, 240, 255, 0.15);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+            transform: scale(1.01);
+            transition: transform 0.6s ease, filter 0.6s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.07);
+            filter: saturate(1.12) contrast(1.08);
+        }
+
+        .gallery-item figcaption {
+            padding: 0.8rem 0.9rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            color: var(--text-dim);
+        }
+
+        @keyframes frameHum {
+            0%, 100% { box-shadow: 0 0 0 rgba(0, 240, 255, 0); }
+            50% { box-shadow: 0 0 18px rgba(0, 240, 255, 0.12); }
+        }
+
+        @keyframes cardSweep {
+            from { transform: translateX(-180%) skewX(-18deg); }
+            to { transform: translateX(410%) skewX(-18deg); }
+        }
+
+        /* New: Staggered entrance animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUpDelay {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes glowPulseEnhanced {
+            0%, 100% {
+                filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.4));
+            }
+            50% {
+                filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.8)) drop-shadow(0 0 30px rgba(176, 38, 255, 0.4));
+            }
+        }
+
+        @keyframes ambientGlowFloat {
+            0%, 100% {
+                opacity: 0.3;
+                transform: translateY(0);
+            }
+            50% {
+                opacity: 0.6;
+                transform: translateY(-8px);
+            }
+        }
+
+        @keyframes shimmerLeft {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        @keyframes subtle3DRotate {
+            0%, 100% {
+                transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+            }
+            50% {
+                transform: perspective(1000px) rotateX(2deg) rotateY(2deg);
+            }
+        }
+
+        @keyframes timelineArrival {
+            0% {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Findings / Legacy */
+        .findings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .finding {
+            padding: 2rem;
+            border-radius: 4px;
+            background: var(--bg-panel);
+            border: 1px solid var(--border-subtle);
+            text-align: center;
+            transition: var(--transition);
+            animation: fadeInUp 0.8s ease-out backwards;
+        }
+
+        .finding:nth-child(1) { animation-delay: 0.1s; }
+        .finding:nth-child(2) { animation-delay: 0.2s; }
+        .finding:nth-child(3) { animation-delay: 0.3s; }
+        .finding:nth-child(4) { animation-delay: 0.4s; }
+
+        .finding:hover {
+            border-color: var(--phage-purple);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 0 20px rgba(176, 38, 255, 0.2), 0 20px 40px rgba(176, 38, 255, 0.1);
+        }
+
+        .finding .stat {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 900;
+            background: var(--gradient-duo);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.4rem;
+        }
+
+        .finding .stat-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            color: var(--phage-cyan);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .finding p { font-size: 0.92rem; margin: 0; }
+
+        /* Reflections / lessons */
+        .reflection {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2.5rem;
+            background: var(--bg-panel);
+            border: 1px solid var(--border-subtle);
+            border-radius: 4px;
+            position: relative;
+            animation: fadeInUp 1s ease-out;
+            box-shadow: 0 0 0 1px rgba(176, 38, 255, 0.1);
+            transition: box-shadow 0.6s ease;
+        }
+
+        .reflection:hover {
+            box-shadow: 0 0 0 1px rgba(176, 38, 255, 0.3), 0 0 30px rgba(176, 38, 255, 0.15);
+        }
+
+        .reflection::before {
+            content: '"';
+            position: absolute;
+            top: -1rem;
+            left: 1.5rem;
+            font-family: 'Orbitron', serif;
+            font-size: 6rem;
+            color: var(--phage-purple);
+            line-height: 1;
+            opacity: 0.6;
+            text-shadow: 0 0 30px var(--phage-purple-glow);
+        }
+
+        .reflection p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+        }
+
+        .reflection-author {
+            margin-top: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--phage-cyan);
+            letter-spacing: 0.1em;
+        }
+
+        /* CTA */
+        .cta-section {
+            text-align: center;
+            padding: 6rem 2rem;
+            background:
+                radial-gradient(circle at 50% 50%, var(--phage-purple-soft), transparent 60%),
+                var(--bg-soft);
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2.2rem;
+            border-radius: 2px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-size: 0.82rem;
+            font-family: 'Orbitron', sans-serif;
+            transition: var(--transition);
+            border: 1px solid transparent;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--gradient-duo);
+            color: var(--bg-void);
+            box-shadow: 0 0 30px var(--phage-cyan-glow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .btn-primary:hover::before {
+            transform: translateX(100%);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 0 40px var(--phage-cyan-glow), 0 0 60px var(--phage-purple-glow), 0 10px 30px rgba(0, 240, 255, 0.2);
+            color: var(--bg-void);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--phage-cyan);
+            border: 1px solid var(--phage-cyan);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-ghost:hover {
+            background: var(--phage-cyan-soft);
+            color: var(--phage-cyan);
+            text-shadow: 0 0 12px var(--phage-cyan-glow);
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2), 0 8px 20px rgba(0, 240, 255, 0.1);
+        }
+
+        /* Animations on scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .hero-content { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
+            .hero-text { text-align: center; }
+            .hero-meta { justify-content: center; }
+            .phage-viz svg { max-width: 280px; }
+            .two-col { grid-template-columns: 1fr; gap: 2rem; }
+            .archived-tape { font-size: 0.7rem; padding: 0.5rem 3rem; right: -40px; }
+        }
+
+        @media (max-width: 480px) {
+            .section { padding: 4rem 1rem; }
+            .reflection { padding: 2rem 1.25rem; }
+            .hero { padding: 7rem 1rem 3rem; }
+        }
+    </style>
+</head>
+<body>
+    <div id="site-header"></div>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="techno-pulse" aria-hidden="true"></div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="mission-tag">STATUS · INACTIVE PROJECT</div>
+                <h1><span class="glitch">PHAGE</span><br>HUNTERS</h1>
+                <p class="hero-subtitle">
+                    A cohort-scale student program, backed by teaching assistants and a faculty sponsor, aimed at one audacious goal:
+                    isolate a bacteriophage no one on Earth had ever described before.
+                </p>
+                <div class="hero-meta">
+                    <span><strong>Discipline</strong>Microbiology · Virology</span>
+                    <span><strong>Scale</strong>25 students · 2 TAs · 1 faculty</span>
+                    <span><strong>Outcome</strong>Archived · See Legacy</span>
+                </div>
+            </div>
+
+            <div class="phage-viz" aria-label="Stylized bacteriophage">
+                <!-- Animated T4-style phage (hexagonal head + contractile tail + fibers) -->
+                <svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg" role="img">
+                    <defs>
+                        <linearGradient id="head" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0%" stop-color="#00F0FF"/>
+                            <stop offset="100%" stop-color="#B026FF"/>
+                        </linearGradient>
+                        <linearGradient id="tail" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#B026FF"/>
+                            <stop offset="100%" stop-color="#00F0FF"/>
+                        </linearGradient>
+                        <radialGradient id="coreGlow" cx="50%" cy="45%" r="50%">
+                            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.8"/>
+                            <stop offset="40%" stop-color="#00F0FF" stop-opacity="0.25"/>
+                            <stop offset="100%" stop-color="#B026FF" stop-opacity="0"/>
+                        </radialGradient>
+                    </defs>
+
+                    <!-- Capsid (icosahedral head) -->
+                    <polygon points="100,10 160,45 160,115 100,150 40,115 40,45"
+                             fill="url(#head)" stroke="#00F0FF" stroke-width="1.5" opacity="0.9"/>
+                    <polygon points="100,10 160,45 160,115 100,150 40,115 40,45"
+                             fill="url(#coreGlow)"/>
+                    <!-- Inner DNA coil lines -->
+                    <path d="M60 50 Q100 70 140 50 M60 75 Q100 95 140 75 M60 100 Q100 120 140 100"
+                          fill="none" stroke="#ecf7ff" stroke-width="1" opacity="0.5"/>
+
+                    <!-- Collar / neck -->
+                    <rect x="88" y="150" width="24" height="8" fill="#00F0FF" opacity="0.9"/>
+
+                    <!-- Contractile tail sheath (segmented) -->
+                    <g stroke="#B026FF" stroke-width="1" fill="url(#tail)" opacity="0.95">
+                        <rect x="86" y="160" width="28" height="10"/>
+                        <rect x="86" y="172" width="28" height="10"/>
+                        <rect x="86" y="184" width="28" height="10"/>
+                        <rect x="86" y="196" width="28" height="10"/>
+                        <rect x="86" y="208" width="28" height="10"/>
+                    </g>
+
+                    <!-- Base plate -->
+                    <polygon points="78,220 122,220 115,232 85,232" fill="#00F0FF" opacity="0.95"/>
+
+                    <!-- Tail fibers (6, animated) -->
+                    <g stroke="#B026FF" stroke-width="2" fill="none" stroke-linecap="round">
+                        <path d="M85 232 Q60 240 55 258"/>
+                        <path d="M92 232 Q82 248 75 260"/>
+                        <path d="M100 232 Q100 250 100 262"/>
+                        <path d="M108 232 Q118 248 125 260"/>
+                        <path d="M115 232 Q140 240 145 258"/>
+                    </g>
+
+                    <!-- Outer capsid highlight -->
+                    <polygon points="100,10 160,45 160,115 100,150 40,115 40,45"
+                             fill="none" stroke="#ffffff" stroke-width="0.6" opacity="0.6"/>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- COHORT PANORAMA -->
+    <section class="phage-cohort-banner" aria-label="Phage Hunters cohort">
+        <img src="assets/img/PhageHunterBGPic.jpeg" alt="Phage Hunters student cohort at the CSUSB campus sign" width="2400" height="900" loading="eager" decoding="async">
+    </section>
+
+    <!-- THE MISSION -->
+    <section class="section">
+        <h2>The <span class="accent">Hunt</span> For Something New</h2>
+        <p class="section-intro">
+            Bacteriophages — viruses that prey on bacteria — outnumber every other biological entity on the planet.
+            Phage Hunters was our attempt to find one that had never been catalogued.
+        </p>
+
+        <div class="two-col">
+            <div class="narrative-card reveal">
+                <h3>Why Phages?</h3>
+                <p>
+                    With antibiotic resistance rising, phages are being rediscovered as precision weapons
+                    against stubborn bacterial infections. Every new phage is a potential tool —
+                    and nearly every soil sample on Earth hides ones science has never seen.
+                </p>
+                <p>
+                    We wanted to join that global search from our own backyard.
+                </p>
+            </div>
+            <div class="narrative-card reveal">
+                <h3>The Ambition</h3>
+                <p>
+                    Our goal was simple to state and brutal to execute: collect, isolate, purify,
+                    characterize, and sequence a novel phage against a safe host bacterium —
+                    then document it well enough that someone, somewhere, could use it.
+                </p>
+                <p>
+                    We didn't get all the way there. But we got further than we had any right to.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- METHODOLOGY -->
+    <section class="section section-alt">
+        <div class="section-inner">
+            <h2>The <span class="accent-p">Methodology</span></h2>
+            <p class="section-intro">
+                A real phage hunt isn't one experiment — it's a pipeline. Each step narrows a chaotic soil sample
+                into a single, purified virus you can study.
+            </p>
+
+            <div class="method-grid">
+                <div class="method-step reveal">
+                    <h4>Soil Sampling</h4>
+                    <p>Collect soil from varied microhabitats — compost, root systems, standing water — where bacterial populations (and their predators) thrive.</p>
+                </div>
+                <div class="method-step reveal">
+                    <h4>Enrichment</h4>
+                    <p>Incubate the sample with the target host bacterium so any lurking phages can multiply into detectable numbers.</p>
+                </div>
+                <div class="method-step reveal">
+                    <h4>Plaque Assay</h4>
+                    <p>Spread on a bacterial lawn. Clear circular "plaques" reveal spots where phages have lysed the cells.</p>
+                </div>
+                <div class="method-step reveal">
+                    <h4>Purification</h4>
+                    <p>Pick a single plaque and re-plate, repeating until the culture is confidently one phage strain — not a mixed population.</p>
+                </div>
+                <div class="method-step reveal">
+                    <h4>High-Titer Lysate</h4>
+                    <p>Scale the isolated phage up to concentrations high enough to image, sequence, and characterize.</p>
+                </div>
+                <div class="method-step reveal">
+                    <h4>Electron Imaging</h4>
+                    <p>Use TEM (transmission electron microscopy) — where available — to classify morphology: siphovirus, myovirus, podovirus.</p>
+                </div>
+                <div class="method-step reveal">
+                    <h4>DNA Extraction</h4>
+                    <p>Lyse the capsid, purify the genome, quantify, and prep for sequencing.</p>
+                </div>
+                <div class="method-step reveal">
+                    <h4>Sequencing &amp; Annotation</h4>
+                    <p>Map the genome, identify genes, and compare against phage databases. If nothing matches closely — it might be new.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FIELD LOG -->
+    <section class="section">
+        <h2>Field <span class="accent">Log</span></h2>
+        <p class="section-intro">
+            Abbreviated entries from the project's working notebook.
+        </p>
+
+        <div class="field-log">
+            <div class="log-entry reveal">
+                <div class="log-date">// ENTRY 01 · PROJECT KICKOFF</div>
+                <h4>Mission brief</h4>
+                <p>Crew assembled. Target host selected. Collection routes plotted across local green spaces. Optimism at 100%.</p>
+            </div>
+            <div class="log-entry reveal">
+                <div class="log-date">// ENTRY 02 · FIRST SAMPLES</div>
+                <h4>Soil acquired, samples logged</h4>
+                <p>Cohort-wide collection across local sites. GPS, depth, moisture, and surrounding flora recorded where possible. Buffer-extracted and stored cold.</p>
+            </div>
+            <div class="log-entry reveal">
+                <div class="log-date">// ENTRY 03 · FIRST PLAQUES</div>
+                <h4>Plaques observed</h4>
+                <p>Many enrichments produced plaques on bacterial lawns. Morphology varied — clear, turbid, bullseye. Dozens of teams flagged promising candidates.</p>
+            </div>
+            <div class="log-entry reveal">
+                <div class="log-date">// ENTRY 04 · PURIFICATION LOOPS</div>
+                <h4>Single-plaque purification</h4>
+                <p>Re-plating narrowed mixed lysates toward clonal lines; the cohort collectively isolated on the order of ten distinct phage candidates, with depth of follow-up varying by team.</p>
+            </div>
+            <div class="log-entry reveal">
+                <div class="log-date">// ENTRY 05 · ROADBLOCK</div>
+                <h4>Equipment access stalled</h4>
+                <p>Access to sequencing and electron microscopy hit a wall. Timeline slipped. Morale adjusted accordingly.</p>
+            </div>
+            <div class="log-entry reveal">
+                <div class="log-date">// ENTRY 06 · MISSION ARCHIVED</div>
+                <h4>Project paused, knowledge preserved</h4>
+                <p>With core members graduating and lab access unresolved, the hunt was formally archived. Protocols, raw data, and field notes were packaged for any future team that wants to pick up the trail.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ARCHIVED IMAGE GALLERY -->
+    <section class="section">
+        <h2>Archived <span class="accent">Photo Log</span></h2>
+        <p class="section-intro">
+            Selected lab and cohort photos from the original run.
+        </p>
+
+        <div class="gallery-grid">
+            <figure class="gallery-item reveal">
+                <img src="assets/img/PS_Phage_H/%21%20IMG_7006.jpeg" alt="Phage Hunters archived photo IMG 7006" loading="lazy" decoding="async">
+                <figcaption>Phage Hunters</figcaption>
+            </figure>
+            <figure class="gallery-item reveal">
+                <img src="assets/img/PS_Phage_H/%21%20IMG_7057.jpeg" alt="Phage Hunters archived photo IMG 7057" loading="lazy" decoding="async">
+                <figcaption>Phage Hunters</figcaption>
+            </figure>
+            <figure class="gallery-item reveal">
+                <img src="assets/img/PS_Phage_H/%21%20IMG_7073.jpeg" alt="Phage Hunters archived photo IMG 7073" loading="lazy" decoding="async">
+                <figcaption>Phage Hunters</figcaption>
+            </figure>
+            <figure class="gallery-item reveal">
+                <img src="assets/img/W1_Phage_h/%21%20IMG_5795.jpg" alt="Phage Hunters archived photo IMG 5795" loading="lazy" decoding="async">
+                <figcaption>Phage Hunters</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <!-- FINDINGS / LEGACY -->
+    <section class="section section-alt">
+        <div class="section-inner">
+            <h2>What We <span class="accent-p">Left Behind</span></h2>
+            <p class="section-intro">
+                No novel phage was published from the program—but the run was real: a full student cohort,
+                teaching support, a faculty sponsor, a poster symposium, and multiple candidate isolates from the bench.
+            </p>
+
+            <div class="findings-grid">
+                <div class="finding reveal">
+                    <div class="stat">25</div>
+                    <div class="stat-label">Student participants</div>
+                    <p>Hands-on sampling, enrichment, plating, and analysis as part of the cohort.</p>
+                </div>
+                <div class="finding reveal">
+                    <div class="stat">~10</div>
+                    <div class="stat-label">Phage isolates</div>
+                    <p>Distinct candidates from plaque work; not all carried through full characterization.</p>
+                </div>
+                <div class="finding reveal">
+                    <div class="stat">30+</div>
+                    <div class="stat-label">Poster boards</div>
+                    <p>Symposium-scale showcase—one board per project or team, depending on year.</p>
+                </div>
+                <div class="finding reveal">
+                    <div class="stat">2</div>
+                    <div class="stat-label">Teaching assistants</div>
+                    <p>TA support for lab technique, safety, and keeping experiments on track.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2><span class="accent">Begin the Hunt?</span></h2>
+        <p style="max-width: 620px; margin: 0 auto;">
+            The notebooks are still here. The protocols still work. If you're ready to push a paused
+            mission back into motion, we'd love to hand you the lab coat.
+        </p>
+        <div class="cta-buttons">
+            <a href="contact.html" class="btn btn-primary">Contact the Org</a>
+            <a href="projects.html" class="btn btn-ghost">Browse Active Projects</a>
+        </div>
+    </section>
+
+    <div id="site-footer"></div>
+
+    <script src="assets/js/shared-header.js"></script>
+    <script src="assets/js/shared-footer.js?v=4-15-26"></script>
+    <script src="assets/js/site-common.js"></script>
+    <script>
+        loadSharedHeader('#site-header');
+        loadSharedFooter('#site-footer');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12 });
+
+        document.querySelectorAll('.reveal').forEach((el, index) => {
+            // Stagger reveal timing for a more rhythmic, techno cadence.
+            el.style.transitionDelay = `${(index % 8) * 65}ms`;
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

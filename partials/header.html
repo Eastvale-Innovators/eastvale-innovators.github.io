@@ -1,0 +1,79 @@
+<!-- Shared site header -->
+<nav id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo">EASTVALE INNOVATORS</a>
+        <ul class="nav-links">
+            <li><a href="index.html#about">About</a></li>
+            <li class="nav-dropdown">
+                <a href="projects.html" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">Projects <span class="dropdown-arrow">▾</span></a>
+                <div class="dropdown-menu" role="menu" aria-label="Projects submenu">
+                    <div class="dropdown-col">
+                        <span class="dropdown-col-label">Past Projects</span>
+                        <a href="virtual-medical-missions.html" class="dropdown-item">VMM</a>
+                        <a href="phage-hunters.html" class="dropdown-item">Phage Hunters</a>
+                    </div>
+                    <div class="dropdown-divider-v"></div>
+                    <div class="dropdown-col">
+                        <span class="dropdown-col-label">Current Projects</span>
+                        <a href="roosevelt-connect.html" class="dropdown-item">Roosevelt Connect</a>
+                        <a href="intelligrader.html" class="dropdown-item">Intelligrader</a>
+                    </div>
+                </div>
+            </li>
+            <!-- <li><a href="leadership.html">Leadership</a></li> -->
+            <li class="nav-dropdown">
+                <a href="teams.html" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">Teams <span class="dropdown-arrow">▾</span></a>
+                <div class="dropdown-menu" role="menu" aria-label="Teams submenu">
+                    <div class="dropdown-col" style="min-width:150px">
+                        <!-- <a href="teams.html#eastvale-innovators-team" class="dropdown-item">Eastvale Innovators</a> -->
+                        <a href="teams.html#roosevelt-connect-team" class="dropdown-item">Roosevelt Connect</a>
+                        <a href="teams.html#intelligrader-team" class="dropdown-item">Intelligrader</a>
+                        <a href="teams.html#virtual-medical-missions-team" class="dropdown-item">VMM</a>
+                    </div>
+                </div>
+            </li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="theme-toggle-btn" type="button" aria-label="Toggle light and dark mode" title="Toggle light and dark mode">☀</button>
+            <button class="mobile-menu-btn" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">☰</button>
+        </div>
+    </div>
+</nav>
+
+<div class="mobile-menu-overlay" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Mobile navigation menu">
+    <div class="mobile-menu-panel">
+        <div class="mobile-menu-header">
+            <span class="mobile-menu-title">Menu</span>
+            <button class="close-menu-btn" type="button" aria-label="Close navigation menu">✕</button>
+        </div>
+
+        <a href="index.html#about" class="mobile-main-link">About</a>
+
+        <details class="mobile-accordion">
+            <summary class="mobile-accordion-summary">Projects</summary>
+            <div class="mobile-sub-links" aria-label="Project links">
+                <a href="projects.html" class="mobile-sub-link">All Projects</a>
+                <a href="virtual-medical-missions.html" class="mobile-sub-link">VMM</a>
+                <a href="phage-hunters.html" class="mobile-sub-link inactive-project-link">Phage Hunters (Inactive)</a>
+                <a href="roosevelt-connect.html" class="mobile-sub-link">Roosevelt Connect</a>
+                <a href="intelligrader.html" class="mobile-sub-link">Intelligrader</a>
+            </div>
+        </details>
+
+        <!-- <a href="leadership.html" class="mobile-main-link">Leadership</a> -->
+
+        <details class="mobile-accordion">
+            <summary class="mobile-accordion-summary">Teams</summary>
+            <div class="mobile-sub-links" aria-label="Team links">
+                <a href="teams.html" class="mobile-sub-link">All Teams</a>
+                <a href="teams.html#eastvale-innovators-team" class="mobile-sub-link">Eastvale Innovators</a>
+                <a href="teams.html#roosevelt-connect-team" class="mobile-sub-link">Roosevelt Connect</a>
+                <a href="teams.html#intelligrader-team" class="mobile-sub-link">Intelligrader</a>
+                <a href="teams.html#virtual-medical-missions-team" class="mobile-sub-link">VMM</a>
+            </div>
+        </details>
+
+        <a href="contact.html" class="mobile-main-link">Contact</a>
+    </div>
+</div>

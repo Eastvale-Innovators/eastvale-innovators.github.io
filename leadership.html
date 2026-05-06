@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Meet the Eastvale Innovators leadership team guiding student projects, mentorship, and community-focused STEM growth.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.eastvaleinnovators.org/leadership.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Eastvale Innovators">
+    <meta property="og:title" content="Eastvale Innovators">
+    <meta property="og:description" content="Learn about the student leaders and department heads shaping Eastvale Innovators.">
+    <meta property="og:url" content="https://www.eastvaleinnovators.org/leadership.html">
+    <meta property="og:image" content="https://www.eastvaleinnovators.org/assets/img/new_innovators.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Eastvale Innovators">
+    <meta name="twitter:description" content="Learn about the student leaders and department heads shaping Eastvale Innovators.">
+    <meta name="twitter:image" content="https://www.eastvaleinnovators.org/assets/img/new_innovators.png">
+    <title>Eastvale Innovators</title>
+    <link rel="icon" type="image/png" href="assets/img/logo_favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #293d62;
+            --accent: #4a9eff;
+            --accent-glow: rgba(var(--accent-rgb), 0.3);
+            --text-light: #f5f5f5;
+            --bg-dark: #001f3f; /* dark navy background */
+            --gradient-2: linear-gradient(135deg, #1a2740 0%, #293d62 100%);
+            --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-light);
+            background: var(--bg-dark);
+            overflow-x: clip;
+            line-height: 1.6;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: -200px;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(74,158,255,0.12), transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(74,158,255,0.08), transparent 40%);
+            z-index: -1;
+            animation: bgDrift 30s linear infinite alternate;
+        }
+
+        @keyframes bgDrift {
+            from { transform: translate(0px,0px); }
+            to { transform: translate(-120px,-80px); }
+        }
+
+        h1, h2, h3 {
+            font-family: 'Orbitron', 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            text-align: center;
+            margin: 0.5rem 0;
+            display: block;
+            width: 100%;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+        }
+
+        html::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            text-align: center;
+            background: var(--gradient-2);
+            margin-top: 0;
+            padding-top: 6rem;
+        }
+
+        .hero-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.12;
+            z-index: 0;
+        }
+
+        .hero-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(var(--accent-rgb), 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(var(--accent-rgb), 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 1;
+        }
+
+        .hero-lines {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            opacity: 0.15;
+            background:
+                repeating-linear-gradient(
+                    45deg,
+                    rgba(74,158,255,0.2),
+                    rgba(74,158,255,0.2) 1px,
+                    transparent 1px,
+                    transparent 60px
+                );
+            animation: leadershipFlow 30s linear infinite;
+        }
+
+        @keyframes leadershipFlow {
+            from { background-position: 0 0; }
+            to { background-position: 600px 600px; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 0 2rem;
+            animation: fadeInDown 1s ease 0.2s backwards;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 300;
+        }
+
+        /* Main Leadership Content */
+        .leadership-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 6rem 2rem;
+        }
+
+        .year-badge {
+            text-align: center;
+            margin-bottom: 5rem;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .year-badge span {
+            display: inline-block;
+            padding: 0.8rem 2.5rem;
+            background: rgba(var(--accent-rgb), 0.15);
+            border: 1px solid rgba(var(--accent-rgb), 0.4);
+            border-radius: 50px;
+            color: var(--accent);
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: var(--transition);
+        }
+
+        .year-badge span:hover {
+            background: rgba(var(--accent-rgb), 0.25);
+            border-color: var(--accent);
+        }
+
+        /* President Section */
+        .president-section {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 6rem;
+        }
+
+        .president-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(var(--accent-rgb), 0.3);
+            border-radius: 30px;
+            overflow: hidden;
+            transition: var(--transition);
+            max-width: 450px;
+            width: 100%;
+            position: relative;
+        }
+
+        .president-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .president-card:hover::before {
+            opacity: 1;
+        }
+
+        .president-card:hover {
+            transform: translateY(-15px);
+            border-color: var(--accent);
+            box-shadow: 0 30px 80px rgba(var(--accent-rgb), 0.4);
+        }
+
+        .president-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .president-card:hover .president-image {
+            transform: scale(1.05);
+        }
+
+        .president-info {
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .president-info h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .president-info .role {
+            color: var(--accent);
+            font-size: 1.3rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Executive Row */
+        .executive-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 6rem;
+        }
+
+        .exec-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .exec-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .exec-card:hover::before {
+            opacity: 1;
+        }
+
+        .exec-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(var(--accent-rgb), 0.5);
+            box-shadow: 0 20px 60px rgba(var(--accent-rgb), 0.3);
+        }
+
+        .exec-image {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .exec-card:hover .exec-image {
+            transform: scale(1.08);
+        }
+
+        .exec-info {
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .exec-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .exec-info .role {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        /* Section Title */
+        .section-title {
+            text-align: center;
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 3.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Department Grid */
+        .department-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem;
+            margin-bottom: 6rem;
+        }
+
+        .dept-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .dept-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .dept-card:hover::before {
+            opacity: 1;
+        }
+
+        .dept-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(var(--accent-rgb), 0.5);
+            box-shadow: 0 20px 60px rgba(var(--accent-rgb), 0.3);
+        }
+
+        .dept-image {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .dept-card:hover .dept-image {
+            transform: scale(1.08);
+        }
+
+        .dept-info {
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .dept-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .dept-info .role {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        /* Advisors Section */
+        .advisors-section {
+            margin-top: 2rem;
+        }
+
+        .advisors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .advisor-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(var(--accent-rgb), 0.2);
+            border-radius: 25px;
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .advisor-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(var(--accent-rgb), 0.15) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .advisor-card:hover::before {
+            opacity: 1;
+        }
+
+        .advisor-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(var(--accent-rgb), 0.5);
+            box-shadow: 0 20px 60px rgba(var(--accent-rgb), 0.2);
+        }
+
+        .advisor-image {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .advisor-card:hover .advisor-image {
+            transform: scale(1.08);
+        }
+
+        .advisor-info {
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .advisor-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .advisor-info .role {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .rank-badge {
+            display: inline-block;
+            margin-top: 0.5rem;
+            padding: 6px 14px;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            border-radius: 999px;
+            border: 1px solid rgba(74,158,255,0.4);
+            background: rgba(74,158,255,0.1);
+            color: var(--accent);
+        }
+
+        .president-card,
+        .exec-card,
+        .dept-card,
+        .advisor-card {
+            position: relative;
+        }
+
+        .president-card::after,
+        .exec-card::after,
+        .dept-card::after,
+        .advisor-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at var(--x) var(--y), rgba(74,158,255,0.15), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            pointer-events: none;
+        }
+
+        .president-card:hover::after,
+        .exec-card:hover::after,
+        .dept-card:hover::after,
+        .advisor-card:hover::after {
+            opacity: 1;
+        }
+
+        .leadership-divider {
+            height: 1px;
+            width: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(74,158,255,0.6),
+                transparent
+            );
+            margin: 3rem 0 4rem;
+        }
+
+        .president-card {
+            box-shadow:
+                0 0 0 1px rgba(74,158,255,0.2),
+                0 20px 80px rgba(74,158,255,0.25);
+        }
+
+        .president-card::after {
+            background: radial-gradient(circle at center, rgba(74,158,255,0.35), transparent 70%);
+        }
+
+        .leadership-quote {
+            text-align: center;
+            max-width: 700px;
+            margin: 2rem auto 4rem;
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.7);
+            font-style: italic;
+        }
+
+        .fade-section {
+            opacity:0;
+            transform:translateY(40px);
+            transition:all .8s ease;
+        }
+
+        .fade-section.visible {
+            opacity:1;
+            transform:translateY(0);
+        }
+
+        #tile-transition {
+            position: fixed;
+            inset: 0;
+            z-index: 20000;
+            pointer-events: none;
+            display: grid;
+            background: transparent;
+        }
+
+        .tile {
+            background: black;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+
+        .tile.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .tile.reveal {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .department-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .executive-row {
+                grid-template-columns: 1fr;
+            }
+
+            .department-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .advisors-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .leadership-container {
+                padding: 3rem 1.5rem;
+            }
+
+            .hero {
+                padding-top: 3rem;
+            }
+
+            .president-image {
+                height: 280px;
+            }
+
+            .exec-image {
+                height: 220px;
+            }
+
+            .dept-image {
+                height: 200px;
+            }
+
+            .advisor-image {
+                height: 200px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div id="site-header"></div>
+    <script src="assets/js/shared-header.js"></script>
+    <script src="assets/js/shared-footer.js?v=4-15-26"></script>
+    <script src="assets/js/site-common.js"></script>
+    <script>
+        loadSharedHeader('#site-header');
+        loadSharedFooter('#site-footer');
+    </script>
+
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <img src="assets/img/new_innovators.png" alt="Eastvale Innovators" class="hero-img">
+        <div class="hero-grid"></div>
+        <div class="hero-lines"></div>
+        <div class="hero-content">
+            <h1>Our Leadership</h1>
+            <p class="hero-subtitle">Meet the innovators driving change in our community</p>
+        </div>
+    </section>
+
+    <!-- Main Leadership Content -->
+    <div class="leadership-container">
+        <!-- Year Badge -->
+        <div class="year-badge">
+            <span>2025 - 2026</span>
+        </div>
+
+        <!-- President Section -->
+        <div class="president-section fade-section">
+            <div class="president-card">
+                <img src="assets/img/OldImages/nil.jpg" alt="Devom Brahmbhatt" class="president-image" loading="lazy" decoding="async">
+                <div class="president-info">
+                    <h2>Member One</h2>
+                    <p class="role">President</p>
+                    <div class="rank-badge">Executive Leadership</div>
+                    <p class="leadership-quote">
+                        "blah blah blah."
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="leadership-divider"></div>
+
+        <!-- Executive Row -->
+        <div class="executive-row fade-section">
+            <div class="exec-card">
+                <img src="assets/img/OldImages/nil.jpg" alt="Kaylee Dih" class="exec-image" loading="lazy" decoding="async">
+                <div class="exec-info">
+                    <h3>Member Two</h3>
+                    <p class="role">Secretary</p>
+                </div>
+            </div>
+
+            <div class="exec-card">
+                <img src="assets/img/OldImages/nil.jpg" alt="Muhammad Khan" class="exec-image" loading="lazy" decoding="async">
+                <div class="exec-info">
+                    <h3>Member Three</h3>
+                    <p class="role">Vice President</p>
+                </div>
+            </div>
+
+            <div class="exec-card">
+                <img src="assets/img/OldImages/nil.jpg" alt="Kireeti Yarlagadda" class="exec-image" loading="lazy" decoding="async">
+                <div class="exec-info">
+                    <h3>Member Four</h3>
+                    <p class="role">Treasurer</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="leadership-divider"></div>
+
+        <!-- Department Heads Section -->
+        <h2 class="section-title">Department Heads</h2>
+        <div class="department-grid fade-section">
+            <div class="dept-card">
+                <img src="assets/img/OldImages/nil.jpg" alt="Aryan Wadhera" class="dept-image" loading="lazy" decoding="async">
+                <div class="dept-info">
+                    <h3>Team Lead</h3>
+                    <p class="role">Head of Computer Science</p>
+                </div>
+            </div>
+
+            <div class="dept-card">
+                <img src="assets/img/OldImages/nil.jpg" alt="Tyler Salamanca" class="dept-image" loading="lazy" decoding="async">
+                <div class="dept-info">
+                    <h3>Team Lead</h3>
+                    <p class="role">Head of Engineering</p>
+                </div>
+            </div>
+
+            <div class="dept-card">
+                <img src="assets/img/OldImages/nil.jpg" alt="Mark Benson" class="dept-image" loading="lazy" decoding="async">
+                <div class="dept-info">
+                    <h3>Team Lead</h3>
+                    <p class="role">Head of Medicine</p>
+                </div>
+            </div>
+
+            <div class="dept-card">
+                <img src="assets/img/OldImages/nil.jpg" alt="Rithwik Anchuri" class="dept-image" loading="lazy" decoding="async">
+                <div class="dept-info">
+                    <h3>Team Lead</h3>
+                    <p class="role">Head of Finance</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="leadership-divider"></div>
+
+        <!-- Advisors Section -->
+        <div class="advisors-section fade-section">
+            <h2 class="section-title">Our Advisors</h2>
+            <div class="advisors-grid">
+                <div class="advisor-card">
+                    <img src="assets/img/OldImages/nil.jpg" alt="Scott Usher" class="advisor-image" loading="lazy" decoding="async">
+                    <div class="advisor-info">
+                        <h3>Scott Usher</h3>
+                        <p class="role">Technical Advisor</p>
+                    </div>
+                </div>
+
+                <div class="advisor-card">
+                    <img src="assets/img/OldImages/nil.jpg" alt="Alex Cabal" class="advisor-image" loading="lazy" decoding="async">
+                    <div class="advisor-info">
+                        <h3>Alex Cabal</h3>
+                        <p class="role">General Advisor</p>
+                    </div>
+                </div>
+
+                <div class="advisor-card">
+                    <img src="assets/img/OldImages/nil.jpg" alt="Rachel Auld" class="advisor-image" loading="lazy" decoding="async">
+                    <div class="advisor-info">
+                        <h3>Rachell Auld</h3>
+                        <p class="role">Medical Advisor</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div style="height: 4rem;"></div>
+    <div id="site-footer"></div>
+    <div id="tile-transition"></div>
+    <script>
+
+        document.querySelectorAll(".president-card, .exec-card, .dept-card, .advisor-card").forEach(card => {
+            card.addEventListener("mousemove", e => {
+            const rect = card.getBoundingClientRect();
+
+            card.style.setProperty("--x", `${e.clientX - rect.left}px`);
+            card.style.setProperty("--y", `${e.clientY - rect.top}px`);
+            });
+        });
+
+        const observer=new IntersectionObserver(entries=>{
+            entries.forEach(entry=>{
+                if(entry.isIntersecting)
+                    entry.target.classList.add("visible")
+                })
+            })
+            document.querySelectorAll(".fade-section").forEach(el=>{
+            observer.observe(el)
+        })
+
+        const heroTitle = document.querySelector(".hero h1");
+        document.addEventListener("mousemove", (e) => {
+            if (!heroTitle) return;
+            const rect = heroTitle.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const offsetX = (e.clientX - centerX) / rect.width;
+            const offsetY = (e.clientY - centerY) / rect.height;
+            const rotateY = offsetX * 2;
+            const rotateX = -offsetY * 1;
+            heroTitle.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+
+        const tileContainer = document.getElementById("tile-transition");
+        const TILE_ROWS = 12;
+        const TILE_COLS = 20;
+        let tiles = [];
+
+        function createTiles() {
+            if (!tileContainer) return;
+
+            tileContainer.innerHTML = "";
+            tileContainer.style.gridTemplateRows = `repeat(${TILE_ROWS}, 1fr)`;
+            tileContainer.style.gridTemplateColumns = `repeat(${TILE_COLS}, 1fr)`;
+
+            tiles = [];
+
+            for (let r = 0; r < TILE_ROWS; r++) {
+                for (let c = 0; c < TILE_COLS; c++) {
+                    const tile = document.createElement("div");
+                    tile.className = "tile";
+                    tile.dataset.row = r;
+                    tile.dataset.col = c;
+                    tileContainer.appendChild(tile);
+                    tiles.push(tile);
+                }
+            }
+        }
+
+        function getTileOrder() {
+            return tiles.slice().sort((a, b) => {
+                const ar = Number(a.dataset.row);
+                const ac = Number(a.dataset.col);
+                const br = Number(b.dataset.row);
+                const bc = Number(b.dataset.col);
+                return (ar + ac) - (br + bc);
+            });
+        }
+
+        function coverTiles() {
+            const ordered = getTileOrder();
+            ordered.forEach((tile, i) => {
+                setTimeout(() => {
+                    tile.classList.add("active");
+                }, i * 2);
+            });
+        }
+
+        function revealTiles() {
+            const ordered = getTileOrder().reverse();
+            ordered.forEach((tile, i) => {
+                setTimeout(() => {
+                    tile.classList.remove("active");
+                }, i * 2);
+            });
+            setTimeout(() => {
+                tileContainer.style.background = "transparent";
+            }, ordered.length * 2 - 240);
+        }
+
+        function startTileNavigation(href) {
+            coverTiles();
+
+            setTimeout(() => {
+                window.location.href = href;
+            }, tiles.length * 2 + 200);
+        }
+
+        document.addEventListener("click", e => {
+            const link = e.target.closest("a");
+            if (!link) return;
+
+            const href = link.getAttribute("href");
+            if (!href) return;
+            if (href.includes("#")) return;
+            if (href.startsWith("mailto:")) return;
+            if (href.startsWith("tel:")) return;
+            if (link.target === "_blank") return;
+
+            e.preventDefault();
+            startTileNavigation(href);
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            createTiles();
+            tiles.forEach(tile => tile.classList.add("active"));
+            setTimeout(() => {
+                revealTiles();
+            }, 120);
+        });
+
+        // If DOMContentLoaded has already fired (script loaded after DOM), run immediately
+        if (document.readyState !== 'loading') {
+            createTiles();
+            tiles.forEach(tile => tile.classList.add("active"));
+            setTimeout(() => {
+                revealTiles();
+            }, 120);
+        }
+    </script>
+</body>
+</html>
