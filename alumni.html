@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Eastvale Innovators Alumni — the people who built this.">
+  <title>Alumni — Eastvale Innovators</title>
+  <link rel="icon" type="image/png" href="assets/img/logo_favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #060f1e;
+      --orange: #c84b0a;
+      --orange-hot: #e8721a;
+      --white: #f4f0eb;
+      --muted: rgba(244,220,190,.5);
+      --nav-h: 72px;
+      --ease: cubic-bezier(.22,1,.36,1);
+      --board: #1a1008;      /* dark cork color */
+      --board-grain: #1e1209;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--orange) var(--navy); }
+    body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--white); overflow-x: hidden; line-height: 1.65; }
+
+    /* ── HERO ── */
+    .page-hero {
+      position: relative; min-height: 50vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; overflow: hidden;
+      padding: calc(var(--nav-h) + 4rem) 2rem 4rem;
+    }
+    .page-hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% -10%, rgba(200,75,10,.3) 0%, transparent 70%),
+        linear-gradient(180deg, #060f1e 0%, #0c1828 100%);
+    }
+    .page-hero-grid {
+      position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size: 38px 38px;
+      mask-image: radial-gradient(ellipse 80% 80% at center, black 0%, transparent 100%);
+    }
+    .hero-content { position: relative; z-index: 5; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-size: .72rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--orange-hot); background: rgba(232,114,26,.1); border: 1px solid rgba(232,114,26,.25);
+      border-radius: 999px; padding: .45rem 1.1rem; margin-bottom: 1.5rem;
+      animation: fadeUp .7s .1s var(--ease) both;
+    }
+    .page-hero h1 {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(3rem, 7vw, 6rem); line-height: .95; letter-spacing: -.03em;
+      margin-bottom: 1rem;
+      animation: fadeUp .8s .2s var(--ease) both;
+    }
+    .page-hero h1 .w1 { display: block; color: var(--white); }
+    .page-hero h1 .w2 {
+      display: block;
+      background: linear-gradient(135deg, var(--orange) 0%, var(--orange-hot) 60%, #fbbf24 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .page-hero-sub {
+      font-size: 1.1rem; color: var(--muted); max-width: 520px; margin: 0 auto;
+      animation: fadeUp .8s .35s var(--ease) both;
+    }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+
+    /* ── INTRO STRIP ── */
+    .intro-strip {
+      max-width: 800px; margin: 0 auto; padding: 2rem 2rem 0;
+      text-align: center;
+    }
+    .intro-strip p { font-size: 1rem; color: var(--muted); line-height: 1.75; }
+
+    /* ═══════════════════════════════════════════════
+       CORKBOARD
+    ═══════════════════════════════════════════════ */
+    .board-section {
+      padding: 3rem 1.5rem 6rem;
+    }
+
+    .board-label {
+      text-align: center; margin-bottom: 2rem;
+      font-family: 'Caveat', cursive;
+      font-size: 1.3rem; color: rgba(200,160,100,.4);
+      letter-spacing: .1em;
+    }
+
+    .corkboard {
+      max-width: 1400px; margin: 0 auto;
+      background:
+        /* Cork grain texture using layered radials */
+        radial-gradient(ellipse 3px 2px at 12% 8%, rgba(120,80,20,.35), transparent),
+        radial-gradient(ellipse 2px 3px at 34% 22%, rgba(100,60,10,.3), transparent),
+        radial-gradient(ellipse 3px 1px at 55% 11%, rgba(130,85,25,.25), transparent),
+        radial-gradient(ellipse 2px 3px at 78% 19%, rgba(110,70,15,.3), transparent),
+        radial-gradient(ellipse 3px 2px at 91% 6%, rgba(120,75,20,.28), transparent),
+        radial-gradient(ellipse 2px 2px at 7% 35%, rgba(100,65,12,.25), transparent),
+        radial-gradient(ellipse 3px 2px at 28% 48%, rgba(130,85,20,.22), transparent),
+        radial-gradient(ellipse 2px 3px at 63% 39%, rgba(105,68,15,.27), transparent),
+        radial-gradient(ellipse 3px 1px at 85% 44%, rgba(115,72,18,.25), transparent),
+        radial-gradient(ellipse 2px 2px at 44% 62%, rgba(125,80,22,.3), transparent),
+        radial-gradient(ellipse 3px 2px at 18% 71%, rgba(108,70,14,.25), transparent),
+        radial-gradient(ellipse 2px 3px at 74% 68%, rgba(120,78,20,.27), transparent),
+        radial-gradient(ellipse 3px 2px at 38% 85%, rgba(110,72,16,.25), transparent),
+        radial-gradient(ellipse 2px 2px at 92% 78%, rgba(125,82,22,.28), transparent),
+        linear-gradient(160deg, #2a1a0a 0%, #1e1209 30%, #231708 60%, #1a1008 100%);
+      border-radius: 8px;
+      padding: 3rem 2.5rem;
+      box-shadow: 0 30px 80px rgba(0,0,0,.6), inset 0 0 80px rgba(0,0,0,.3), 0 0 0 6px #120d05, 0 0 0 8px rgba(255,200,100,.05);
+      border: 1px solid rgba(200,150,60,.12);
+    }
+
+    /* ── COLLAGE GRID — pinned notes ── */
+    .collage {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+      align-items: start;
+    }
+
+    /* Each alumni card is a "pinned piece of paper" */
+    .alumni-card {
+      position: relative;
+      cursor: pointer;
+      transform-style: preserve-3d;
+      /* Random slight tilt applied via inline style */
+    }
+
+    /* The paper itself */
+    .card-paper {
+      position: relative;
+      padding: 1.5rem 1.25rem 1.25rem;
+      border-radius: 2px;
+      transition: transform .35s var(--ease), box-shadow .35s var(--ease), filter .35s;
+      transform-origin: top center;
+      will-change: transform;
+      /* Default drop shadow = flat on board */
+      box-shadow:
+        2px 4px 8px rgba(0,0,0,.45),
+        1px 2px 4px rgba(0,0,0,.3);
+    }
+
+    /* Worn paper edge texture */
+    .card-paper::after {
+      content: ''; position: absolute; inset: 0;
+      border-radius: 2px;
+      background: linear-gradient(135deg, rgba(255,255,255,.06) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    /* LIFT on hover */
+    .alumni-card:hover .card-paper {
+      transform: translateY(-12px) scale(1.03) rotate(0deg) !important;
+      box-shadow:
+        0 24px 50px rgba(0,0,0,.6),
+        0 8px 16px rgba(0,0,0,.4),
+        0 0 0 1px rgba(255,255,255,.08);
+      filter: brightness(1.08);
+      z-index: 20;
+    }
+
+    /* PUSH PIN */
+    .card-pin {
+      position: absolute;
+      top: -10px; left: 50%;
+      transform: translateX(-50%);
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      z-index: 5;
+      box-shadow: 0 2px 6px rgba(0,0,0,.5), inset 0 -2px 4px rgba(0,0,0,.3);
+      transition: transform .35s var(--ease);
+    }
+    .alumni-card:hover .card-pin {
+      transform: translateX(-50%) translateY(-4px);
+    }
+    /* Pin shadow on paper */
+    .card-pin::after {
+      content: ''; position: absolute;
+      bottom: -4px; left: 50%;
+      transform: translateX(-50%);
+      width: 8px; height: 3px;
+      background: rgba(0,0,0,.3);
+      border-radius: 50%;
+      filter: blur(2px);
+    }
+
+    /* Name */
+    .card-name {
+      font-family: 'Caveat', cursive;
+      font-size: 1.35rem; font-weight: 600;
+      line-height: 1.2; margin-bottom: .4rem;
+      color: rgba(0,0,0,.85);
+    }
+
+    /* Divider line (like a ruled line on paper) */
+    .card-line {
+      height: 1px; background: rgba(0,0,0,.15);
+      margin: .5rem 0;
+    }
+
+    /* Bio text — handwritten feel */
+    .card-bio {
+      font-family: 'Caveat', cursive;
+      font-size: 1rem; line-height: 1.55;
+      color: rgba(0,0,0,.7);
+    }
+
+    /* Year tag */
+    .card-year {
+      display: inline-block;
+      margin-top: .85rem;
+      font-size: .72rem; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase;
+      background: rgba(0,0,0,.1); border-radius: 4px;
+      padding: .15rem .5rem;
+      color: rgba(0,0,0,.55);
+    }
+
+    /* Tape strips some cards have */
+    .card-tape {
+      position: absolute;
+      top: -6px; left: 50%;
+      transform: translateX(-50%);
+      width: 52px; height: 18px;
+      border-radius: 2px;
+      background: rgba(255,255,255,.28);
+      backdrop-filter: blur(1px);
+      border: 1px solid rgba(255,255,255,.15);
+      z-index: 4;
+    }
+
+    /* COLOR THEMES — 10 paper colors */
+    .theme-cream   { background: #fdf6e3; }
+    .theme-blush   { background: #fde8e8; }
+    .theme-sky     { background: #ddf0fd; }
+    .theme-mint    { background: #ddf5ec; }
+    .theme-lavender{ background: #ede8fd; }
+    .theme-yellow  { background: #fdf7d6; }
+    .theme-peach   { background: #fdeee0; }
+    .theme-rose    { background: #fce8f3; }
+    .theme-sage    { background: #e8f5e8; }
+    .theme-slate   { background: #e8eef5; }
+
+    /* Pin color themes */
+    .pin-red    { background: radial-gradient(circle at 35% 30%, #ff8080, #cc2222); }
+    .pin-blue   { background: radial-gradient(circle at 35% 30%, #80b4ff, #2255cc); }
+    .pin-green  { background: radial-gradient(circle at 35% 30%, #80ffb4, #22aa55); }
+    .pin-orange { background: radial-gradient(circle at 35% 30%, #ffcc80, #dd7700); }
+    .pin-purple { background: radial-gradient(circle at 35% 30%, #cc80ff, #7722cc); }
+    .pin-teal   { background: radial-gradient(circle at 35% 30%, #80eeff, #009999); }
+    .pin-pink   { background: radial-gradient(circle at 35% 30%, #ff80cc, #cc2288); }
+    .pin-gold   { background: radial-gradient(circle at 35% 30%, #ffe080, #cc9900); }
+
+    /* ── MODAL for clicked card ── */
+    #modal-overlay {
+      position: fixed; inset: 0; z-index: 9000;
+      background: rgba(2, 6, 16, .85);
+      backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 2rem;
+      opacity: 0; pointer-events: none;
+      transition: opacity .3s var(--ease);
+    }
+    #modal-overlay.open { opacity: 1; pointer-events: all; }
+
+    #modal-card {
+      max-width: 460px; width: 100%;
+      border-radius: 4px;
+      padding: 2.5rem 2.25rem;
+      position: relative;
+      transform: scale(.92) translateY(20px);
+      transition: transform .35s var(--ease);
+      box-shadow: 0 40px 100px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.08);
+    }
+    #modal-overlay.open #modal-card {
+      transform: scale(1) translateY(0);
+    }
+    #modal-close {
+      position: absolute; top: 1rem; right: 1rem;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(0,0,0,.15); border: none; cursor: pointer;
+      font-size: 1rem; display: flex; align-items: center; justify-content: center;
+      color: rgba(0,0,0,.6); transition: background .2s;
+    }
+    #modal-close:hover { background: rgba(0,0,0,.25); }
+    #modal-name { font-family: 'Caveat', cursive; font-size: 2rem; font-weight: 700; margin-bottom: .5rem; color: rgba(0,0,0,.85); }
+    #modal-line { height: 1px; background: rgba(0,0,0,.15); margin: .75rem 0; }
+    #modal-bio { font-family: 'Caveat', cursive; font-size: 1.2rem; line-height: 1.65; color: rgba(0,0,0,.72); }
+    #modal-year { display: inline-block; margin-top: 1rem; font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; background: rgba(0,0,0,.1); border-radius: 4px; padding: .2rem .6rem; color: rgba(0,0,0,.5); }
+
+    /* ── FOOTER DIVIDER ── */
+    .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(200,75,10,.18), transparent); max-width: 1300px; margin: 0 auto; }
+
+    /* ── TILES ── */
+    #tile-transition { position: fixed; inset: 0; z-index: 20000; pointer-events: none; display: grid; }
+    .tile { background: #0b1a30; opacity: 0; transform: scale(.95); transition: opacity .28s ease, transform .28s ease; }
+    .tile.active { opacity: 1; transform: scale(1); }
+
+    @media (max-width: 600px) {
+      .corkboard { padding: 2rem 1.25rem; }
+      .collage { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="site-header"></div>
+<script src="assets/js/shared-header.js"></script>
+<script src="assets/js/shared-footer.js?v=4-17-26"></script>
+<script src="assets/js/site-common.js"></script>
+<script src="assets/js/color-transition.js"></script>
+<script>
+  loadSharedHeader('#site-header');
+  loadSharedFooter('#site-footer');
+  registerPageColors({ accent:'#c84b0a', accentHot:'#e8721a', bg:'#060f1e' });
+</script>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">The People Who Built This</div>
+    <h1><span class="w1">Our</span><span class="w2">Alumni</span></h1>
+    <p class="page-hero-sub">They came, they built, they left their mark. Every name on this board is a piece of what Eastvale Innovators became.</p>
+  </div>
+</section>
+
+<!-- INTRO -->
+<div class="intro-strip">
+  <p>Hover over a card to lift it off the board. Click to read more.</p>
+</div>
+
+<!-- CORKBOARD -->
+<section class="board-section">
+  <div class="board-label">— Class of '23 · '24 · '25 —</div>
+  <div class="corkboard">
+    <div class="collage" id="alumni-collage">
+      <!-- Cards injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="divider"></div>
+<section style="padding:5rem 2rem;text-align:center">
+  <p style="color:var(--muted);font-size:1rem;max-width:480px;margin:0 auto 2rem">Are you an alum who wants to add yourself, update your card, or reconnect with the org?</p>
+  <a href="contact.html" style="display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 2rem;background:linear-gradient(135deg,#c84b0a,#a33a06);color:#fff;text-decoration:none;border-radius:12px;font-weight:700;font-size:.9rem;box-shadow:0 8px 28px rgba(200,75,10,.4);transition:transform .2s,box-shadow .2s">Get In Touch →</a>
+</section>
+
+<!-- MODAL -->
+<div id="modal-overlay" role="dialog" aria-modal="true" aria-label="Alumni profile">
+  <div id="modal-card">
+    <button id="modal-close" aria-label="Close">✕</button>
+    <div id="modal-name"></div>
+    <div id="modal-line"></div>
+    <div id="modal-bio"></div>
+    <div id="modal-year"></div>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<div id="tile-transition"></div>
+
+<script>
+/* ══ ALUMNI DATA ════════════════════════════════════════════════
+   Add, edit, or remove entries here.
+   Fields: name, bio, year, theme (cream/blush/sky/mint/lavender/
+           yellow/peach/rose/sage/slate), pin (red/blue/green/
+           orange/purple/teal/pink/gold), rot (-8 to 8 degrees),
+           tape: true/false
+══════════════════════════════════════════════════════════════ */
+const ALUMNI = [
+  {
+    name: "Aryan Wadhera",
+    bio: "CTO of Virtual Medical Missions. Built the platform from zero. Now probably doing something even more ambitious.",
+    year: "2024",
+    theme: "sky", pin: "blue", rot: -3, tape: false
+  },
+  {
+    name: "Devom Brahmbhatt",
+    bio: "Youth President of VMM, engineer on Intelligrader and Roosevelt Connect. The connective tissue of the whole org.",
+    year: "2024",
+    theme: "lavender", pin: "purple", rot: 4, tape: false
+  },
+  {
+    name: "Praneet Dumpa",
+    bio: "Principal engineer on Roosevelt Connect. Led the build from wireframe to deployed app at ERHS.",
+    year: "2025",
+    theme: "cream", pin: "orange", rot: -2, tape: true
+  },
+  {
+    name: "Satya Lakkaraju",
+    bio: "Full-stack on both Roosevelt Connect and Intelligrader. Shipped real features to real users.",
+    year: "2025",
+    theme: "mint", pin: "green", rot: 5, tape: false
+  },
+  {
+    name: "Jacob Wu",
+    bio: "Full-stack engineer, Roosevelt Connect. Turned a whiteboard idea into code that actual students use.",
+    year: "2025",
+    theme: "yellow", pin: "gold", rot: -6, tape: true
+  },
+  {
+    name: "Videsh Arivazhagan",
+    bio: "Backend API engineer on Intelligrader. Made the grading pipeline fast, reliable, and production-ready.",
+    year: "2025",
+    theme: "peach", pin: "red", rot: 3, tape: false
+  },
+  {
+    name: "Preston Lee",
+    bio: "AI model tuner on Intelligrader. Coaxed the models into actually knowing what a good FRQ looks like.",
+    year: "2025",
+    theme: "rose", pin: "pink", rot: -4, tape: false
+  },
+  /* ── Add more alumni below ───────────────────────────────── */
+  /* Example:
+  {
+    name: "Your Name",
+    bio: "What you did, where you are now, or whatever you want the world to know.",
+    year: "2026",
+    theme: "slate", pin: "teal", rot: 2, tape: false
+  },
+  */
+];
+
+/* ══ RENDER COLLAGE ═══════════════════════════════════════════ */
+const collage = document.getElementById('alumni-collage');
+
+ALUMNI.forEach((alum, i) => {
+  const card = document.createElement('div');
+  card.className = 'alumni-card';
+  card.style.transform = `rotate(${alum.rot}deg)`;
+  card.style.marginTop = Math.abs(alum.rot) > 4 ? '1.2rem' : '0';
+  card.setAttribute('data-index', i);
+  card.setAttribute('role', 'button');
+  card.setAttribute('tabindex', '0');
+  card.setAttribute('aria-label', `${alum.name} — click to read more`);
+
+  card.innerHTML = `
+    ${alum.tape
+      ? `<div class="card-tape"></div>`
+      : `<div class="card-pin pin-${alum.pin}"></div>`
+    }
+    <div class="card-paper theme-${alum.theme}">
+      <div class="card-name">${alum.name}</div>
+      <div class="card-line"></div>
+      <div class="card-bio">${alum.bio.length > 90 ? alum.bio.slice(0, 90) + '…' : alum.bio}</div>
+      ${alum.year ? `<span class="card-year">${alum.year}</span>` : ''}
+    </div>
+  `;
+
+  // Reset rotation on hover via JS (CSS handles the lift)
+  card.addEventListener('mouseenter', () => {
+    card.querySelector('.card-paper').style.transform = '';
+  });
+  card.addEventListener('mouseleave', () => {
+    card.querySelector('.card-paper').style.transform = '';
+  });
+
+  card.addEventListener('click', () => openModal(i));
+  card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openModal(i); });
+
+  collage.appendChild(card);
+});
+
+/* ══ MODAL ═══════════════════════════════════════════════════ */
+const overlay = document.getElementById('modal-overlay');
+const modalCard = document.getElementById('modal-card');
+const modalClose = document.getElementById('modal-close');
+
+function openModal(idx) {
+  const alum = ALUMNI[idx];
+  // Set modal card background to same theme color
+  const themeColors = {
+    cream: '#fdf6e3', blush: '#fde8e8', sky: '#ddf0fd', mint: '#ddf5ec',
+    lavender: '#ede8fd', yellow: '#fdf7d6', peach: '#fdeee0',
+    rose: '#fce8f3', sage: '#e8f5e8', slate: '#e8eef5'
+  };
+  modalCard.style.background = themeColors[alum.theme] || '#fdf6e3';
+  document.getElementById('modal-name').textContent = alum.name;
+  document.getElementById('modal-bio').textContent = alum.bio;
+  document.getElementById('modal-year').textContent = alum.year || '';
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  modalClose.focus();
+}
+
+function closeModal() {
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+modalClose.addEventListener('click', closeModal);
+overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+/* ══ TILE TRANSITION ═════════════════════════════════════════ */
+window.addEventListener('load', () => runColorTransition());
+const tc=document.getElementById('tile-transition');const R=10,C=18;let tiles=[];
+function mkT(){tc.innerHTML='';tc.style.gridTemplateRows=`repeat(${R},1fr)`;tc.style.gridTemplateColumns=`repeat(${C},1fr)`;tiles=[];for(let r=0;r<R;r++)for(let c=0;c<C;c++){const t=document.createElement('div');t.className='tile';t.dataset.d=r+c;tc.appendChild(t);tiles.push(t);}}
+const sortT=()=>tiles.slice().sort((a,b)=>a.dataset.d-b.dataset.d);
+const coverT=cb=>{sortT().forEach((t,i)=>setTimeout(()=>t.classList.add('active'),i*2));setTimeout(cb,tiles.length*2+180);};
+const revealT=()=>sortT().reverse().forEach((t,i)=>setTimeout(()=>t.classList.remove('active'),i*2));
+document.addEventListener('click',e=>{
+  if(e.target.closest('#modal-overlay')) return; // don't nav from modal
+  const a=e.target.closest('a[href]');if(!a)return;
+  const h=a.getAttribute('href');if(!h||h.includes('#')||h.startsWith('mailto:')||h.startsWith('tel:')||a.target==='_blank')return;
+  e.preventDefault();coverT(()=>window.location.href=h);
+});
+mkT();tiles.forEach(t=>t.classList.add('active'));setTimeout(revealT,80);
+</script>
+</body>
+</html>

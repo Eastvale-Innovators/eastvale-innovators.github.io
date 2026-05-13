@@ -338,3 +338,66 @@ body {
   color: var(--white);
   background: rgba(200,75,10,0.12);
 }
+
+/* ── ALUMNI NAV BUTTON — emphasized standalone item ── */
+.nav-alumni-item {
+  margin-left: .5rem;
+}
+
+.nav-alumni-btn {
+  display: inline-flex !important;
+  align-items: center;
+  gap: .45rem;
+  padding: .48rem 1.1rem !important;
+  border-radius: 10px !important;
+  background: linear-gradient(135deg, rgba(200,75,10,.18), rgba(232,114,26,.12)) !important;
+  border: 1px solid rgba(200,75,10,.42) !important;
+  color: #e8721a !important;
+  font-weight: 700 !important;
+  font-size: .88rem !important;
+  letter-spacing: .02em;
+  transition: background .22s, border-color .22s, transform .22s var(--transition), box-shadow .22s !important;
+  box-shadow: 0 0 0 0 rgba(200,75,10,0);
+  position: relative;
+  overflow: hidden;
+}
+
+/* shimmer sweep */
+.nav-alumni-btn::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.12) 50%, transparent 100%);
+  transform: translateX(-120%);
+  transition: transform .55s ease;
+  pointer-events: none;
+}
+.nav-alumni-btn:hover::before {
+  transform: translateX(120%);
+}
+
+.nav-alumni-btn:hover {
+  background: linear-gradient(135deg, rgba(200,75,10,.32), rgba(232,114,26,.22)) !important;
+  border-color: rgba(232,114,26,.7) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 22px rgba(200,75,10,.38) !important;
+  color: #fbbf24 !important;
+}
+
+.alumni-star {
+  font-size: .75rem;
+  opacity: .85;
+  animation: starPulse 2.5s ease-in-out infinite;
+}
+@keyframes starPulse {
+  0%,100% { transform: scale(1) rotate(0deg); opacity: .85; }
+  50% { transform: scale(1.3) rotate(20deg); opacity: 1; }
+}
+
+/* Mobile alumni link */
+.mobile-alumni-link {
+  color: #e8721a !important;
+  font-weight: 700 !important;
+  border-top: 1px solid rgba(200,75,10,.2) !important;
+  padding-top: 1.25rem !important;
+  margin-top: .5rem;
+}
