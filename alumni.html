@@ -17,6 +17,7 @@
       --muted: rgba(244,220,190,.5);
       --nav-h: 72px;
       --ease: cubic-bezier(.22,1,.36,1);
+      --ease-spring: cubic-bezier(.34,1.3,.35,1);
       --board: #1a1008;      /* dark cork color */
       --board-grain: #1e1209;
     }
@@ -256,42 +257,350 @@
     .pin-pink   { background: radial-gradient(circle at 35% 30%, #ff80cc, #cc2288); }
     .pin-gold   { background: radial-gradient(circle at 35% 30%, #ffe080, #cc9900); }
 
-    /* ── MODAL for clicked card ── */
+    /* ── MODAL — unfolds into a giant alumni "letter" ── */
     #modal-overlay {
       position: fixed; inset: 0; z-index: 9000;
-      background: rgba(2, 6, 16, .85);
-      backdrop-filter: blur(12px);
+      background: rgba(2, 6, 16, .88);
+      backdrop-filter: blur(14px);
       display: flex; align-items: center; justify-content: center;
       padding: 2rem;
       opacity: 0; pointer-events: none;
+      perspective: 2400px;
       transition: opacity .3s var(--ease);
     }
     #modal-overlay.open { opacity: 1; pointer-events: all; }
 
+    /* The letter itself: most of the viewport, not all of it — the container
+       is just a shadow + clip boundary now; each panel below carries its own
+       paper color, so the physical paper folds along with the content. */
     #modal-card {
-      max-width: 460px; width: 100%;
-      border-radius: 4px;
-      padding: 2.5rem 2.25rem;
+      width: min(94vw, 980px);
+      max-height: 92vh;
+      overflow-y: auto; overflow-x: hidden;
+      border-radius: 8px;
       position: relative;
-      transform: scale(.92) translateY(20px);
-      transition: transform .35s var(--ease);
-      box-shadow: 0 40px 100px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.08);
+      opacity: 0;
+      transform: translateY(30px) scale(.965);
+      /* Perspective here (not just the overlay) so the panel flaps get real
+         3D foreshortening as they hinge open */
+      perspective: 1600px;
+      transition: opacity .25s ease, transform .65s var(--ease);
+      box-shadow: 0 60px 140px rgba(0,0,0,.8), 0 0 0 1px rgba(255,255,255,.08);
+      /* Three equal thirds, fixed to the same size for every letter — sized
+         generously enough for the busiest letter (long name + several team
+         chips) so it never clips. On short viewports the whole letter
+         scrolls as one unit (see overflow-y above) rather than shrinking
+         the thirds unevenly. */
+      --rowh: 320px;
+      display: grid;
+      grid-template-rows: repeat(3, var(--rowh));
     }
-    #modal-overlay.open #modal-card {
-      transform: scale(1) translateY(0);
+    #modal-overlay.open #modal-card { opacity: 1; transform: translateY(0) scale(1); }
+
+    /* Tri-fold panels — top & bottom hinge open like a letter unfolding into
+       thirds. Each panel carries its own paper color + crinkled-fiber texture
+       (set via JS) so the physical paper folds away, not just its text. */
+    .letter-panel {
+      position: relative;
+      overflow-y: auto; overflow-x: hidden;
+      scrollbar-width: none; /* fallback scroll stays available, just invisible */
+      transition: transform .85s var(--ease-spring), opacity .4s ease;
+      background-image:
+        repeating-linear-gradient(107deg, rgba(0,0,0,.02) 0px, rgba(0,0,0,.02) 1px, transparent 1px, transparent 4px),
+        repeating-linear-gradient(17deg, rgba(255,255,255,.03) 0px, rgba(255,255,255,.03) 1px, transparent 1px, transparent 5px),
+        repeating-linear-gradient(63deg, rgba(0,0,0,.015) 0px, rgba(0,0,0,.015) 1px, transparent 1px, transparent 7px);
+      background-blend-mode: multiply;
     }
+    .panel-mid { transition: transform .6s var(--ease), opacity .4s ease; }
+
+    /* Fold shading: each panel carries a shadow gradient (strongest near its
+       hinge) that sweeps away as the panel opens toward the light */
+    .letter-panel::after {
+      content: ''; position: absolute; inset: 0; z-index: 3;
+      pointer-events: none;
+      opacity: var(--shade, 0);
+      transition: opacity .9s ease;
+    }
+    .panel-top::after    { background: linear-gradient(to top, rgba(30,15,0,.38), rgba(30,15,0,.08)); }
+    .panel-mid::after    { background: rgba(30,15,0,.18); }
+    .panel-bottom::after { background: linear-gradient(to bottom, rgba(30,15,0,.38), rgba(30,15,0,.08)); }
+
+    /* Instant-reset helper: fold shut with no animation before each unfold */
+    .letter-panel.no-trans, .letter-panel.no-trans::after { transition: none !important; }
+    .letter-panel::-webkit-scrollbar { display: none; }
+
+    .panel-inner { position: relative; padding: 2.75rem 3rem; }
+
+    /* Fold/unfold transform + opacity are driven from JS (see openModal/closeModal) —
+       class-swapped transitions on 3D transforms proved unreliable, so JS sets
+       inline styles with a forced reflow. Opacity (not backface-visibility) hides
+       each panel while folded, since backface culling is flaky across renderers. */
+    .panel-top { transform-origin: bottom center; }
+    .panel-mid {
+      transform-origin: center center;
+      border-top: 1px solid rgba(0,0,0,.1);
+      border-bottom: 1px solid rgba(0,0,0,.1);
+      box-shadow: inset 0 8px 12px -10px rgba(0,0,0,.4), inset 0 -8px 12px -10px rgba(0,0,0,.4);
+    }
+    /* Bottom third holds the sign-off, pinned to the letter's foot */
+    .panel-bottom {
+      transform-origin: top center;
+      display: flex;
+    }
+
+    /* Close button lives on the dark overlay, so the letter's corner stays
+       free for the postage stamp */
     #modal-close {
-      position: absolute; top: 1rem; right: 1rem;
-      width: 32px; height: 32px; border-radius: 50%;
-      background: rgba(0,0,0,.15); border: none; cursor: pointer;
-      font-size: 1rem; display: flex; align-items: center; justify-content: center;
-      color: rgba(0,0,0,.6); transition: background .2s;
+      position: absolute; top: 1.25rem; right: 1.5rem; z-index: 20;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18);
+      cursor: pointer;
+      font-size: 1.1rem; display: flex; align-items: center; justify-content: center;
+      color: #fff; transition: background .2s, transform .3s var(--ease);
     }
-    #modal-close:hover { background: rgba(0,0,0,.25); }
-    #modal-name { font-family: 'Caveat', cursive; font-size: 2rem; font-weight: 700; margin-bottom: .5rem; color: rgba(0,0,0,.85); }
-    #modal-line { height: 1px; background: rgba(0,0,0,.15); margin: .75rem 0; }
-    #modal-bio { font-family: 'Caveat', cursive; font-size: 1.2rem; line-height: 1.65; color: rgba(0,0,0,.72); }
-    #modal-year { display: inline-block; margin-top: 1rem; font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; background: rgba(0,0,0,.1); border-radius: 4px; padding: .2rem .6rem; color: rgba(0,0,0,.5); }
+    #modal-close:hover { background: rgba(255,255,255,.22); transform: rotate(90deg); }
+
+    /* Postage stamp + postmark, because this letter was mailed with love */
+    .letter-stamp {
+      position: absolute; top: 1.3rem; right: 1.5rem; z-index: 3;
+      width: 72px; height: 86px;
+      background: #fff;
+      border: 2px dashed rgba(0,0,0,.18);
+      border-radius: 4px;
+      transform: rotate(3deg);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .2rem;
+      font-size: 1.7rem;
+      box-shadow: 0 3px 8px rgba(0,0,0,.18);
+      pointer-events: none;
+    }
+    .letter-stamp span {
+      font-family: 'DM Sans', sans-serif;
+      font-size: .55rem; font-weight: 700; letter-spacing: .14em;
+      color: rgba(0,0,0,.45);
+    }
+    .letter-postmark {
+      position: absolute; top: 2.4rem; right: 6.2rem; z-index: 3;
+      width: 60px; height: 60px;
+      border: 2px solid rgba(0,0,0,.13); border-radius: 50%;
+      pointer-events: none;
+    }
+    .letter-postmark::after {
+      content: '';
+      position: absolute; top: 16px; left: -74px;
+      width: 70px; height: 26px;
+      background: repeating-linear-gradient(0deg, rgba(0,0,0,.11) 0 2px, transparent 2px 9px);
+      transform: skewY(-5deg);
+    }
+
+    /* "from the desk of…" letterhead over the bio */
+    .letterhead {
+      font-size: .68rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+      color: rgba(0,0,0,.35);
+      border-bottom: 1px solid rgba(0,0,0,.1);
+      padding-bottom: .5rem; margin-bottom: 1rem;
+    }
+
+    /* Sign-off block in the bottom fold — every letter ends with gratitude */
+    .letter-signoff { width: 100%; margin-top: auto; display: flex; flex-direction: column; }
+    #modal-ps {
+      font-family: 'Caveat', cursive;
+      font-size: 1.3rem; color: rgba(0,0,0,.6);
+      margin-bottom: 1.5rem;
+    }
+    #modal-ps:empty { display: none; }
+    .signoff-line { font-size: .82rem; letter-spacing: .05em; color: rgba(0,0,0,.45); text-align: right; }
+    .signoff-name { font-family: 'Caveat', cursive; font-size: 2.1rem; font-weight: 700; color: rgba(0,0,0,.75); text-align: right; }
+    .signoff-motto {
+      font-size: .64rem; font-weight: 600; text-transform: uppercase; letter-spacing: .2em;
+      color: rgba(0,0,0,.32); text-align: right; margin-top: .3rem;
+    }
+
+    /* Decorative stickers — an overlay covering the whole letter, so each
+       sticker can be placed anywhere on the card via top/left. */
+    #letter-stickers {
+      position: absolute; inset: 0; z-index: 4;
+      pointer-events: none;
+    }
+    .sticker {
+      position: absolute;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 52px; height: 52px; border-radius: 50%;
+      background: #fff; font-size: 1.6rem;
+      border: 2px dashed rgba(0,0,0,.15);
+      box-shadow: 0 4px 10px rgba(0,0,0,.25);
+    }
+
+    /* Two-column letter layout: left = identity, right = words */
+    .panel-grid {
+      display: grid;
+      /* Left column grows if the teams list wraps into a second column of
+         chips; the right column (bio/quote) just reflows narrower. */
+      grid-template-columns: minmax(250px, max-content) 1fr;
+      gap: 1rem 3rem;
+      align-items: start;
+    }
+    .col-left { display: flex; flex-direction: column; align-items: flex-start; gap: .8rem; }
+    .col-right { min-width: 0; }
+    /* Keep the bio clear of the postage stamp in the letter's corner */
+    .panel-top .col-right { padding-right: 96px; }
+
+    .letter-photo {
+      flex-shrink: 0; width: 128px; height: 128px; border-radius: 50%;
+      overflow: hidden; border: 4px solid #fff;
+      box-shadow: 0 10px 26px rgba(0,0,0,.35);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 2.2rem;
+      color: #fff;
+    }
+    .letter-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+    #modal-name { font-family: 'Caveat', cursive; font-size: 2.6rem; font-weight: 700; line-height: 1.1; color: rgba(0,0,0,.85); }
+
+    /* Teams + class year column */
+    .side-label {
+      font-size: .68rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+      color: rgba(0,0,0,.4); margin-bottom: .4rem;
+    }
+    /* Stacks straight down while short. Once the list is tall enough to hit
+       this cap, it starts a new column to the side instead of overflowing
+       the fixed-height fold — each column sized to its own content, so a
+       short list still reads as one natural-width column. */
+    #modal-teams-list {
+      list-style: none; margin: 0; padding: 0;
+      display: flex; flex-flow: column wrap; align-content: flex-start;
+      max-height: 168px;
+      gap: .35rem .6rem;
+    }
+    #modal-teams-list li {
+      font-size: .85rem; font-weight: 600; color: rgba(0,0,0,.65);
+      background: rgba(0,0,0,.07); border-radius: 6px;
+      padding: .3rem .7rem; width: fit-content;
+    }
+    #modal-teams.empty { display: none; }
+    #modal-year { display: inline-block; font-size: .78rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; background: rgba(0,0,0,.1); border-radius: 4px; padding: .25rem .7rem; color: rgba(0,0,0,.5); }
+
+    /* Bio — the main body of the letter, top right */
+    #modal-bio { font-family: 'Caveat', cursive; font-size: 1.4rem; line-height: 1.7; color: rgba(0,0,0,.72); }
+
+    /* Quote — deliberately a different voice than the handwritten bio:
+       typed, italic, small, with an oversized opening quotation mark */
+    #modal-quote {
+      position: relative;
+      font-family: 'DM Sans', sans-serif; font-style: italic;
+      font-size: 1rem; line-height: 1.7;
+      color: rgba(0,0,0,.55);
+      padding-left: 2.2rem;
+    }
+    #modal-quote::before {
+      content: '\201C';
+      position: absolute; left: 0; top: -.35rem;
+      font-family: 'Syne', sans-serif; font-style: normal;
+      font-size: 2.6rem; font-weight: 800; color: rgba(0,0,0,.2);
+    }
+    #modal-quote:empty { display: none; }
+
+    @media (max-width: 700px) {
+      .panel-inner { padding: 2rem 1.5rem; }
+      .panel-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .letter-photo { width: 96px; height: 96px; font-size: 1.7rem; }
+      #modal-name { font-size: 2.2rem; }
+      #modal-bio { font-size: 1.2rem; }
+      .sticker { width: 40px; height: 40px; font-size: 1.2rem; }
+    }
+
+    /* ── WARMTH: floating embers in the hero ── */
+    .hero-embers { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
+    .hero-embers span {
+      position: absolute; bottom: -12px;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #ffb35c; filter: blur(1px);
+      opacity: 0;
+      animation: emberFloat 9s linear infinite;
+    }
+    .hero-embers span:nth-child(1) { left: 8%;  animation-delay: 0s;    animation-duration: 10s; }
+    .hero-embers span:nth-child(2) { left: 22%; animation-delay: 2.4s;  width: 4px; height: 4px; }
+    .hero-embers span:nth-child(3) { left: 35%; animation-delay: 5s;    animation-duration: 12s; background: #ff9d6b; }
+    .hero-embers span:nth-child(4) { left: 48%; animation-delay: 1.2s;  width: 5px; height: 5px; }
+    .hero-embers span:nth-child(5) { left: 61%; animation-delay: 3.6s;  animation-duration: 11s; background: #ffd9a0; }
+    .hero-embers span:nth-child(6) { left: 74%; animation-delay: 6.2s;  width: 4px; height: 4px; }
+    .hero-embers span:nth-child(7) { left: 86%; animation-delay: 0.8s;  animation-duration: 13s; background: #ff9d6b; }
+    .hero-embers span:nth-child(8) { left: 94%; animation-delay: 4.4s;  width: 5px; height: 5px; background: #ffd9a0; }
+    @keyframes emberFloat {
+      0%   { transform: translateY(0) translateX(0); opacity: 0; }
+      10%  { opacity: .65; }
+      60%  { opacity: .4; }
+      100% { transform: translateY(-58vh) translateX(34px); opacity: 0; }
+    }
+
+    /* ── WARMTH: string lights wound loosely across the board top —
+       the wire is an SVG path (with little coils), and JS hangs the
+       bulbs along the actual curve ── */
+    .string-lights {
+      position: relative;
+      height: 74px; margin-bottom: 2.25rem;
+    }
+    .string-lights svg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      overflow: visible;
+    }
+    .string-lights .bulb {
+      position: absolute;
+      width: 10px; height: 14px;
+      border-radius: 50% 50% 55% 55%;
+      background: var(--c, #ffd9a0);
+      box-shadow: 0 0 10px 2px var(--c, #ffd9a0);
+      animation: twinkle 2.8s ease-in-out infinite alternate;
+    }
+    @keyframes twinkle {
+      from { opacity: .5;  box-shadow: 0 0 5px 1px var(--c, #ffd9a0); }
+      to   { opacity: 1;   box-shadow: 0 0 14px 4px var(--c, #ffd9a0); }
+    }
+
+    /* ── WARMTH: a little heart when you lift a card ── */
+    .card-heart {
+      position: absolute; top: .5rem; right: .6rem;
+      font-size: 1rem; color: rgba(200,40,60,.75);
+      opacity: 0; transform: scale(.4) rotate(-20deg);
+      transition: opacity .3s var(--ease), transform .3s var(--ease);
+      pointer-events: none;
+    }
+    .alumni-card:hover .card-heart { opacity: 1; transform: scale(1) rotate(-8deg); }
+
+    /* ── WARMTH: decorative keepsakes pinned between the cards ── */
+    .decor-card { position: relative; pointer-events: none; }
+    .decor-paper {
+      padding: 1.5rem 1.25rem;
+      border-radius: 2px;
+      box-shadow: 2px 4px 8px rgba(0,0,0,.45), 1px 2px 4px rgba(0,0,0,.3);
+    }
+    .decor-script {
+      font-family: 'Caveat', cursive;
+      font-size: 1.5rem; line-height: 1.35;
+      color: rgba(0,0,0,.7); text-align: center;
+    }
+    .polaroid-frame {
+      background: #f6f2ea;
+      padding: .6rem .6rem .45rem;
+      border-radius: 2px;
+      box-shadow: 2px 4px 8px rgba(0,0,0,.45), 1px 2px 4px rgba(0,0,0,.3);
+    }
+    .polaroid-frame img {
+      display: block; width: 100%; aspect-ratio: 1;
+      object-fit: contain; background: #0c1828;
+      border-radius: 2px; padding: 16%; box-sizing: border-box;
+    }
+    .polaroid-caption {
+      font-family: 'Caveat', cursive; text-align: center;
+      font-size: 1.15rem; color: rgba(0,0,0,.6);
+      padding-top: .45rem;
+    }
+
+    .board-postscript {
+      text-align: center; margin-top: 1.75rem;
+      font-family: 'Caveat', cursive;
+      font-size: 1.3rem; color: rgba(200,160,100,.45);
+    }
 
     /* ── FOOTER DIVIDER ── */
     .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(200,75,10,.18), transparent); max-width: 1300px; margin: 0 auto; }
@@ -324,44 +633,82 @@
 <section class="page-hero">
   <div class="page-hero-bg"></div>
   <div class="page-hero-grid"></div>
+  <div class="hero-embers" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
   <div class="hero-content">
-    <div class="hero-eyebrow">The People Who Built This</div>
+    <div class="hero-eyebrow">The People Who Built This ♥</div>
     <h1><span class="w1">Our</span><span class="w2">Alumni</span></h1>
-    <p class="page-hero-sub">They came, they built, they left their mark. Every name on this board is a piece of what Eastvale Innovators became.</p>
+    <p class="page-hero-sub">To the ones who stayed late, shipped first, and made this club feel like home — this wall is yours. Every card is a thank-you note we never want to take down.</p>
   </div>
 </section>
 
 <!-- INTRO -->
 <div class="intro-strip">
-  <p>Hover over a card to lift it off the board. Click to read more.</p>
+  <p>Hover over a card to lift it off the board. Click one to unfold the letter we'd send them if we could.</p>
 </div>
 
 <!-- CORKBOARD -->
 <section class="board-section">
-  <div class="board-label">— Class of '23 · '24 · '25 —</div>
+  <div class="board-label">— Class of '23 · '24 · '25 · once an innovator, always an innovator —</div>
   <div class="corkboard">
+    <div class="string-lights" id="string-lights" aria-hidden="true"></div>
     <div class="collage" id="alumni-collage">
       <!-- Cards injected by JS -->
     </div>
   </div>
+  <div class="board-postscript">…and there's plenty of board left for whoever's next.</div>
 </section>
 
 <!-- CTA -->
 <div class="divider"></div>
 <section style="padding:5rem 2rem;text-align:center">
-  <p style="color:var(--muted);font-size:1rem;max-width:480px;margin:0 auto 2rem">Are you an alum who wants to add yourself, update your card, or reconnect with the org?</p>
-  <a href="contact.html" style="display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 2rem;background:linear-gradient(135deg,#c84b0a,#a33a06);color:#fff;text-decoration:none;border-radius:12px;font-weight:700;font-size:.9rem;box-shadow:0 8px 28px rgba(200,75,10,.4);transition:transform .2s,box-shadow .2s">Get In Touch →</a>
+  <p style="color:var(--muted);font-size:1rem;max-width:480px;margin:0 auto 2rem">This wall misses people. If you're an alum and want your card up here, want to fix what yours says, or just want to say hi — the door never closed.</p>
+  <a href="contact.html" style="display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 2rem;background:linear-gradient(135deg,#c84b0a,#a33a06);color:#fff;text-decoration:none;border-radius:12px;font-weight:700;font-size:.9rem;box-shadow:0 8px 28px rgba(200,75,10,.4);transition:transform .2s,box-shadow .2s">Write to Us →</a>
 </section>
 
-<!-- MODAL -->
+<!-- MODAL: unfolds into a giant alumni "letter", tri-folded like paper -->
 <div id="modal-overlay" role="dialog" aria-modal="true" aria-label="Alumni profile">
   <div id="modal-card">
-    <button id="modal-close" aria-label="Close">✕</button>
-    <div id="modal-name"></div>
-    <div id="modal-line"></div>
-    <div id="modal-bio"></div>
-    <div id="modal-year"></div>
+    <div class="letter-stamp" aria-hidden="true">⚡<span>EI POST</span></div>
+    <div class="letter-postmark" aria-hidden="true"></div>
+    <div id="letter-stickers"></div>
+    <div class="letter-panel panel-top">
+      <div class="panel-inner panel-grid">
+        <div class="col-left">
+          <div id="modal-photo" class="letter-photo"></div>
+          <div id="modal-name"></div>
+        </div>
+        <div class="col-right">
+          <div class="letterhead">from the desk of Eastvale Innovators</div>
+          <div id="modal-bio"></div>
+        </div>
+      </div>
+    </div>
+    <div class="letter-panel panel-mid">
+      <div class="panel-inner panel-grid">
+        <div class="col-left">
+          <div id="modal-teams">
+            <div class="side-label">Teams</div>
+            <ul id="modal-teams-list"></ul>
+          </div>
+          <div id="modal-year"></div>
+        </div>
+        <div class="col-right">
+          <div id="modal-quote"></div>
+        </div>
+      </div>
+    </div>
+    <div class="letter-panel panel-bottom">
+      <div class="panel-inner letter-signoff">
+        <div id="modal-ps"></div>
+        <div class="signoff-line">With gratitude &amp; pride,</div>
+        <div class="signoff-name">— Eastvale Innovators ♥</div>
+        <div class="signoff-motto">once an innovator, always an innovator</div>
+      </div>
+    </div>
   </div>
+  <button id="modal-close" aria-label="Close">✕</button>
 </div>
 
 <div id="site-footer"></div>
@@ -370,61 +717,100 @@
 <script>
 /* ══ ALUMNI DATA ════════════════════════════════════════════════
    Add, edit, or remove entries here.
-   Fields: name, bio, year, theme (cream/blush/sky/mint/lavender/
-           yellow/peach/rose/sage/slate), pin (red/blue/green/
-           orange/purple/teal/pink/gold), rot (-8 to 8 degrees),
-           tape: true/false
+   Fields:
+     name, bio, year   — shown on the card and in the opened letter
+     theme             — paper color: cream/blush/sky/mint/lavender/
+                         yellow/peach/rose/sage/slate
+     pin               — pin color: red/blue/green/orange/purple/
+                         teal/pink/gold (also colors the fallback
+                         monogram if no image is given)
+     rot               — tilt in degrees, -8 to 8
+     tape              — true/false, tape strip instead of a pin
+     image (optional)  — path/URL to a photo, shown circular in the
+                         opened letter. Omit it and the letter shows
+                         an initials monogram instead.
+     teams (optional)  — array of team/project names, listed in the
+                         left column of the opened letter.
+     bioLong (optional)— longer bio shown in the opened letter in
+                         place of `bio` (which stays on the small
+                         pinned card). Omit to reuse `bio`.
+     quote (optional)  — a short quote, shown typed-italic under the
+                         bio in the opened letter. Omit to hide it.
+     stickers (optional) — stuck-on stickers, placeable anywhere on
+                         the opened letter. Each entry is either an
+                         emoji string "🚀" (auto-scattered around the
+                         edges) or { emoji: "🚀", top: "20%",
+                         left: "85%", rot: -12 } for an exact spot.
 ══════════════════════════════════════════════════════════════ */
 const ALUMNI = [
   {
     name: "Aryan Wadhera",
     bio: "CTO of Virtual Medical Missions. Built the platform from zero. Now probably doing something even more ambitious.",
     year: "2024",
-    theme: "sky", pin: "blue", rot: -3, tape: false
+    teams: ["Virtual Medical Missions"],
+    theme: "sky", pin: "blue", rot: -3, tape: false,
+    stickers: ["🚀", "🛠️"]
   },
   {
     name: "Devom Brahmbhatt",
     bio: "Youth President of VMM, engineer on Intelligrader and Roosevelt Connect. The connective tissue of the whole org.",
     year: "2024",
-    theme: "lavender", pin: "purple", rot: 4, tape: false
+    teams: ["Virtual Medical Missions", "Intelligrader", "Roosevelt Connect"],
+    theme: "lavender", pin: "purple", rot: 4, tape: false,
+    stickers: ["🎖️", "🔗"]
   },
   {
     name: "Praneet Dumpa",
     bio: "Principal engineer on Roosevelt Connect. Led the build from wireframe to deployed app at ERHS.",
     year: "2025",
-    theme: "cream", pin: "orange", rot: -2, tape: true
+    teams: ["Roosevelt Connect"],
+    theme: "cream", pin: "orange", rot: -2, tape: true,
+    stickers: ["🧩", "🚀"]
   },
   {
     name: "Satya Lakkaraju",
     bio: "Full-stack on both Roosevelt Connect and Intelligrader. Shipped real features to real users.",
     year: "2025",
-    theme: "mint", pin: "green", rot: 5, tape: false
+    teams: ["Roosevelt Connect", "Intelligrader"],
+    theme: "mint", pin: "green", rot: 5, tape: false,
+    stickers: ["💻", "⚡"]
   },
   {
     name: "Jacob Wu",
     bio: "Full-stack engineer, Roosevelt Connect. Turned a whiteboard idea into code that actual students use.",
     year: "2025",
-    theme: "yellow", pin: "gold", rot: -6, tape: true
+    teams: ["Roosevelt Connect"],
+    theme: "yellow", pin: "gold", rot: -6, tape: true,
+    stickers: ["💡", "💻"]
   },
   {
     name: "Videsh Arivazhagan",
     bio: "Backend API engineer on Intelligrader. Made the grading pipeline fast, reliable, and production-ready.",
     year: "2025",
-    theme: "peach", pin: "red", rot: 3, tape: false
+    teams: ["Intelligrader"],
+    theme: "peach", pin: "red", rot: 3, tape: false,
+    stickers: ["⚙️", "🔧"]
   },
   {
     name: "Preston Lee",
     bio: "AI model tuner on Intelligrader. Coaxed the models into actually knowing what a good FRQ looks like.",
     year: "2025",
-    theme: "rose", pin: "pink", rot: -4, tape: false
+    teams: ["Intelligrader"],
+    theme: "rose", pin: "pink", rot: -4, tape: false,
+    stickers: ["🤖", "🧠"]
   },
   /* ── Add more alumni below ───────────────────────────────── */
   /* Example:
   {
     name: "Your Name",
-    bio: "What you did, where you are now, or whatever you want the world to know.",
+    bio: "The short version, for the pinned card.",
     year: "2026",
-    theme: "slate", pin: "teal", rot: 2, tape: false
+    teams: ["Your Team"],
+    theme: "slate", pin: "teal", rot: 2, tape: false,
+    image: "assets/img/alumni/your-name.jpg",
+    bioLong: "The long version, for the opened letter — where you went, what you built, what you want the underclassmen to know.",
+    quote: "Something you'd actually want on your own letter.",
+    stickers: ["🎓", { emoji: "✨", top: "70%", left: "80%", rot: -8 }]
   },
   */
 ];
@@ -448,6 +834,7 @@ ALUMNI.forEach((alum, i) => {
       : `<div class="card-pin pin-${alum.pin}"></div>`
     }
     <div class="card-paper theme-${alum.theme}">
+      <div class="card-heart">♥</div>
       <div class="card-name">${alum.name}</div>
       <div class="card-line"></div>
       <div class="card-bio">${alum.bio.length > 90 ? alum.bio.slice(0, 90) + '…' : alum.bio}</div>
@@ -469,31 +856,203 @@ ALUMNI.forEach((alum, i) => {
   collage.appendChild(card);
 });
 
+/* ══ KEEPSAKES — decorative bits pinned between the cards ═════ */
+function makeDecor(html, rot) {
+  const d = document.createElement('div');
+  d.className = 'decor-card';
+  d.style.transform = `rotate(${rot}deg)`;
+  d.setAttribute('aria-hidden', 'true');
+  d.innerHTML = html;
+  return d;
+}
+const thankYouNote = makeDecor(`
+  <div class="card-tape"></div>
+  <div class="decor-paper theme-cream">
+    <div class="decor-script">thank you for building this place ♥</div>
+  </div>`, 4);
+const clubPolaroid = makeDecor(`
+  <div class="card-pin pin-red"></div>
+  <div class="polaroid-frame">
+    <img src="assets/img/logo_favicon.png" alt="">
+    <div class="polaroid-caption">the club that builds ⚡</div>
+  </div>`, -5);
+// Tuck them into the flow of the board
+if (collage.children.length > 2) collage.insertBefore(thankYouNote, collage.children[2]);
+collage.appendChild(clubPolaroid);
+
+/* ══ STRING LIGHTS ════════════════════════════════════════════
+   The wire sags, wanders, and coils in two spots like it was strung
+   by hand; bulbs are hung at even arc-lengths along the real curve. */
+const lightsEl = document.getElementById('string-lights');
+const WIRE_W = 1000, WIRE_H = 74;
+lightsEl.innerHTML = `
+  <svg viewBox="0 0 ${WIRE_W} ${WIRE_H}" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M 0 22
+             C 70 38, 140 46, 210 34
+             C 252 27, 270 10, 283 20
+             C 294 29, 281 39, 270 31
+             C 261 24, 274 15, 304 18
+             C 400 30, 480 50, 580 38
+             C 632 31, 650 12, 663 21
+             C 674 30, 662 40, 652 32
+             C 644 25, 656 16, 690 19
+             C 790 30, 900 44, 1000 26"
+          fill="none" stroke="rgba(0,0,0,.4)" stroke-width="2"
+          vector-effect="non-scaling-stroke"/>
+  </svg>`;
+const wirePath = lightsEl.querySelector('path');
+const BULB_COLORS = ['#ffd9a0', '#ffb35c', '#ff8f6b', '#ffe9b8'];
+const BULB_COUNT = 24;
+const wireLen = wirePath.getTotalLength();
+for (let i = 0; i < BULB_COUNT; i++) {
+  const pt = wirePath.getPointAtLength(wireLen * (i + 0.5) / BULB_COUNT);
+  const b = document.createElement('span');
+  b.className = 'bulb';
+  b.style.left = (pt.x / WIRE_W * 100) + '%';
+  b.style.top = (pt.y / WIRE_H * 100) + '%';
+  b.style.transform = `translate(-50%, 1px) rotate(${(i % 5 - 2) * 7}deg)`;
+  b.style.setProperty('--c', BULB_COLORS[i % BULB_COLORS.length]);
+  b.style.animationDelay = `${(i * 0.37) % 2.8}s`;
+  lightsEl.appendChild(b);
+}
+
 /* ══ MODAL ═══════════════════════════════════════════════════ */
 const overlay = document.getElementById('modal-overlay');
-const modalCard = document.getElementById('modal-card');
 const modalClose = document.getElementById('modal-close');
+const panelTop = document.querySelector('.panel-top');
+const panelMid = document.querySelector('.panel-mid');
+const panelBottom = document.querySelector('.panel-bottom');
+
+const PIN_COLORS = {
+  red: '#cc2222', blue: '#2255cc', green: '#22aa55', orange: '#dd7700',
+  purple: '#7722cc', teal: '#009999', pink: '#cc2288', gold: '#cc9900'
+};
+
+function initials(name) {
+  return name.split(/\s+/).map(w => w[0]).slice(0, 2).join('').toUpperCase();
+}
+
+const PANELS = [panelTop, panelMid, panelBottom];
+
+/* Fold the letter shut instantly (no transition) — used to reset before
+   the next unfold, and to snap closed behind the fading overlay. */
+function foldPanels() {
+  PANELS.forEach(p => {
+    p.classList.add('no-trans');
+    p.style.transitionDelay = '0s';
+    p.style.opacity = '0';
+    p.style.setProperty('--shade', '1');
+  });
+  panelTop.style.transform = 'rotateX(-112deg)';
+  panelMid.style.transform = 'scaleY(.86)';
+  panelBottom.style.transform = 'rotateX(112deg)';
+}
+
+/* Unfold into thirds: the middle of the packet settles first, then the top
+   flap swings open, then the bottom flap drops — each with a springy ease
+   that overshoots a touch and settles, while the hinge shadow sweeps off.
+   A forced reflow between fold and unfold makes the browser reliably
+   animate from the folded state instead of skipping straight to open. */
+function unfoldPanels() {
+  foldPanels();
+  panelTop.getBoundingClientRect(); // force reflow
+  requestAnimationFrame(() => {
+    PANELS.forEach(p => p.classList.remove('no-trans'));
+    panelMid.style.transitionDelay = '0s';
+    panelTop.style.transitionDelay = '.12s';
+    panelBottom.style.transitionDelay = '.28s';
+    requestAnimationFrame(() => {
+      PANELS.forEach(p => {
+        p.style.opacity = '1';
+        p.style.setProperty('--shade', '0');
+      });
+      panelTop.style.transform = 'rotateX(0deg)';
+      panelMid.style.transform = 'scaleY(1)';
+      panelBottom.style.transform = 'rotateX(0deg)';
+    });
+  });
+}
 
 function openModal(idx) {
   const alum = ALUMNI[idx];
-  // Set modal card background to same theme color
+  // Paint each panel (not the outer card) with the same theme color as the
+  // pinned card, so the physical paper folds away along with the content.
   const themeColors = {
     cream: '#fdf6e3', blush: '#fde8e8', sky: '#ddf0fd', mint: '#ddf5ec',
     lavender: '#ede8fd', yellow: '#fdf7d6', peach: '#fdeee0',
     rose: '#fce8f3', sage: '#e8f5e8', slate: '#e8eef5'
   };
-  modalCard.style.background = themeColors[alum.theme] || '#fdf6e3';
+  const paperColor = themeColors[alum.theme] || '#fdf6e3';
+  [panelTop, panelMid, panelBottom].forEach(p => { p.style.backgroundColor = paperColor; });
+
   document.getElementById('modal-name').textContent = alum.name;
-  document.getElementById('modal-bio').textContent = alum.bio;
-  document.getElementById('modal-year').textContent = alum.year || '';
+  document.getElementById('modal-year').textContent = alum.year ? `Class of ${alum.year}` : '';
+  // The opened letter shows the long-form bio when one is provided
+  document.getElementById('modal-bio').textContent = alum.bioLong || alum.bio;
+
+  const teamsBlock = document.getElementById('modal-teams');
+  const teamsList = document.getElementById('modal-teams-list');
+  teamsList.innerHTML = '';
+  (alum.teams || []).forEach(t => {
+    const li = document.createElement('li');
+    li.textContent = t;
+    teamsList.appendChild(li);
+  });
+  teamsBlock.classList.toggle('empty', !(alum.teams || []).length);
+
+  document.getElementById('modal-quote').textContent = alum.quote ? `“${alum.quote}”` : '';
+
+  // A personal P.S. at the foot of every letter
+  const firstName = alum.name.split(' ')[0];
+  document.getElementById('modal-ps').textContent = `P.S. The board isn't the same without you, ${firstName}.`;
+
+  const photoEl = document.getElementById('modal-photo');
+  photoEl.innerHTML = '';
+  if (alum.image) {
+    photoEl.style.background = 'none';
+    const img = document.createElement('img');
+    img.src = alum.image;
+    img.alt = alum.name;
+    photoEl.appendChild(img);
+  } else {
+    photoEl.style.background = PIN_COLORS[alum.pin] || '#888';
+    photoEl.textContent = initials(alum.name);
+  }
+
+  // Stickers can be plain emoji strings (auto-scattered around the edges of
+  // the letter) or objects { emoji, top, left, rot } placed anywhere on it.
+  const STICKER_SPOTS = [
+    { top: '26%', left: '89%', rot: -10 },
+    { top: '55%', left: '91%', rot: 8 },
+    { top: '79%', left: '86%', rot: -6 },
+    { top: '86%', left: '6%',  rot: 12 },
+    { top: '44%', left: '3%',  rot: -14 },
+    { top: '13%', left: '44%', rot: 6 }
+  ];
+  const stickersEl = document.getElementById('letter-stickers');
+  stickersEl.innerHTML = '';
+  (alum.stickers || []).forEach((s, i) => {
+    const spec = typeof s === 'string' ? {} : s;
+    const spot = STICKER_SPOTS[i % STICKER_SPOTS.length];
+    const chip = document.createElement('span');
+    chip.className = 'sticker';
+    chip.textContent = typeof s === 'string' ? s : s.emoji;
+    chip.style.top = spec.top || spot.top;
+    chip.style.left = spec.left || spot.left;
+    chip.style.transform = `rotate(${spec.rot !== undefined ? spec.rot : spot.rot}deg)`;
+    stickersEl.appendChild(chip);
+  });
+
   overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
   modalClose.focus();
+  unfoldPanels();
 }
 
 function closeModal() {
   overlay.classList.remove('open');
   document.body.style.overflow = '';
+  foldPanels();
 }
 
 modalClose.addEventListener('click', closeModal);
